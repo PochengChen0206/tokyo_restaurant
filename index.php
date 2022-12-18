@@ -3,7 +3,8 @@ require_once('DBPDO.php');
 ?>
 <table width="100%">
   <tr>
-    <td align="right"><button>登入</button></td>
+    <td align="left
+    "><a type="button" href="./view/login.php">登入</a></td>
   </tr>
 </table>
 <h3 align="center">東京美食收藏</h3>
