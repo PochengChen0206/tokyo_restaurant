@@ -63,11 +63,37 @@ require_once('../DBPDO.php');
     </tr>
     <tr>
       <td>午餐預算</td>
-      <td><input type="text" name="price_lunch"></td>
+      <td>
+        <select name="price_lunch" id="price_lunch">
+          <option value="">請選擇分類</option>
+          <?php 
+          $row=$dbpdo->prepare("SELECT * FROM `price_range`");
+          $row->execute();
+          foreach($row as $k=>$v){
+          ?>
+            <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
+          <?php 
+          }
+          ?>
+        </select>
+      </td>
     </tr>
     <tr>
       <td>晚餐預算</td>
-      <td><input type="text" name="price_dinner"></td>
+      <td>
+        <select name="price_dinner" id="price_dinner">
+          <option value="">請選擇分類</option>
+          <?php 
+          $row=$dbpdo->prepare("SELECT * FROM `price_range`");
+          $row->execute();
+          foreach($row as $k=>$v){
+          ?>
+            <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
+          <?php 
+          }
+          ?>
+        </select>
+      </td>
     </tr>
     <tr>
       <td>備註</td>

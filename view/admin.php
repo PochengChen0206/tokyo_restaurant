@@ -1,6 +1,174 @@
 <?php 
 require_once('../DBPDO.php');
 ?>
+<!doctype html>
+<html lang="en">
+<?php require_once('../view/head.php'); ?>
+
+<body>
+  <div class="site-mobile-menu site-navbar-target">
+    <div class="site-mobile-menu-header">
+      <div class="site-mobile-menu-close">
+        <span class="icofont-close js-menu-toggle"></span>
+      </div>
+    </div>
+    <div class="site-mobile-menu-body"></div>
+  </div>
+
+  <?php require_once('../view/nav.php'); ?>
+
+  <div class="hero hero-inner">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mx-auto text-center">
+          <div class="intro-wrap">
+            <h2 class="text-white">管理後台</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="untree_co-section">
+    <div class="container">
+      <div class="row justify-content-between align-items-center">
+        <div class="col-lg-3">
+          <div class="feature-1">
+            <ul class="list-unstyled clearfix">
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=new">餐廳新增</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit">餐廳管理</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=member">會員管理</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=report">分享文章管理</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <?php if(!isset($_GET['cate'])){ ?>
+        <div class="col-lg-9">
+          <h2 class="section-title text-left mb-4">管理後台</h2>
+          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+          <p class="mb-4"></p>
+          <ul class="list-unstyled two-col clearfix">
+            <li>Outdoor recreation activities</li>
+            <li>Airlines</li>
+            <li>Car Rentals</li>
+            <li>Cruise Lines</li>
+            <li>Hotels</li>
+            <li>Railways</li>
+            <li>Travel Insurance</li>
+            <li>Package Tours</li>
+            <li>Insurance</li>
+            <li>Guide Books</li>
+          </ul>
+        </div>
+        <?php } ?>
+
+        <?php if(isset($_GET['cate']) && $_GET['cate']=='new'){ ?>
+          <div class="col-lg-9">
+            <h2 class="section-title text-left mb-4">餐廳新增</h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+            <p class="mb-4"></p>
+
+            <ul class="list-unstyled two-col clearfix">
+              <li>Outdoor recreation activities</li>
+              <li>Airlines</li>
+              <li>Car Rentals</li>
+              <li>Cruise Lines</li>
+              <li>Hotels</li>
+              <li>Railways</li>
+              <li>Travel Insurance</li>
+              <li>Package Tours</li>
+              <li>Insurance</li>
+              <li>Guide Books</li>
+            </ul>
+          </div>
+        <?php } ?>
+
+        <?php if(isset($_GET['cate']) && $_GET['cate']=='edit'){ ?>
+          <div class="col-lg-9">
+            <h2 class="section-title text-left mb-4">餐廳管理</h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+            <p class="mb-4"></p>
+
+            <ul class="list-unstyled two-col clearfix">
+              <li>Outdoor recreation activities</li>
+              <li>Airlines</li>
+              <li>Car Rentals</li>
+              <li>Cruise Lines</li>
+              <li>Hotels</li>
+              <li>Railways</li>
+              <li>Travel Insurance</li>
+              <li>Package Tours</li>
+              <li>Insurance</li>
+              <li>Guide Books</li>
+            </ul>
+          </div>
+        <?php } ?>
+
+        <?php if(isset($_GET['cate']) && $_GET['cate']=='member'){ ?>
+          <div class="col-lg-9">
+            <h2 class="section-title text-left mb-4">會員管理</h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+            <p class="mb-4"></p>
+
+            <ul class="list-unstyled two-col clearfix">
+              <li>Outdoor recreation activities</li>
+              <li>Airlines</li>
+              <li>Car Rentals</li>
+              <li>Cruise Lines</li>
+              <li>Hotels</li>
+              <li>Railways</li>
+              <li>Travel Insurance</li>
+              <li>Package Tours</li>
+              <li>Insurance</li>
+              <li>Guide Books</li>
+            </ul>
+          </div>
+        <?php } ?>
+
+        <?php if(isset($_GET['cate']) && $_GET['cate']=='report'){ ?>
+          <div class="col-lg-9">
+            <h2 class="section-title text-left mb-4">分享文章管理</h2>
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+
+            <p class="mb-4"></p>
+
+            <ul class="list-unstyled two-col clearfix">
+              <li>Outdoor recreation activities</li>
+              <li>Airlines</li>
+              <li>Car Rentals</li>
+              <li>Cruise Lines</li>
+              <li>Hotels</li>
+              <li>Railways</li>
+              <li>Travel Insurance</li>
+              <li>Package Tours</li>
+              <li>Insurance</li>
+              <li>Guide Books</li>
+            </ul>
+          </div>
+        <?php } ?>
+      </div>
+    </div>
+  </div>
+
+  <?php require_once('../view/footer.php'); ?>
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/popper.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <script src="../js/owl.carousel.min.js"></script>
+  <script src="../js/jquery.animateNumber.min.js"></script>
+  <script src="../js/jquery.waypoints.min.js"></script>
+  <script src="../js/jquery.fancybox.min.js"></script>
+  <script src="../js/aos.js"></script>
+  <script src="../js/moment.min.js"></script>
+  <script src="../js/daterangepicker.js"></script>
+  <script src="../js/typed.js"></script>  
+  <script src="../js/custom.js"></script>
+</body>
+</html>
 <h3 align="center">管理後台</h3>
 <h3>我的收藏</h3>
 <table width="100%" border="1px" style="border-collapse: collapse;">
@@ -51,23 +219,6 @@ require_once('../DBPDO.php');
     <td><a type="button" href="../index.php">回首頁</a></td>
   </tr>
 </table>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script>
-  function confirmdelete(id) {
-    var postinfo = id.split("delete_mylist");
-    if (confirm('確認刪除？')) {
-      $.ajax({
-        url: "../contral/delete.php",
-        type: "POST",
-        data: {"admin_rID": postinfo[1]},
-          success: function(res) {
-            confirm("已經成功刪除紀錄");
-            document.location.reload(true);
-          }
-      });
-    } else {
-      alert('已取消刪除');
-    }
-  };
-</script>
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
+
 

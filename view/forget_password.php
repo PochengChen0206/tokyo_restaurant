@@ -25,8 +25,7 @@
       <div class="row align-items-center">
         <div class="col-lg-6 mx-auto text-center">
           <div class="intro-wrap">
-            <h2 class="mb-3 text-white">第一次使用</h2>
-            <button class="col-4 btn btn-outline-light" onclick="toSignUpPage();">註冊會員</button>
+          <h2 class="mb-3 text-white">忘記密碼</h2>
           </div>
         </div>
       </div>
@@ -39,7 +38,7 @@
         <div class="col-lg-6 mb-5 mb-lg-0">
           <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/login_connect.php" method="post" onsubmit="return login_check();">
             <div class="row justify-content-center">
-              <h2 class="section-title text-center mb-3">登入帳號</h2>
+              <h2 class="section-title text-center mb-3">請輸入會員信箱</h2>
             </div>
             <div class="form-group">
               <label class="text-black" for="email">信箱</label>
@@ -50,11 +49,7 @@
               <input type="password" class="form-control" id="login_password" name="login_password" placeholder="請輸入密碼" required>
             </div>
             <div class="row justify-content-center">
-              <button type="submit" class="col-4 btn btn-primary mt-2">登入</button>
-            </div>
-            <div class="row justify-content-end">
-              <button type="button" class="btn btn-outline-dark btn-sm mt-2" onclick="toForgetpasswordPage();">忘記密碼</button>
-              <!-- 這邊加上點擊到忘記密碼頁面 -->
+              <button type="submit" class="col-4 btn btn-primary mt-2">送出</button>
             </div>
           </form>
           
@@ -64,6 +59,7 @@
   </div>
 
   <?php require_once('../view/footer.php'); ?>
+
   <script src="../js/jquery-3.4.1.min.js"></script>
   <script src="../js/popper.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
@@ -79,14 +75,6 @@
 </body>
 </html>
 <script>
-  function toSignUpPage(){
-    window.location.href='http://localhost/pocheng/tokyo_restaurant/view/signup.php';
-  }
-
-  function toForgetpasswordPage(){
-    window.location.href='http://localhost/pocheng/tokyo_restaurant/view/forget_password.php';
-  }
-
   function login_check(){
     var check_login_email = document.querySelector('#login_email');
     var check_login_password = document.querySelector('#login_password');
