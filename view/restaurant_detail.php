@@ -38,12 +38,15 @@
         <div class="row">
           <div class="col-lg-6">
             <div class="owl-single dots-absolute owl-carousel">
-              <!-- 判斷有幾張圖片顯示 -->
-              <img src="../images/slider-1.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-              <img src="../images/slider-2.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-              <img src="../images/slider-3.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-              <img src="../images/slider-4.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-              <img src="../images/slider-5.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+              <?php if($v['image1']!=""){ ?>
+                <img src="<?=$v['image1']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+              <?php }?>
+              <?php if($v['image2']!=""){ ?>
+                <img src="<?=$v['image2']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+              <?php }?>
+              <?php if($v['image3']!=""){ ?>
+                <img src="<?=$v['image3']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+              <?php }?>
             </div>
           </div>
           <div class="col-lg-6 pl-lg-6 ml-auto">
@@ -68,7 +71,7 @@
                 ?>
               </li>
             </ul>
-            <div class="row justify-content-end">
+            <div class="row justify-content-end mr-3">
               <?php
                 $row_check=$dbpdo->prepare("SELECT `rID` FROM `my_restaurant_list` WHERE `rID` = :rID");
                 $row_check->bindParam(':rID',$rID,PDO::PARAM_STR);

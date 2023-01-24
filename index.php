@@ -43,7 +43,6 @@ require_once('DBPDO.php');
 				<div class="col-lg-7">
 					<div class="intro-wrap">
 						<h1 class="mb-5"><span class="d-block">尋找東京的美食</span><span class="typed-words"></span></h1>
-
 						<div class="row">
 							<div class="col-12">
 								<form class="form" action="./contral/search.php" method="post" onsubmit="return search_check();">
@@ -104,11 +103,11 @@ require_once('DBPDO.php');
 				</div>
 				<div class="col-lg-5">
 					<div class="slides">
-						<img src="images/hero-slider-1.jpg" alt="Image" class="img-fluid active">
-						<img src="images/hero-slider-2.jpg" alt="Image" class="img-fluid">
-						<img src="images/hero-slider-3.jpg" alt="Image" class="img-fluid">
-						<img src="images/hero-slider-4.jpg" alt="Image" class="img-fluid">
-						<img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid">
+						<img src="images/slider1.jpg" alt="Image" class="img-fluid active">
+						<img src="images/slider2.jpg" alt="Image" class="img-fluid">
+						<img src="images/slider3.jpg" alt="Image" class="img-fluid">
+						<!-- <img src="images/slider4.jpg" alt="Image" class="img-fluid">
+						<img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid"> -->
 					</div>
 				</div>
 			</div>
@@ -124,11 +123,14 @@ require_once('DBPDO.php');
 			</div>
 			<div class="row align-items-stretch">
 				<div class="col-lg-4 order-lg-1">
-					<div class="h-100"><div class="frame h-100"><div class="feature-img-bg h-100" style="background-image: url('images/hero-slider-1.jpg');"></div></div></div>
+					<div class="h-100">
+						<div class="frame h-100">
+							<div class="feature-img-bg h-100" style="background-image: url('images/about.jpg');"></div>
+						</div>
+					</div>
 				</div>
 
 				<div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1" >
-
 					<div class="feature-1 d-md-flex">
 						<div class="align-self-center">
 							<span class="flaticon-house display-4 text-primary"></span>
@@ -171,7 +173,7 @@ require_once('DBPDO.php');
 		</div>
 	</div>
 
-	<div class="untree_co-section count-numbers py-5">
+	<!-- <div class="untree_co-section count-numbers py-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
@@ -208,7 +210,7 @@ require_once('DBPDO.php');
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="untree_co-section">
 		<div class="container">
@@ -219,63 +221,56 @@ require_once('DBPDO.php');
 			<div class="owl-carousel owl-3-slider">
 
 				<div class="item">
-					<a class="media-thumb" href="images/hero-slider-1.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="images/top-slider-1.jpg" data-fancybox="gallery">
 						<div class="media-text">
-							<h3>Pragser Wildsee</h3>
-							<span class="location">Italy</span>
+							<h3>咖啡廳</h3>
 						</div>
-						<img src="images/hero-slider-1.jpg" alt="Image" class="img-fluid">
+						<img src="images/cafe.jpg" alt="Image" class="img-fluid">
 					</a> 
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="images/hero-slider-2.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="images/top-slider-2.jpg" data-fancybox="gallery">
 						<div class="media-text">
-							<h3>Oia</h3>
-							<span class="location">Greece</span>
+							<h3>壽司</h3>
 						</div>
-						<img src="images/hero-slider-2.jpg" alt="Image" class="img-fluid">
+						<img src="images/top-slider-2.jpg" alt="Image" class="img-fluid">
 					</a> 
 				</div>
 
 				<div class="item">
 					<a class="media-thumb" href="images/hero-slider-3.jpg" data-fancybox="gallery">
 						<div class="media-text">
-							<h3>Perhentian Islands</h3>
-							<span class="location">Malaysia</span>
+							<h3>甜點</h3>
 						</div>
-						<img src="images/hero-slider-3.jpg" alt="Image" class="img-fluid">
+						<img src="images/sweet.jpg" alt="Image" class="img-fluid">
 					</a> 
 				</div>
-
 
 				<div class="item">
 					<a class="media-thumb" href="images/hero-slider-4.jpg" data-fancybox="gallery">
 						<div class="media-text">
-							<h3>Rialto Bridge</h3>
-							<span class="location">Italy</span>
+							<h3>拉麵</h3>
 						</div>
-						<img src="images/hero-slider-4.jpg" alt="Image" class="img-fluid">
+						<img src="images/ramen.jpg" alt="Image" class="img-fluid">
 					</a> 
 				</div>
 
 				<div class="item">
 					<a class="media-thumb" href="images/hero-slider-5.jpg" data-fancybox="gallery">
 						<div class="media-text">
-							<h3>San Francisco, United States</h3>
-							<span class="location">United States</span>
+							<h3>酒吧</h3>
 						</div>
-						<img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid">
+						<img src="images/bar.jpg" alt="Image" class="img-fluid">
 					</a> 
 				</div>
 
 				<div class="item">
 					<a class="media-thumb" href="images/hero-slider-1.jpg" data-fancybox="gallery">
 						<div class="media-text">
-							<h3>Lake Thun</h3>
-							<span class="location">Switzerland</span>
+							<h3>海鮮丼</h3>
 						</div>
-						<img src="images/hero-slider-2.jpg" alt="Image" class="img-fluid">
+						<img src="images/kaisendon.jpg" alt="Image" class="img-fluid">
 					</a> 
 				</div>
 			</div>
@@ -362,7 +357,16 @@ require_once('DBPDO.php');
 				?>
 					<div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
 						<div class="media-1">
-							<a href="./view/restaurant_detail.php?rID=<?=$v['id']?>" class="d-block mb-3"><img src="images/hero-slider-1.jpg" alt="Image" class="img-fluid"></a>
+							<a href="./view/restaurant_detail.php?rID=<?=$v['id']?>" class="d-block mb-3">
+								<?php 
+								if($v['index_image']!=""){
+								?>
+									<img src="<?=$v['index_image']?>" alt="Image" class="img-fluid">
+								<?php }else{ ?>
+									<img src="./images/image_prepare.jpg" alt="Image" class="img-fluid">
+									<img src="../images/detail/yoroniku_1.jpg" alt="Image" class="img-fluid">
+								<?php } ?>
+							</a>
 							<span class="d-flex align-items-center loc mb-2">
 								<span class="icon-room mr-3"></span>
 								<span><?=$v['area']?></span>

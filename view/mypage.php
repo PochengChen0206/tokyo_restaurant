@@ -52,6 +52,19 @@ require_once('../DBPDO.php');
     </div>
   </div>
 
+  <?php
+  //個人資料
+  $sql = "SELECT * FROM `user_info` WHERE `userID` = '11'";
+  // $sql = "SELECT * FROM `user_info` WHERE `userID` = '".$_SESSION['userID']."'";
+  $stmt = $dbpdo->prepare($sql);
+  $stmt->execute();
+  $result_userinfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  foreach($result_userinfo as $k=>$v){
+    $user_name = $v['user_name'];
+    $nickname = $v['nickname'];
+    $email = $v['email'];
+  }
+  ?>
   <div class="untree_co-section">
     <div class="container">
       <div class="row justify-content-between align-items-start">
@@ -61,7 +74,7 @@ require_once('../DBPDO.php');
               <a href="#">頭像</a>
             </div>
             <div class="mb-3">
-              <p>名字</p>
+              <p>暱稱 <?=$nickname?></p>
             </div>
             <div class="mb-3">
               <p>目前的預約_件</p>
@@ -70,7 +83,7 @@ require_once('../DBPDO.php');
           
           <div class="feature-1">
             <ul class="list-unstyled clearfix">
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=setting">個人資料設定</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=userinfo">個人資料設定</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=collect&page=1">我的收藏</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=share">我分享的文章</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=reservation">預約餐廳</a></li>
@@ -78,47 +91,77 @@ require_once('../DBPDO.php');
           </div>
         </div>
 
-        <?php if(!isset($_GET['cate'])){ ?>
-        <div class="col-lg-9">
-          <h2 class="section-title text-left mb-4">本月收藏的餐廳</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-          <p class="mb-4"></p>
-          <ul class="list-unstyled two-col clearfix">
-            <li>Outdoor recreation activities</li>
-            <li>Airlines</li>
-            <li>Car Rentals</li>
-            <li>Cruise Lines</li>
-            <li>Hotels</li>
-            <li>Railways</li>
-            <li>Travel Insurance</li>
-            <li>Package Tours</li>
-            <li>Insurance</li>
-            <li>Guide Books</li>
-          </ul>
-        </div>
+        <?php if(isset($_GET['cate']) && $_GET['cate']=='userinfo'){ ?>
+          <div class="col-lg-9">
+            <h2 class="section-title text-left mb-4">個人資料設定</h2>
+              <form class="contact-form">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">姓名</label>
+                      <input class="form-control" type="text" value="<?=$user_name?>" readonly>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">暱稱</label>
+                      <input class="form-control" type="text" value="<?=$nickname?>" readonly>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="text-black">電子信箱</label>
+                  <input class="form-control" type="email"  value="<?=$email?>" readonly>
+                </div>
+                <div class="row justify-content-center">
+                  <a class="col-3 btn btn-primary mt-2" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=setting">修改個人資料</a>
+                </div>
+              </form>
+          </div>
         <?php } ?>
 
         <?php if(isset($_GET['cate']) && $_GET['cate']=='setting'){ ?>
           <div class="col-lg-9">
-            <h2 class="section-title text-left mb-4">個人資料設定</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-
-            <p class="mb-4"></p>
-
-            <ul class="list-unstyled two-col clearfix">
-              <li>Outdoor recreation activities</li>
-              <li>Airlines</li>
-              <li>Car Rentals</li>
-              <li>Cruise Lines</li>
-              <li>Hotels</li>
-              <li>Railways</li>
-              <li>Travel Insurance</li>
-              <li>Package Tours</li>
-              <li>Insurance</li>
-              <li>Guide Books</li>
-            </ul>
+            <h2 class="section-title text-left mb-4">修改個人資料</h2>
+            <?php  
+            $sql = "SELECT * FROM `user_info` WHERE `userID` = '11'";
+            // $sql = "SELECT * FROM `user_info` WHERE `userID` = '".$_SESSION['userID']."'";
+            $stmt = $dbpdo->prepare($sql);
+            $stmt->execute();
+            $result_userinfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($result_userinfo as $k=>$v){
+            ?>
+              <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/setting_userinfo.php" method="post" onsubmit="return setting_check();">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">姓名</label>
+                      <input class="form-control" type="text" id="setting_user_name" name="setting_user_name" value="<?=$v['user_name']?>" required>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">暱稱</label>
+                      <input class="form-control" type="text" id="setting_nickname" name="setting_nickname" value="<?=$v['nickname']?>" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="text-black">電子信箱</label>
+                  <input class="form-control" type="email" id="setting_email"  name="setting_email" value="<?=$v['email']?>" required>
+                </div>
+                <div class="row justify-content-center">
+                  <button type="submit" class="col-3 btn btn-primary mt-2">更新個人資料</button>
+                </div>
+                <div class="row justify-content-center">
+                  <a class="col-3 btn btn-primary mt-2" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=userinfo">返回個人資料設定</a>
+                </div>
+              </form>
+            <?php } ?>
           </div>
         <?php } ?>
+
+
 
         <?php if(isset($_GET['cate']) && $_GET['cate']=='collect'){ ?>
           <div class="col-lg-9">
@@ -137,16 +180,24 @@ require_once('../DBPDO.php');
               $page = 1;
             }
             $start_no = ($page - 1) * $num;
-            $sql = "SELECT * FROM `my_restaurant_list` ORDER BY `id` DESC LIMIT $start_no, $num";
+            $sql = "SELECT a.*,b.`index_image` FROM `my_restaurant_list` a INNER jOIN `restaurant_info` b ON a.`rID` = b.`id` ORDER BY `id` DESC LIMIT $start_no, $num";
             $stmt =  $dbpdo->prepare($sql);
             $stmt->execute();
             $result_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if($total_list>0){
+              $img = "";
               foreach($result_list as $k=>$v){
+                if($v['index_image']!=""){
+                  $img = '.'.$v['index_image'];
+                }else{
+                  $img = "../images/image_prepare.jpg";
+                }
               ?>
                 <div class="row ml-2">
                   <div class="col-3">
-                    <a href="#"><img src="../images/person_1.jpg" alt="Image" class="img-fluid mb-4 rounded-20"></a>
+                    <a href="#">
+                      <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
+                    </a>
                   </div>
                   <div class="col-9">
                     <h4><?=$v['name']?></h4>
@@ -282,4 +333,23 @@ require_once('../DBPDO.php');
       alert('已取消刪除');
     }
   };
+
+  function setting_check(){
+    var check_setting_user_name = $('#setting_user_name').val();
+    var check_setting_nickname = $('#setting_nickname').val();
+    var check_setting_email = $('#setting_email').val();
+
+    if(check_setting_user_name==""){
+      alert("請輸入會員名字進行修改");
+      return false;
+    }
+    if(check_setting_nickname==""){
+      alert("請輸入會員暱稱進行修改");
+      return false;
+    }
+    if(check_setting_email==""){
+      alert("請輸入email進行修改");
+      return false;
+    }
+  }
 </script>
