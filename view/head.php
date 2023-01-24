@@ -17,5 +17,6 @@
   <link rel="stylesheet" href="../css/daterangepicker.css">
   <link rel="stylesheet" href="../css/aos.css">
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/jquery.datetimepicker.css">
   <title>List Of Tokyo Restaurant</title>
 </head>

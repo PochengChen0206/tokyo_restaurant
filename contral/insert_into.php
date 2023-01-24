@@ -4,7 +4,20 @@ require_once('../function.php');
 
 //新增餐廳
 if($_POST['formID']=='creat_list'){
-  $name = $_POST['name'];
+  // $name = $_POST['name'];
+  //判斷餐廳名稱是否存在
+  $sql ="SELECT `name` FROM `restaurant_info` WHERE `name` = :name";
+  $stmt = $dbpdo->prepare($sql);
+  $stmt->bindParam(':name',$_POST['name'],PDO::PARAM_STR);
+  $stmt->execute();
+  $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if(count($row) > 0){
+    echo alert_topre('輸入的餐廳已經存在');
+    exit();
+  }else{
+    $name = $_POST['name'];
+  }
+
   $area = $_POST['area'];
   $location = $_POST['location'];
   $category = $_POST['category'];
@@ -32,7 +45,7 @@ if($_POST['formID']=='creat_list'){
   $row->bindParam(':link',$link,PDO::PARAM_STR);
   $row ->execute();
 
-  echo alert_toindex('新增成功');
+  echo "<script>alert('新增成功');window.location.href='http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit'</script>";
   exit();
 }
 

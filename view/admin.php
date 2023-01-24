@@ -31,59 +31,17 @@ require_once('../DBPDO.php');
 
   <div class="untree_co-section">
     <div class="container">
-      <div class="row justify-content-between align-items-center">
+      <div class="row justify-content-between align-items-start">
         <div class="col-lg-3">
           <div class="feature-1">
             <ul class="list-unstyled clearfix">
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=new">餐廳新增</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit">餐廳管理</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=new">餐廳新增</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=member">會員管理</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=report">分享文章管理</a></li>
             </ul>
           </div>
         </div>
-
-        <?php if(!isset($_GET['cate'])){ ?>
-        <div class="col-lg-9">
-          <h2 class="section-title text-left mb-4">管理後台</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-          <p class="mb-4"></p>
-          <ul class="list-unstyled two-col clearfix">
-            <li>Outdoor recreation activities</li>
-            <li>Airlines</li>
-            <li>Car Rentals</li>
-            <li>Cruise Lines</li>
-            <li>Hotels</li>
-            <li>Railways</li>
-            <li>Travel Insurance</li>
-            <li>Package Tours</li>
-            <li>Insurance</li>
-            <li>Guide Books</li>
-          </ul>
-        </div>
-        <?php } ?>
-
-        <?php if(isset($_GET['cate']) && $_GET['cate']=='new'){ ?>
-          <div class="col-lg-9">
-            <h2 class="section-title text-left mb-4">餐廳新增</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-
-            <p class="mb-4"></p>
-
-            <ul class="list-unstyled two-col clearfix">
-              <li>Outdoor recreation activities</li>
-              <li>Airlines</li>
-              <li>Car Rentals</li>
-              <li>Cruise Lines</li>
-              <li>Hotels</li>
-              <li>Railways</li>
-              <li>Travel Insurance</li>
-              <li>Package Tours</li>
-              <li>Insurance</li>
-              <li>Guide Books</li>
-            </ul>
-          </div>
-        <?php } ?>
 
         <?php if(isset($_GET['cate']) && $_GET['cate']=='edit'){ ?>
           <div class="col-lg-9">
@@ -104,6 +62,140 @@ require_once('../DBPDO.php');
               <li>Insurance</li>
               <li>Guide Books</li>
             </ul>
+          </div>
+        <?php } ?>        
+
+        <?php if(isset($_GET['cate']) && $_GET['cate']=='new'){ ?>
+          <div class="col-lg-9">
+            <h2 class="section-title text-left mb-4">餐廳新增</h2>
+              <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/insert_into.php" method="post" onsubmit="return insert_check();">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">餐廳名稱</label>
+                      <input class="form-control" type="text" id="name" name="name" placeholder="請輸入餐廳名稱" required>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">區域</label>
+                      <select name="area" id="area" class="form-control custom-select">
+                        <option value="">請選擇區域</option>
+                      <?php 
+                      $stmt=$dbpdo->prepare("SELECT * FROM `area_info`");
+                      $stmt->execute();
+                      $result_area = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_area as $k=>$v){
+                      ?>
+                        <option value="<?=$v['area']?>"><?=$v['area']?></option>
+                      <?php 
+                      }
+                      ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">地點</label>
+                      <input class="form-control" type="text" id="location" name="location" placeholder="請輸入餐廳地點" required>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">分類</label>
+                      <select name="category" id="category" class="form-control custom-select">
+                        <option value="">請選擇分類</option>
+                      <?php 
+                      $stmt=$dbpdo->prepare("SELECT * FROM `categories_info`");
+                      $stmt->execute();
+                      $result_categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_categories as $k=>$v){
+                      ?>
+                        <option value="<?=$v['cat_name']?>"><?=$v['cat_name']?></option>
+                      <?php 
+                      }
+                      ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">開始營業時間</label>
+                      <input class="form-control" type="text" id="open_time" name="open_time" placeholder="請選擇開始營業時間" onblur="check_open_time();">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">結束營業時間</label>
+                      <input class="form-control" type="text" id="close_time" name="close_time" placeholder="請選擇結束營業時間" onblur="check_close_time();">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">午餐預算</label>
+                      <select name="price_lunch" id="price_lunch" class="form-control custom-select">
+                        <option value="">請選擇價格區間</option>
+                      <?php 
+                      $stmt=$dbpdo->prepare("SELECT * FROM `price_range`");
+                      $stmt->execute();
+                      $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_price_range as $k=>$v){
+                      ?>
+                        <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
+                      <?php 
+                      }
+                      ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">晚餐預算</label>
+                      <select name="price_dinner" id="price_dinner" class="form-control custom-select">
+                        <option value="">請選擇價格區間</option>
+                      <?php 
+                      $stmt=$dbpdo->prepare("SELECT * FROM `price_range`");
+                      $stmt->execute();
+                      $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_price_range as $k=>$v){
+                      ?>
+                        <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
+                      <?php 
+                      }
+                      ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">交通</label>
+                      <input class="form-control" type="text" id="access" name="access" placeholder="請輸入交通資訊">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">餐廳網站</label>
+                      <input class="form-control" type="text" name="link" id="link" placeholder="請輸入餐廳網站">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="text-black">備註</label>
+                  <textarea class="form-control" name="memo" id="memo" rows="5"></textarea>
+                </div>
+                <div class="row justify-content-center">
+                  <input type="hidden" id="formID" name="formID" value="creat_list">
+                  <button type="submit" class="col-3 btn btn-primary mt-2">新增餐廳</button>
+                </div>
+              </form>
           </div>
         <?php } ?>
 
@@ -167,58 +259,80 @@ require_once('../DBPDO.php');
   <script src="../js/daterangepicker.js"></script>
   <script src="../js/typed.js"></script>  
   <script src="../js/custom.js"></script>
+  <script src="../js/jquery.datetimepicker.full.min.js"></script>
 </body>
 </html>
-<h3 align="center">管理後台</h3>
-<h3>我的收藏</h3>
-<table width="100%" border="1px" style="border-collapse: collapse;">
-  <tr>
-    <td width="100px" align="center">收藏時間</td> 
-    <td width="250px" align="center">店名</td>
-    <td width="180px" align="center">區域</td>
-    <td width="100px" align="center">地點</td>
-    <td width="120px" align="center">分類</td>
-    <td width="60px" align="center">網站</td>
-    <td align="center">備註</td>
-    <td width="80px" align="center">詳細資訊</td>
-    <td width="80px" align="center">功能</td>
-  </tr>
-  <?php
-  $cmd = "SELECT * FROM `my_restaurant_list` ORDER BY `id` DESC";
-  $row_new=$dbpdo->prepare($cmd);
-  $row_new->execute();
-  foreach($row_new as $k=>$v){
-  ?>
-    <tr height="50px">
-      <td><?=date("Y/m/d",strtotime($v['creat_date']))?></td>
-      <td><?=$v['name']?></td>
-      <td align="center"><?=$v['area']?></td>
-      <td align="center"><?=$v['location']?></td>
-      <td align="center"><?=$v['category']?></td>
-      <td align="center">
-        <?php if($v['link']!=""){ ?>
-          <a href="<?=$v['link']?>" target="_blank">前往</a>
-        <?php 
-        }else{
-          echo "暫無<br>網站";
-        }?>
-      </td>
-      <td><?=nl2br($v['memo'])?></td>
-      <td align="center"><a href="../view/restaurant_detail.php?rID=<?=$v['rID']?>">查看</a></td>
-      <td align="center">
-        <input type="button" id="delete_mylist<?=$v['rID']?>" onclick="confirmdelete(this.id);" name="delete_mylist" value="刪除">
-      </td>
-    </tr>
-  <?php
+<script>
+  $('#open_time').datetimepicker({
+    datepicker:false,
+    format:'H:i'
+  });
+
+  $('#close_time').datetimepicker({
+    datepicker:false,
+    format:'H:i'
+  });
+
+  function check_open_time(){
+    var open_time = $('#open_time').val();
+    
+    var check_open_time = open_time.match(/^([0-2][0-9]):([0-5][0-9])$/);    
+    if(check_open_time == null){
+      alert('輸入的時間格式不對'); 
+      return false;
+    }    
+    if(check_open_time[1]>23 || check_open_time[2]>59){    
+      alert("輸入的時間格式不對");    
+      return false    
+    }
   }
-  ?>
-</table>
-<br>
-<table width="100%">
-  <tr>
-    <td><a type="button" href="../index.php">回首頁</a></td>
-  </tr>
-</table>
-<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
+
+  function check_close_time(){
+    var close_time = $('#close_time').val();
+
+    var check_close_time = close_time.match(/^([0-2][0-9]):([0-5][0-9])$/);    
+    if(check_close_time == null){
+      alert('輸入的時間格式不對'); 
+      return false;
+    }    
+    if(check_close_time[1]>23 || check_close_time[2]>59){    
+      alert("輸入的時間格式不對");    
+      return false    
+    }
+  }
+
+  function insert_check(){
+    var name = $('#name').val();
+    var area = $('#area').val();
+    var location = $('#location').val();
+    var category = $('#category').val();
+    var access = $('#access').val();
+
+    if(name==""){
+      alert("請輸入餐廳名稱");
+      return false;
+    }
+
+    if(area==""){
+      alert("請選擇區域");
+      return false;
+    }
+
+    if(location==""){
+      alert("請輸入地點");
+      return false;
+    }
+
+    if(category==""){
+      alert("請選擇分類");
+      return false;
+    }
+
+    if(access==""){
+      alert("請輸入交通資訊");
+      return false;
+    }
+  }
+</script>
 
 

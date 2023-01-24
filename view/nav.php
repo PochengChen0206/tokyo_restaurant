@@ -24,13 +24,11 @@ session_start();
 						</li>
 					</ul>
 				</li>
-				<li><a href="services.html">Services</a></li>
-				<li><a href="about.html">About</a></li>
 				<li><a href="contact.html">快速預約</a></li>
 				<!-- 之後session判斷 -->
 				<li><a href="http://localhost/pocheng/tokyo_restaurant/view/login.php">LOGIN</a></li>
-				<li><a href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php">會員中心</a></li>
-				<li><a href="http://localhost/pocheng/tokyo_restaurant/view/admin.php">管理後台</a></li>
+				<li><a href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=userinfo">會員中心</a></li>
+				<li><a href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit">管理後台</a></li>
 				<!-- <li><a type=button>LOGIOUT</a></li> -->
 			</ul>
 			<a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-none light" data-toggle="collapse" data-target="#main-navbar">
