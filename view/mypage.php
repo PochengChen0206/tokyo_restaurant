@@ -4,30 +4,6 @@ require_once('../DBPDO.php');
 <!doctype html>
 <html lang="en">
 <?php require_once('../view/head.php'); ?>
-<style>
-/* hover */
-  .c-hover{
-    padding-bottom: 5px;
-    position: relative;
-  }
-  .c-hover::before {
-    background: #1A374D;
-    content: '';
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    transform-origin: right top;
-    transform: scale(0, 1);
-    transition: transform .3s;
-  }
-  .c-hover:hover::before {
-    transform-origin: left top;
-    transform: scale(1, 1);
-  }
-</style>
 <body>
   <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -167,7 +143,7 @@ require_once('../DBPDO.php');
           <div class="col-lg-9">
             <h2 class="section-title text-left mb-4">我的收藏</h2>
             <?php
-            $num = 2; //每頁呈現筆數 
+            $num = 5; //每頁呈現筆數 
             $stmt = $dbpdo->prepare("SELECT `id` FROM `my_restaurant_list`");
             $stmt->execute();
             $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
