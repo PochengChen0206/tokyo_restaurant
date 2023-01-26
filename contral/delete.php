@@ -4,9 +4,9 @@ require_once('../DBPDO.php');
 if($_POST['admin_rID']!=""){
   $delete_rID = $_POST['admin_rID'];
   $cmd = "DELETE FROM `my_restaurant_list` WHERE `rID` = :rID";
-  $row_delete=$dbpdo->prepare($cmd);
-  $row_delete->bindParam(':rID',$delete_rID,PDO::PARAM_STR);
-  $row_delete->execute();
+  $stmt_delete=$dbpdo->prepare($cmd);
+  $stmt_delete->bindParam(':rID',$delete_rID,PDO::PARAM_STR);
+  $stmt_delete->execute();
 }
 
 exit();

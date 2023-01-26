@@ -10,8 +10,8 @@ if($_POST['formID']=='creat_list'){
   $stmt = $dbpdo->prepare($sql);
   $stmt->bindParam(':name',$_POST['name'],PDO::PARAM_STR);
   $stmt->execute();
-  $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  if(count($row) > 0){
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if(count($result) > 0){
     echo alert_topre('輸入的餐廳已經存在');
     exit();
   }else{
@@ -31,19 +31,19 @@ if($_POST['formID']=='creat_list'){
 
   $cmd = "INSERT INTO `restaurant_info`(`name`,`area`,`location`,`category`,`open_time`,`close_time`,`access`,`price_lunch`,`price_dinner`,`memo`,`link`,`creat_date`) VALUES(:name,:area,:location,:category,:open_time,:close_time,:access,:price_lunch,:price_dinner,:memo,:link,NOW())";
 
-  $row = $dbpdo->prepare($cmd);
-  $row->bindParam(':name',$name,PDO::PARAM_STR);
-  $row->bindParam(':area',$area,PDO::PARAM_STR);
-  $row->bindParam(':location',$location,PDO::PARAM_STR);
-  $row->bindParam(':category',$category,PDO::PARAM_STR);
-  $row->bindParam(':open_time',$open_time,PDO::PARAM_STR);
-  $row->bindParam(':close_time',$close_time,PDO::PARAM_STR);
-  $row->bindParam(':access',$access,PDO::PARAM_STR);
-  $row->bindParam(':price_lunch',$price_lunch,PDO::PARAM_STR);
-  $row->bindParam(':price_dinner',$price_dinner,PDO::PARAM_STR);
-  $row->bindParam(':memo',$memo,PDO::PARAM_STR);
-  $row->bindParam(':link',$link,PDO::PARAM_STR);
-  $row ->execute();
+  $stmt = $dbpdo->prepare($cmd);
+  $stmt->bindParam(':name',$name,PDO::PARAM_STR);
+  $stmt->bindParam(':area',$area,PDO::PARAM_STR);
+  $stmt->bindParam(':location',$location,PDO::PARAM_STR);
+  $stmt->bindParam(':category',$category,PDO::PARAM_STR);
+  $stmt->bindParam(':open_time',$open_time,PDO::PARAM_STR);
+  $stmt->bindParam(':close_time',$close_time,PDO::PARAM_STR);
+  $stmt->bindParam(':access',$access,PDO::PARAM_STR);
+  $stmt->bindParam(':price_lunch',$price_lunch,PDO::PARAM_STR);
+  $stmt->bindParam(':price_dinner',$price_dinner,PDO::PARAM_STR);
+  $stmt->bindParam(':memo',$memo,PDO::PARAM_STR);
+  $stmt->bindParam(':link',$link,PDO::PARAM_STR);
+  $stmt->execute();
 
   echo "<script>alert('新增成功');window.location.href='http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit'</script>";
   exit();
@@ -65,20 +65,20 @@ if($_POST['formID']=='add_mylist'){
   $rID = $_POST['rID'];
 
   $cmd = "INSERT INTO `my_restaurant_list`(`rID`,`name`,`area`,`location`,`category`,`open_time`,`close_time`,`access`,`price_lunch`,`price_dinner`,`memo`,`link`,`creat_date`) VALUES(:rID,:name,:area,:location,:category,:open_time,:close_time,:access,:price_lunch,:price_dinner,:memo,:link,NOW())";
-  $row = $dbpdo->prepare($cmd);
-  $row->bindParam(':rID',$rID,PDO::PARAM_INT);
-  $row->bindParam(':name',$name,PDO::PARAM_STR);
-  $row->bindParam(':area',$area,PDO::PARAM_STR);
-  $row->bindParam(':location',$location,PDO::PARAM_STR);
-  $row->bindParam(':category',$category,PDO::PARAM_STR);
-  $row->bindParam(':open_time',$open_time,PDO::PARAM_STR);
-  $row->bindParam(':close_time',$close_time,PDO::PARAM_STR);
-  $row->bindParam(':access',$access,PDO::PARAM_STR);
-  $row->bindParam(':price_lunch',$price_lunch,PDO::PARAM_STR);
-  $row->bindParam(':price_dinner',$price_dinner,PDO::PARAM_STR);
-  $row->bindParam(':memo',$memo,PDO::PARAM_STR);
-  $row->bindParam(':link',$link,PDO::PARAM_STR);
-  $row ->execute();
+  $stmt = $dbpdo->prepare($cmd);
+  $stmt->bindParam(':rID',$rID,PDO::PARAM_INT);
+  $stmt->bindParam(':name',$name,PDO::PARAM_STR);
+  $stmt->bindParam(':area',$area,PDO::PARAM_STR);
+  $stmt->bindParam(':location',$location,PDO::PARAM_STR);
+  $stmt->bindParam(':category',$category,PDO::PARAM_STR);
+  $stmt->bindParam(':open_time',$open_time,PDO::PARAM_STR);
+  $stmt->bindParam(':close_time',$close_time,PDO::PARAM_STR);
+  $stmt->bindParam(':access',$access,PDO::PARAM_STR);
+  $stmt->bindParam(':price_lunch',$price_lunch,PDO::PARAM_STR);
+  $stmt->bindParam(':price_dinner',$price_dinner,PDO::PARAM_STR);
+  $stmt->bindParam(':memo',$memo,PDO::PARAM_STR);
+  $stmt->bindParam(':link',$link,PDO::PARAM_STR);
+  $stmt->execute();
 
   exit();
 }
