@@ -24,7 +24,30 @@ require_once('DBPDO.php');
 	<link rel="stylesheet" href="css/style.css">
 	<title>List Of Tokyo Restaurant</title>
 </head>
-
+<style>
+/* hover */
+  .c-hover{
+    padding-bottom: 5px;
+    position: relative;
+  }
+  .c-hover::before {
+    background: #1A374D;
+    content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    transform-origin: right top;
+    transform: scale(0, 1);
+    transition: transform .3s;
+  }
+  .c-hover:hover::before {
+    transform-origin: left top;
+    transform: scale(1, 1);
+  }
+</style>
 <body>
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -106,8 +129,8 @@ require_once('DBPDO.php');
 						<img src="images/slider1.jpg" alt="Image" class="img-fluid active">
 						<img src="images/slider2.jpg" alt="Image" class="img-fluid">
 						<img src="images/slider3.jpg" alt="Image" class="img-fluid">
-						<!-- <img src="images/slider4.jpg" alt="Image" class="img-fluid">
-						<img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid"> -->
+						<img src="images/slider4.jpg" alt="Image" class="img-fluid">
+						<!-- <img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid"> -->
 					</div>
 				</div>
 			</div>
@@ -173,45 +196,6 @@ require_once('DBPDO.php');
 		</div>
 	</div>
 
-	<!-- <div class="untree_co-section count-numbers py-5">
-		<div class="container">
-			<div class="row">
-				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
-					<div class="counter-wrap">
-						<div class="counter">
-							<span class="" data-number="9313">0</span>
-						</div>
-						<span class="caption">餐廳名單</span>
-					</div>
-				</div>
-				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
-					<div class="counter-wrap">
-						<div class="counter">
-							<span class="" data-number="8492">0</span>
-						</div>
-						<span class="caption">分享文章</span>
-					</div>
-				</div>
-				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
-					<div class="counter-wrap">
-						<div class="counter">
-							<span class="" data-number="100">0</span>
-						</div>
-						<span class="caption">造訪人次</span>
-					</div>
-				</div>
-				<div class="col-6 col-sm-6 col-md-6 col-lg-3">
-					<div class="counter-wrap">
-						<div class="counter">
-							<span class="" data-number="160">0</span>
-						</div>
-						<span class="caption">會員數</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
-
 	<div class="untree_co-section">
 		<div class="container">
 			<div class="row text-center justify-content-center mb-5">
@@ -221,7 +205,7 @@ require_once('DBPDO.php');
 			<div class="owl-carousel owl-3-slider">
 
 				<div class="item">
-					<a class="media-thumb" href="images/top-slider-1.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=咖啡廳&price_range=&page=1">
 						<div class="media-text">
 							<h3>咖啡廳</h3>
 						</div>
@@ -230,7 +214,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="images/top-slider-2.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=壽司&price_range=&page=1">
 						<div class="media-text">
 							<h3>壽司</h3>
 						</div>
@@ -239,7 +223,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="images/hero-slider-3.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=甜點&price_range=&page=1">
 						<div class="media-text">
 							<h3>甜點</h3>
 						</div>
@@ -248,7 +232,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="images/hero-slider-4.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=拉麵&price_range=&page=1">
 						<div class="media-text">
 							<h3>拉麵</h3>
 						</div>
@@ -257,7 +241,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="images/hero-slider-5.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=酒吧&price_range=&page=1">
 						<div class="media-text">
 							<h3>酒吧</h3>
 						</div>
@@ -266,7 +250,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="images/hero-slider-1.jpg" data-fancybox="gallery">
+					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=海鮮丼&price_range=&page=1">
 						<div class="media-text">
 							<h3>海鮮丼</h3>
 						</div>
@@ -364,7 +348,7 @@ require_once('DBPDO.php');
 									<img src="<?=$v['index_image']?>" alt="Image" class="img-fluid">
 								<?php }else{ ?>
 									<img src="./images/image_prepare.jpg" alt="Image" class="img-fluid">
-									<img src="../images/detail/yoroniku_1.jpg" alt="Image" class="img-fluid">
+									<!-- <img src="./images/detail/iruka_index.jpg" alt="Image" class="img-fluid"> -->
 								<?php } ?>
 							</a>
 							<span class="d-flex align-items-center loc mb-2">
@@ -384,7 +368,7 @@ require_once('DBPDO.php');
 									<div class="ml-auto">
 										<p>
 											<?php if($v['link']!=""){ ?>
-												<a href="<?=$v['link']?>" target="_blank">前往餐廳網站</a>
+												<a class="c-hover" href="<?=$v['link']?>" target="_blank">前往餐廳網站</a>
 											<?php 
 											}else{
 												echo "暫無網站";
@@ -415,7 +399,9 @@ require_once('DBPDO.php');
 				<div class="col-md-12">
 					<h2 class="mb-2 text-white">歡迎探索各樣的餐廳</h2>
 					<p class="mb-4 lead text-white text-white-opacity">下次去東京想要吃什麼呢?</p>
-					<p class="mb-0"><a href="booking.html" class="btn btn-outline-white text-white btn-md font-weight-bold">查看更多餐廳</a></p>
+					<p class="mb-0">
+						<a href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=all&category=all&price_range=all&page=1" class="btn btn-outline-white text-white btn-md font-weight-bold">查看更多餐廳</a>
+					</p>
 				</div>
 			</div>
 		</div>
@@ -474,50 +460,3 @@ require_once('DBPDO.php');
     }
 	}
 </script>
-
-<h3>最新投稿</h3>
-<table width="100%" border="1" cellpadding="0" style="border-collapse: collapse;">
-  <tr>
-    <td width="100px" align="center">更新時間</td> 
-    <td width="250px" align="center">店名</td>
-    <td width="180px" align="center">區域</td>
-    <td width="100px" align="center">地點</td>
-    <td width="120px" align="center">分類</td>
-    <td width="150px" align="center">交通</td>
-    <td width="60px" align="center">網站</td>
-    <td align="center">備註</td>
-    <td width="80px" align="center">詳細資訊</td>
-  </tr>
-  <?php
-  $cmd = "SELECT * FROM `restaurant_info` ORDER BY `id` DESC LIMIT 9";
-  $row_new=$dbpdo->prepare($cmd);
-  $row_new->execute();
-  foreach($row_new as $k=>$v){
-  ?>
-    <tr height="50px">
-      <td><?=date("Y/m/d",strtotime($v['creat_date']))?></td>
-      <td><?=$v['name']?></td>
-      <td align="center"><?=$v['area']?></td>
-      <td align="center"><?=$v['location']?></td>
-      <td align="center"><?=$v['category']?></td>
-      <td align="center"><?=$v['access']?></td>
-      <td align="center">
-        <?php if($v['link']!=""){ ?>
-        <a href="<?=$v['link']?>" target="_blank">前往</a>
-        <?php 
-        }else{
-          echo "暫無<br>網站";
-        }?>
-      </td>
-      <td><?=nl2br($v['memo'])?></td>
-      <td align="center"><a href="./view/restaurant_detail.php?rID=<?=$v['id']?>">查看</a></td>
-    </tr>
-  <?php
-  }
-  ?>
-</table>
-<table width="100%">
-  <tr>
-    <td><a type="button" href="./view/creat_list.php">新增餐廳</a></td>
-  </tr>
-</table>
