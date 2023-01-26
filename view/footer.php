@@ -1,5 +1,5 @@
 <div class="site-footer">
-	<div class="inner first">
+	<!-- <div class="inner first">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-lg-4">
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="inner dark">
 		<div class="container">
 			<div class="row text-center">
