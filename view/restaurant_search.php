@@ -1,5 +1,6 @@
 <?php 
 require_once('../DBPDO.php');
+
 $area = $_GET['area'];
 $category = $_GET['category'];
 $price_range = $_GET['price_range'];
@@ -31,7 +32,6 @@ if($arr_search_word){
 <!doctype html>
 <html lang="en">
 <?php require_once('../view/head.php'); ?>
-
 <body>
   <div class="site-mobile-menu site-navbar-target">
     <div class="site-mobile-menu-header">
@@ -118,11 +118,25 @@ if($arr_search_word){
         </div>
 
         <div class="col-lg-9">
-          <h3 class="section-title text-left mb-4"><?=$search_word?></h3>
+          <h3 class="section-title text-left mb-4">
+            <?php
+              if($_GET['area']!='all' && $_GET['category']!='all' && $_GET['price_range']!='all'){
+                echo $search_word;
+              }else{
+                echo '所有餐廳';
+              }
+            ?>
+          </h3>
           <?php
           $num = 4; //每頁呈現筆數 
-          $sql = "SELECT * FROM `restaurant_info` WHERE $whereSql ORDER BY `id` DESC";
-          $stmt = $dbpdo->prepare($sql);
+          if($_GET['area']!='all' && $_GET['category']!='all' && $_GET['price_range']!='all'){
+            $sql = "SELECT * FROM `restaurant_info` WHERE $whereSql ORDER BY `id` DESC";
+            $stmt = $dbpdo->prepare($sql);
+          }else{
+            $sql_all =  "SELECT * FROM `restaurant_info` ORDER BY `id` DESC";
+            $stmt = $dbpdo->prepare($sql_all);
+          }
+
           $stmt->execute();
           $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
           $total_restaurant = count($row);
@@ -135,16 +149,26 @@ if($arr_search_word){
           }
 
           $start_no = ($page - 1) * $num;
-          $sql1 = "SELECT * FROM `restaurant_info` WHERE $whereSql  ORDER BY `id` DESC LIMIT $start_no, $num";
-          $stmt =  $dbpdo->prepare($sql1);
+          if($_GET['area']!='all' && $_GET['category']!='all' && $_GET['price_range']!='all'){
+            $sql1 = "SELECT * FROM `restaurant_info` WHERE $whereSql  ORDER BY `id` DESC LIMIT $start_no, $num";
+            $stmt =  $dbpdo->prepare($sql1);
+          }else{
+            $sql1_all = "SELECT * FROM `restaurant_info` ORDER BY `id` DESC LIMIT $start_no, $num";
+            $stmt =  $dbpdo->prepare($sql1_all);
+          }
           $stmt->execute();
           $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
           if($total_restaurant>0){
             foreach($result as $k=>$v){
+              if($v['index_image']!=""){
+                $img = '.'.$v['index_image'];
+              }else{
+                $img = "../images/image_prepare.jpg";
+              }
             ?>
               <div class="row ml-2">
                 <div class="col-3">
-                  <a href="#"><img src="../images/person_1.jpg" alt="Image" class="img-fluid mb-4 rounded-20"></a>
+                  <a href="#"><img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>
                 </div>
                 <div class="col-9">
                   <h4><?=$v['name']?></h4>

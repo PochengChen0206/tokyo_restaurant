@@ -20,3 +20,27 @@
   <link rel="stylesheet" href="../css/jquery.datetimepicker.css">
   <title>List Of Tokyo Restaurant</title>
 </head>
+<style>
+/* hover */
+  .c-hover{
+    padding-bottom: 5px;
+    position: relative;
+  }
+  .c-hover::before {
+    background: #1A374D;
+    content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    transform-origin: right top;
+    transform: scale(0, 1);
+    transition: transform .3s;
+  }
+  .c-hover:hover::before {
+    transform-origin: left top;
+    transform: scale(1, 1);
+  }
+</style>

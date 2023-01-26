@@ -40,7 +40,11 @@
             <div class="owl-single dots-absolute owl-carousel">
               <?php if($v['image1']!=""){ ?>
                 <img src="<?=$v['image1']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
-              <?php }?>
+              <?php }else{ ?>
+                <div class="col-8">
+                  <img src="../images/image_prepare.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                </div>
+              <?php } ?>
               <?php if($v['image2']!=""){ ?>
                 <img src="<?=$v['image2']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
               <?php }?>
@@ -63,7 +67,7 @@
                 <?php 
                   if($v['link']!=""){ 
                 ?>
-                  <a href="<?=$v['link']?>" target="_blank">查看</a>
+                  <a class="c-hover" href="<?=$v['link']?>" target="_blank">查看</a>
                 <?php 
                   }else{
                     echo "暫無<br>網站";
@@ -108,12 +112,7 @@
     <div class="container">
       <div class="row justify-content-between align-items-center">
         <div class="col-lg-6">
-          <figure class="img-play-video">
-            <a id="play-video" class="video-play-button" href="https://www.youtube.com/watch?v=mwtbEGNABWU" data-fancybox>
-              <span></span>
-            </a>
-            <img src="images/hero-slider-2.jpg" alt="Image" class="img-fluid rounded-20">
-          </figure>
+          
         </div>
 
         <div class="col-lg-5">
