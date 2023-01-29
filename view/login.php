@@ -80,11 +80,11 @@
 </html>
 <script>
   function toSignUpPage(){
-    window.location.href='http://localhost/pocheng/tokyo_restaurant/view/signup.php';
+    window.location.href='../view/signup.php';
   }
 
   function toForgetpasswordPage(){
-    window.location.href='http://localhost/pocheng/tokyo_restaurant/view/forget_password.php';
+    window.location.href='../view/forget_password.php';
   }
 
   function login_check(){

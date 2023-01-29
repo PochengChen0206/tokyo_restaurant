@@ -13,7 +13,7 @@ $price_dinner = $_POST['price_dinner'];
 $memo = $_POST['memo'];
 $link = $_POST['link'];
 
-$sql = "UPDATE `restaurant_info` SET`name` = :name, `area` = :area, `location` = :location, `category` = :category,`open_time` = :open_time, `close_time` = :close_time,`access` = :access,`price_lunch` = :price_lunch, `price_dinner` = :price_dinner, `memo` = :memo, `link` = :link, `creat_date` = NOW() WHERE `id` = :rID";
+$sql = "UPDATE `restaurant_info` SET `name` = :name, `area` = :area, `location` = :location, `category` = :category,`open_time` = :open_time, `close_time` = :close_time,`access` = :access,`price_lunch` = :price_lunch, `price_dinner` = :price_dinner, `memo` = :memo, `link` = :link, `creat_date` = NOW() WHERE `id` = :rID";
 $stmt = $dbpdo->prepare($sql);
 $stmt->bindParam(':name',$name,PDO::PARAM_STR);
 $stmt->bindParam(':area',$area,PDO::PARAM_STR);

@@ -3,51 +3,7 @@ require_once('DBPDO.php');
 ?>
 <!doctype html>
 <html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="author" content="Untree.co">
-	<link rel="shortcut icon" href="favicon.png">
-	<meta name="description" content="" />
-	<meta name="keywords" content="bootstrap, bootstrap4" />
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Source+Serif+Pro:wght@400;700&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/owl.carousel.min.css">
-	<link rel="stylesheet" href="css/owl.theme.default.min.css">
-	<link rel="stylesheet" href="css/jquery.fancybox.min.css">
-	<link rel="stylesheet" href="fonts/icomoon/style.css">
-	<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
-	<link rel="stylesheet" href="css/daterangepicker.css">
-	<link rel="stylesheet" href="css/aos.css">
-	<link rel="stylesheet" href="css/style.css">
-	<title>List Of Tokyo Restaurant</title>
-</head>
-<style>
-/* hover */
-  .c-hover{
-    padding-bottom: 5px;
-    position: relative;
-  }
-  .c-hover::before {
-    background: #1A374D;
-    content: '';
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    transform-origin: right top;
-    transform: scale(0, 1);
-    transition: transform .3s;
-  }
-  .c-hover:hover::before {
-    transform-origin: left top;
-    transform: scale(1, 1);
-  }
-</style>
+<?php require_once('./view/head.php'); ?>
 <body>
 	<div class="site-mobile-menu site-navbar-target">
 		<div class="site-mobile-menu-header">
@@ -130,7 +86,7 @@ require_once('DBPDO.php');
 						<img src="images/slider2.jpg" alt="Image" class="img-fluid">
 						<img src="images/slider3.jpg" alt="Image" class="img-fluid">
 						<img src="images/slider4.jpg" alt="Image" class="img-fluid">
-						<!-- <img src="images/hero-slider-5.jpg" alt="Image" class="img-fluid"> -->
+						<img src="images/slider5.jpg" alt="Image" class="img-fluid">
 					</div>
 				</div>
 			</div>
@@ -266,57 +222,33 @@ require_once('DBPDO.php');
 			<div class="row justify-content-center">
 				<div class="col-lg-7 text-center">
 					<h2 class="section-title text-center mb-5">用餐心得分享</h2>
-
 					<div class="owl-single owl-carousel no-nav">
-						<div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="images/person_2.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Adam Aderson</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
-
-						<div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="images/person_3.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Lukas Devlin</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
-
-            <div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="images/person_3.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Lukas Devlin</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
-
-            <div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="images/person_3.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Lukas Devlin</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
-
-						<div class="testimonial mx-auto">
-							<figure class="img-wrap">
-								<img src="images/person_4.jpg" alt="Image" class="img-fluid">
-							</figure>
-							<h3 class="name">Kayla Bryant</h3>
-							<blockquote>
-								<p>&ldquo;There live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.&rdquo;</p>
-							</blockquote>
-						</div>
+						<?php 
+						$sql = "SELECT a.*, c.`name`, c.`index_image` FROM `comment_info` a INNER JOIN `user_info` b ON a.`user_id` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` ORDER BY a.`creat_date` DESC LIMIT 0,5";
+						$stmt =  $dbpdo->prepare($sql);
+						$stmt->execute();
+						$result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
+						foreach($result_comment as $k=>$v){
+							$restaurant = $v['name'];
+							$content = nl2br($v['content']);
+							$nickname = $v['nickname'];
+							if($v['index_image']!=""){
+								$image = $v['index_image'];
+							}else{
+								$image = './images/image_prepare.jpg';
+							}
+							$creat_date = $v['creat_date'];
+						?>
+							<div class="testimonial mx-auto">
+								<figure class="img-wrap">
+									<img src="<?=$image?>" alt="Image" class="img-fluid">
+								</figure>
+								<h3 class="name"><?=$nickname?></h3>
+								<blockquote>
+									<p>&ldquo;<?=$content?>&rdquo;</p>
+								</blockquote>
+							</div>	
+						<?php }?>
 					</div>
 				</div>
 			</div>
@@ -341,14 +273,13 @@ require_once('DBPDO.php');
 				?>
 					<div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
 						<div class="media-1">
-							<a href="./view/restaurant_detail.php?rID=<?=$v['id']?>" class="d-block mb-3">
+							<a href="./view/restaurant_detail.php?rID=<?=$v['id']?>&page=1" class="d-block mb-3">
 								<?php 
 								if($v['index_image']!=""){
 								?>
 									<img src="<?=$v['index_image']?>" alt="Image" class="img-fluid">
 								<?php }else{ ?>
 									<img src="./images/image_prepare.jpg" alt="Image" class="img-fluid">
-									<!-- <img src="./images/detail/iruka_index.jpg" alt="Image" class="img-fluid"> -->
 								<?php } ?>
 							</a>
 							<span class="d-flex align-items-center loc mb-2">
@@ -357,7 +288,7 @@ require_once('DBPDO.php');
 							</span>
 							<div class="d-flex align-items-center">
 								<div>
-									<h3><a href="./view/restaurant_detail.php?rID=<?=$v['id']?>"><?=$v['name']?></a></h3>
+									<h3><a href="./view/restaurant_detail.php?rID=<?=$v['id']?>&page=1"><?=$v['name']?></a></h3>
 									<div class="price ml-auto">
 										<span><?=$v['access']?></span>
 									</div>

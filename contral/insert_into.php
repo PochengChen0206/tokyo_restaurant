@@ -82,4 +82,22 @@ if($_POST['formID']=='add_mylist'){
 
   exit();
 }
+
+//新增留言
+if($_POST['formID']=='comment'){
+  $rID = $_POST['comment_rID'];
+  $user_id = $_POST['user_id'];
+  $nickname = $_POST['nickname'];
+  $content = $_POST['content'];
+  
+  $sql = "INSERT INTO `comment_info`(`rID`,`user_id`,`nickname`,`content`,`creat_date`) VALUES(:rID,:user_id,:nickname,:content,NOW())";
+  $stmt = $dbpdo->prepare($sql);
+  $stmt->bindParam(':rID',$rID,PDO::PARAM_STR);
+  $stmt->bindParam(':user_id',$user_id,PDO::PARAM_STR);
+  $stmt->bindParam(':nickname',$nickname,PDO::PARAM_STR);
+  $stmt->bindParam(':content',$content,PDO::PARAM_STR);
+  $stmt->execute();
+  echo "<script>alert('留言分享成功');window.location.href='http://localhost/pocheng/tokyo_restaurant/view/restaurant_detail.php?rID=$rID&page=1'</script>";
+  exit();
+}
 ?>

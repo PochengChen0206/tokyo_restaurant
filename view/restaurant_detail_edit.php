@@ -197,7 +197,7 @@
                 <button type="submit" class="col-4 btn btn-primary mt-2">修改餐廳資訊</button>
               </div>
               <div class="row justify-content-center">
-                <a class="col-4 btn btn-primary mt-2" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit&page=1">返回餐廳管理</a>
+                <a class="col-4 btn btn-primary mt-2" href="../view/admin.php?cate=edit&page=1">返回餐廳管理</a>
               </div>
             </form>
           </div>

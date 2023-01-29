@@ -35,10 +35,10 @@ require_once('../DBPDO.php');
         <div class="col-lg-3">
           <div class="feature-1">
             <ul class="list-unstyled clearfix">
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit&page=1">餐廳管理</a></li>
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=new">餐廳新增</a></li>
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=member&page=1">會員管理</a></li>
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=report&page=1">分享文章管理</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/admin.php?cate=edit&page=1">餐廳管理</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/admin.php?cate=new">餐廳新增</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/admin.php?cate=member&page=1">會員管理</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/admin.php?cate=report&page=1">分享心得管理</a></li>
             </ul>
           </div>
         </div>
@@ -93,6 +93,9 @@ require_once('../DBPDO.php');
                     <div class="col-6">
                       <a class="c-hover" href="../view/restaurant_detail_edit.php?rID=<?=$v['id']?>">查看和修改</a>
                     </div>
+                    <div class="col-6">
+                      <input type="button" id="delete_rlist<?=$v['id']?>" onclick="confirmdelete(this.id);" name="delete_restaurant" value="刪除餐廳">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -103,27 +106,27 @@ require_once('../DBPDO.php');
                 <nav aria-label="Page navigation example">
                   <ul class="pagination">
                     <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit&page=1">第一頁</a>
+                      <a class="page-link" href="../view/admin.php?cate=edit&page=1">第一頁</a>
                     </li>
                     <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit&page=<?($page-1)?>">前一頁</a>
+                      <a class="page-link" href="../view/admin.php?cate=edit&page=<?($page-1)?>">前一頁</a>
                     </li>
                     <?php 
                     for($i=1;$i<=$max_page;$i++){ 
                       if ($i > $page - 4 && $i < $page + 4){ 
                     ?>
                       <li class="page-item <?= $_GET['page']==$i?'active':''?>">
-                        <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit&page=<?=$i?>"><?=$i?></a>
+                        <a class="page-link" href="../view/admin.php?cate=edit&page=<?=$i?>"><?=$i?></a>
                       </li>
                     <?php 
                       }
                     } 
                     ?>
                     <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit&page=<?=($page+1)?>">下一頁</a>
+                      <a class="page-link" href="../view/admin.php?cate=edit&page=<?=($page+1)?>">下一頁</a>
                     </li>
                     <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit&page=<?=$max_page?>">最後一頁</a>
+                      <a class="page-link" href="../view/admin.php?cate=edit&page=<?=$max_page?>">最後一頁</a>
                     </li>
                   </ul>
                 </nav>
@@ -296,7 +299,7 @@ require_once('../DBPDO.php');
 
         <?php if(isset($_GET['cate']) && $_GET['cate']=='report'){ ?>
           <div class="col-lg-9">
-            <h2 class="section-title text-left mb-4">分享文章管理</h2>
+            <h2 class="section-title text-left mb-4">分享心得管理</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
 
             <p class="mb-4"></p>
@@ -406,6 +409,23 @@ require_once('../DBPDO.php');
       return false;
     }
   }
+
+  function confirmdelete(id) {
+    var postinfo = id.split("delete_rlist");
+    if (confirm('確認刪除？')) {
+      $.ajax({
+        url: "../contral/delete.php",
+        type: "POST",
+        data: {"admin_id": postinfo[1]},
+          success: function(res) {
+            confirm("已經成功刪除餐廳");
+            document.location.reload(true);
+          }
+      });
+    } else {
+      alert('已取消刪除');
+    }
+  };
 </script>
 
 

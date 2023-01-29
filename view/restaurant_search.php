@@ -182,7 +182,7 @@ if($arr_search_word){
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <a class="c-hover" href="../view/restaurant_detail.php?rID=<?=$v['id']?>">詳細資訊</a>
+                      <a class="c-hover" href="../view/restaurant_detail.php?rID=<?=$v['id']?>&page=1">詳細資訊</a>
                     </div>
                   </div>
                 </div>
@@ -194,27 +194,27 @@ if($arr_search_word){
                 <nav aria-label="Page navigation example">
                   <ul class="pagination">
                     <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=1">第一頁</a>
+                      <a class="page-link" href="../view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=1">第一頁</a>
                     </li>
                     <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?($page-1)?>">前一頁</a>
+                      <a class="page-link" href="../view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?($page-1)?>">前一頁</a>
                     </li>
                     <?php 
                     for($i=1;$i<=$max_page;$i++){ 
                       if ($i > $page - 4 && $i < $page + 4){ 
                     ?>
                         <li class="page-item <?= $_GET['page']==$i?'active':''?>">
-                          <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?=$i?>"><?=$i?></a>
+                          <a class="page-link" href="../view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?=$i?>"><?=$i?></a>
                         </li>
                     <?php 
                       }
                     } 
                     ?>
                     <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?=($page+1)?>">下一頁</a>
+                      <a class="page-link" href="../view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?=($page+1)?>">下一頁</a>
                     </li>
                     <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
-                      <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?=$max_page?>">最後一頁</a>
+                      <a class="page-link" href="../view/restaurant_search.php?area=<?=$area?>&category=<?=$category?>&price_range=<?=$price_range?>&page=<?=$max_page?>">最後一頁</a>
                     </li>
                   </ul>
                 </nav>

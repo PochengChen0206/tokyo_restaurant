@@ -110,32 +110,99 @@
 
   <div class="untree_co-section">
     <div class="container">
-      <div class="row justify-content-between align-items-center">
-        <div class="col-lg-6">
-          
-        </div>
-
-        <div class="col-lg-5">
-          <h2 class="section-title text-left mb-4">Take a look at Tour Video</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-
-          <p class="mb-4"></p>
-
-          <ul class="list-unstyled two-col clearfix">
-            <li>Outdoor recreation activities</li>
-            <li>Airlines</li>
-            <li>Car Rentals</li>
-            <li>Cruise Lines</li>
-            <li>Hotels</li>
-            <li>Railways</li>
-            <li>Travel Insurance</li>
-            <li>Package Tours</li>
-            <li>Insurance</li>
-            <li>Guide Books</li>
-          </ul>
-          <p><a href="#" class="btn btn-primary">Get Started</a></p>
-        </div>
+      <div class="col-lg-12" style="border-top: 1px solid #d5d5d8; border-bottom: 1px solid #d5d5d8;">
+        <h2 class="section-title text-left mt-3 mb-4">用餐心得</h2>
+        <?php
+        $sql = "SELECT *  FROM `comment_info` a INNER JOIN `user_info` b ON a.`user_id` = b.`userID` WHERE a.`rID` = '".$rID."' ORDER BY a.`creat_date`";
+        $stmt =  $dbpdo->prepare($sql);
+        $stmt->execute();
+        $result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $total_comment = count($result_comment);
+        if($total_comment>0){
+          $img = "";
+          foreach($result_comment as $k=>$v){
+            $comment_id = $v['id'];
+          ?>
+            <div class="row ml-2 mb-3">
+              <?php if(!isset($_GET['editid'])){ ?>
+                <div class="col-1">
+                  <?php if($v['user_image']!=""){ ?>
+                    <img src="../images/detail/A1301_index.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+                  <?php }else{ ?>
+                    <img src="../images/image_prepare.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+                  <?php } ?>
+                </div>
+                <div class="col-11" style="background-color: #f4f4f5;">
+                  <div><h5><?=$v['nickname']?></h5></div>
+                  <div><?=nl2br($v['content'])?></div>
+                  <div><?=$v['creat_date']?></div>
+                  <div class="row justify-content-end mr-2 mb-2">
+                    <div class="mr-3">
+                      <input type="button" id="edit_comment<?=$comment_id?>" onclick="editcomment(this.id);" name="edit_comment" value="編輯">
+                    </div>
+                    <div>
+                      <input type="button" id="delete_comment<?=$comment_id?>" onclick="confirmdelete(this.id);" name="delete_comment" value="刪除">
+                    </div>
+                  </div>
+                </div>
+              <?php }elseif($_GET['editid']==$comment_id){ ?>
+                <div class="col-1">
+                  <?php if($v['user_image']!=""){ ?>
+                    <img src="../images/detail/A1301_index.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+                  <?php }else{ ?>
+                    <img src="../images/image_prepare.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+                  <?php } ?>
+                </div>
+                <div class="col-11" style="background-color: #f4f4f5;">
+                  <div><h5><?=$v['nickname']?></h5></div>
+                  <form action="../contral/update_comment.php" method="post">
+                    <div><input type="text" id="edit_content" name="edit_content" value="<?=nl2br($v['content'])?>"></div>
+                    <div><?=$v['creat_date']?></div>
+                    <div class="row justify-content-end mr-2 mb-2">
+                    <div class="mr-3">
+                      <input type="hidden" name="comment_rID" value="<?=$rID?>">
+                      <input type="hidden" name="comment_id" value="<?=$comment_id?>">
+                      <input type="submit" value="編輯留言">
+                    </div>
+                    <div>
+                      <input type="button" onclick="goback_comment();" value="返回用餐心得">
+                    </div>
+                  </form>
+                </div>
+              <?php } ?>   
+            </div>
+          <?php } ?>
+        <?php
+        }else{
+        ?>
+        <div class="row ml-2"><p>目前尚未有心得分享</p></div>
+        <?php  
+        }
+        ?>
       </div>
+      <?php if(!isset($_GET['editid'])){ ?>
+        <div class="col-lg-12 mt-3">
+          <form action="../contral/insert_into.php" method="post" onsubmit="return content_check();">
+          <div class="row ml-2">
+            <div class="col-1">
+              <a href="#">
+                <img src="../images/detail/yoroniku_index.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+              </a>
+            </div>
+            <div class="col-10">
+              <textarea name="content" id="content" cols="100" rows="5"></textarea>
+              <input type="hidden" name="comment_rID" value="<?=$rID?>">
+              <input type="hidden" name="user_id" value="11">
+              <input type="hidden" name="nickname" value="jay">
+              <input type="hidden" name="formID" value="comment">
+            </div>
+            <div class="col-1 row align-items-end">
+              <input type="submit" class="btn btn-primary" value="留言">
+            </div>
+          </div>
+          </form>
+        </div>
+      <?php } ?>
     </div>
   </div>
   
@@ -173,18 +240,18 @@
 </html>
 <script>
   function addto_mylist(id) {
-    let rID = $('#rID').val();
-    let name = $('#name').val();
-    let area = $('#area').val();
-    let location = $('#location').val();
-    let category = $('#category').val();
-    let open_time = $('#open_time').val();
-    let close_time = $('#close_time').val();
-    let access = $('#access').val();
-    let memo = $('#memo').val();
-    let price_lunch = $('#price_lunch').val();
-    let price_dinner = $('#price_dinner').val();
-    let link = $('#link').val();
+    var rID = $('#rID').val();
+    var name = $('#name').val();
+    var area = $('#area').val();
+    var location = $('#location').val();
+    var category = $('#category').val();
+    var open_time = $('#open_time').val();
+    var close_time = $('#close_time').val();
+    var access = $('#access').val();
+    var memo = $('#memo').val();
+    var price_lunch = $('#price_lunch').val();
+    var price_dinner = $('#price_dinner').val();
+    var link = $('#link').val();
 
     if (confirm('確認加入我的收藏？')) {
       $.ajax({
@@ -206,7 +273,7 @@
               "link": link
               },
           success: function(res) {
-            confirm("已經成功加入我的收藏");
+            confirm("成功加入我的收藏");
             document.location.reload(true);
           }
       });
@@ -214,4 +281,38 @@
       alert('已取消加入我的收藏');
     }
   };
+
+  function content_check(){
+		var check_content =$('#content').val();
+    if(check_content==""){
+      alert("請輸入留言內容");
+      return false;
+    }
+	}
+
+  function confirmdelete(id) {
+    var postinfo = id.split("delete_comment");
+    if (confirm('確認刪除？')) {
+      $.ajax({
+        url: "../contral/delete.php",
+        type: "POST",
+        data: {"comment_id": postinfo[1]},
+          success: function(res) {
+            confirm("成功刪除留言");
+            document.location.reload(true);
+          }
+      });
+    } else {
+      alert('已取消刪除');
+    }
+  };
+
+  function editcomment(id) {
+    var editid = id.split("edit_comment");
+    window.location.href="../view/restaurant_detail.php?rID=<?=$rID?>&page=1&editid=" + editid[1];
+  }
+
+  function goback_comment(){
+    window.location.href="../view/restaurant_detail.php?rID=<?=$rID?>&page=1";
+  }
 </script>

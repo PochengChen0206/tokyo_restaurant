@@ -39,6 +39,11 @@ require_once('../DBPDO.php');
     $user_name = $v['user_name'];
     $nickname = $v['nickname'];
     $email = $v['email'];
+    if($v['user_image']!=""){
+      $user_image = $v['user_image'];
+    }else{
+      $user_image = '../images/image_prepare.jpg';
+    }
   }
   ?>
   <div class="untree_co-section">
@@ -46,8 +51,8 @@ require_once('../DBPDO.php');
       <div class="row justify-content-between align-items-start">
         <div class="col-lg-3">
           <div class="mb-5 feature-1">
-            <div class="mb-3">
-              <a href="#">頭像</a>
+            <div class="mb-3" style="width: 150px;height:150px;">
+              <img src="<?=$user_image?>" alt="Image" class="mb-4 rounded-20" style="width:100%">
             </div>
             <div class="mb-3">
               <p>暱稱 <?=$nickname?></p>
@@ -59,10 +64,10 @@ require_once('../DBPDO.php');
           
           <div class="feature-1">
             <ul class="list-unstyled clearfix">
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=userinfo">個人資料設定</a></li>
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=collect&page=1">我的收藏</a></li>
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=share">我分享的文章</a></li>
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=reservation">預約餐廳</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=userinfo">個人資料設定</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=collect&page=1">我的收藏</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=share">我的留言</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=reservation">預約餐廳</a></li>
             </ul>
           </div>
         </div>
@@ -90,7 +95,7 @@ require_once('../DBPDO.php');
                   <input class="form-control" type="email"  value="<?=$email?>" readonly>
                 </div>
                 <div class="row justify-content-center">
-                  <a class="col-3 btn btn-primary mt-2" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=setting">修改個人資料</a>
+                  <a class="col-3 btn btn-primary mt-2" href="../view/mypage.php?cate=setting">修改個人資料</a>
                 </div>
               </form>
           </div>
@@ -107,7 +112,7 @@ require_once('../DBPDO.php');
             $result_userinfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
             foreach($result_userinfo as $k=>$v){
             ?>
-              <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/setting_userinfo.php" method="post" onsubmit="return setting_check();">
+              <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/setting_userinfo.php" method="post" enctype="multipart/form-data" onsubmit="return setting_check();">
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
@@ -126,11 +131,16 @@ require_once('../DBPDO.php');
                   <label class="text-black">電子信箱</label>
                   <input class="form-control" type="email" id="setting_email"  name="setting_email" value="<?=$v['email']?>" required>
                 </div>
+                <div class="form-group">
+                  <label class="text-black">個人頭像</label>
+                  <input type="file" name="opload_image" accept="image/*">
+                  <input type="hidden" name="user_image" value="<?=$v['user_image']?>">
+                </div>
                 <div class="row justify-content-center">
                   <button type="submit" class="col-3 btn btn-primary mt-2">更新個人資料</button>
                 </div>
                 <div class="row justify-content-center">
-                  <a class="col-3 btn btn-primary mt-2" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=userinfo">返回個人資料設定</a>
+                  <a class="col-3 btn btn-primary mt-2" href="../view/mypage.php?cate=userinfo">返回個人資料設定</a>
                 </div>
               </form>
             <?php } ?>
@@ -187,7 +197,7 @@ require_once('../DBPDO.php');
                     </div>
                     <div class="row">
                       <div class="col-6">
-                        <a class="c-hover" href="../view/restaurant_detail.php?rID=<?=$v['rID']?>">詳細資訊</a>
+                        <a class="c-hover" href="../view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1">詳細資訊</a>
                       </div>
                       <div class="col-6">
                         <input type="button" id="delete_mylist<?=$v['rID']?>" onclick="confirmdelete(this.id);" name="delete_mylist" value="刪除收藏">
@@ -202,21 +212,21 @@ require_once('../DBPDO.php');
                   <nav aria-label="Page navigation example">
                     <ul class="pagination">
                       <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
-                        <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=collect&page=1">第一頁</a>
+                        <a class="page-link" href="../view/mypage.php?cate=collect&page=1">第一頁</a>
                       </li>
                       <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
-                        <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=collect&page=<?($page-1)?>">前一頁</a>
+                        <a class="page-link" href="../view/mypage.php?cate=collect&page=<?($page-1)?>">前一頁</a>
                       </li>
                       <?php for($i=1;$i<=$max_page;$i++){ ?>
                         <li class="page-item <?= $_GET['page']==$i?'active':''?>">
-                          <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=collect&page=<?=$i?>"><?=$i?></a>
+                          <a class="page-link" href="../view/mypage.php?cate=collect&page=<?=$i?>"><?=$i?></a>
                         </li>
                       <?php } ?>
                       <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
-                        <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=collect&page=<?=($page+1)?>">下一頁</a>
+                        <a class="page-link" href="../view/mypage.php?cate=collect&page=<?=($page+1)?>">下一頁</a>
                       </li>
                       <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
-                        <a class="page-link" href="http://localhost/pocheng/tokyo_restaurant/view/mypage.php?cate=collect&page=<?=$max_page?>">最後一頁</a>
+                        <a class="page-link" href="../view/mypage.php?cate=collect&page=<?=$max_page?>">最後一頁</a>
                       </li>
                     </ul>
                   </nav>
@@ -232,7 +242,7 @@ require_once('../DBPDO.php');
         <?php } ?>
         <?php if(isset($_GET['cate']) && $_GET['cate']=='share'){ ?>
           <div class="col-lg-9">
-            <h2 class="section-title text-left mb-4">我分享的文章</h2>
+            <h2 class="section-title text-left mb-4">我的留言</h2>
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
 
             <p class="mb-4"></p>
@@ -299,9 +309,9 @@ require_once('../DBPDO.php');
       $.ajax({
         url: "../contral/delete.php",
         type: "POST",
-        data: {"admin_rID": postinfo[1]},
+        data: {"mylist_rID": postinfo[1]},
           success: function(res) {
-            confirm("已經成功刪除紀錄");
+            confirm("已經成功刪除收藏");
             document.location.reload(true);
           }
       });
