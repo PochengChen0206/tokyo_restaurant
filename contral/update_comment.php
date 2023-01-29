@@ -9,6 +9,6 @@ $stmt = $dbpdo->prepare($sql);
 $stmt->bindParam(':content',$content,PDO::PARAM_STR);
 $stmt->bindParam(':id',$id,PDO::PARAM_STR);
 $stmt->execute();
-echo "<script>alert('留言修改成功');window.location.href='http://localhost/pocheng/tokyo_restaurant/view/restaurant_detail.php?rID=$rID&page=1'</script>";
+echo "<script>alert('留言修改成功');window.location.href='../view/restaurant_detail.php?rID=$rID&page=1'</script>";
 exit();
 ?>

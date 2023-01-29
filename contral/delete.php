@@ -11,7 +11,7 @@ if($_POST['mylist_rID']!=""){
 }
 
 //刪除餐廳資訊
-if($_POST['admin_id']!=""){
+if($_POST['admin_rID']!=""){
   $delete_id = $_POST['admin_id'];
 
   //刪除餐廳資訊寫入restaurant_info_delete
@@ -35,6 +35,16 @@ if($_POST['comment_id']!=""){
   $stmt_delete->execute();
 }
 
+//刪除使用者
+if($_POST['admin_userID']!=""){
+  $delete_id = $_POST['admin_userID'];
+  die;
+  $sql = "DELETE FROM `user_info` WHERE `id` = :id";
+  $stmt_delete=$dbpdo->prepare($sql);
+  $stmt_delete->bindParam(':id',$delete_id,PDO::PARAM_STR);
+  $stmt_delete->execute();
+  echo "<script>alert('使用者已刪除');window.location.href='../view/admin.php?cate=member&page=1'</script>";
+}
 
 exit();
 ?>

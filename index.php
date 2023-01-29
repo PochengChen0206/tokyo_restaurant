@@ -240,12 +240,14 @@ require_once('DBPDO.php');
 							$creat_date = $v['creat_date'];
 						?>
 							<div class="testimonial mx-auto">
-								<figure class="img-wrap">
-									<img src="<?=$image?>" alt="Image" class="img-fluid">
+								<figure style="width:150px; margin:0 auto;">
+									<img src="<?=$image?>" alt="Image" class="img-fluid rounded-20">
 								</figure>
+								<h3><?=$restaurant?></h3>
 								<h3 class="name"><?=$nickname?></h3>
 								<blockquote>
-									<p>&ldquo;<?=$content?>&rdquo;</p>
+									<p class="mb-2">&ldquo;<?=$content?>&rdquo;</p>
+									<p><?=$creat_date?></p>
 								</blockquote>
 							</div>	
 						<?php }?>
@@ -331,7 +333,7 @@ require_once('DBPDO.php');
 					<h2 class="mb-2 text-white">歡迎探索各樣的餐廳</h2>
 					<p class="mb-4 lead text-white text-white-opacity">下次去東京想要吃什麼呢?</p>
 					<p class="mb-0">
-						<a href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=all&category=all&price_range=all&page=1" class="btn btn-outline-white text-white btn-md font-weight-bold">查看更多餐廳</a>
+						<a href="./view/restaurant_search.php?&area=all&category=all&price_range=all&page=1" class="btn btn-outline-white text-white btn-md font-weight-bold">查看更多餐廳</a>
 					</p>
 				</div>
 			</div>

@@ -51,8 +51,10 @@ require_once('../DBPDO.php');
       <div class="row justify-content-between align-items-start">
         <div class="col-lg-3">
           <div class="mb-5 feature-1">
-            <div class="mb-3" style="width: 150px;height:150px;">
-              <img src="<?=$user_image?>" alt="Image" class="mb-4 rounded-20" style="width:100%">
+            <div class="mb-3">
+              <div style="width: 150px;height:150px; border-radius: 20px; position: relative; overflow: hidden;">
+                <img src="<?=$user_image?>" alt="Image" class="mb-4" style="position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+              </div>
             </div>
             <div class="mb-3">
               <p>暱稱 <?=$nickname?></p>
@@ -181,9 +183,11 @@ require_once('../DBPDO.php');
               ?>
                 <div class="row ml-2">
                   <div class="col-3">
-                    <a href="#">
-                      <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
-                    </a>
+                    <div>
+                      <a href="../view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1">
+                        <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
+                      </a>
+                    </div>
                   </div>
                   <div class="col-9">
                     <h4><?=$v['name']?></h4>

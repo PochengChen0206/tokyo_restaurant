@@ -278,44 +278,180 @@ require_once('../DBPDO.php');
         <?php if(isset($_GET['cate']) && $_GET['cate']=='member'){ ?>
           <div class="col-lg-9">
             <h2 class="section-title text-left mb-4">會員管理</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <?php
+            $num = 5; //每頁呈現筆數 
+            $stmt = $dbpdo->prepare("SELECT `userID` FROM `user_info`");
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $total_list = count($row);
+            $max_page = ceil($total_list/$num);
 
-            <p class="mb-4"></p>
-
-            <ul class="list-unstyled two-col clearfix">
-              <li>Outdoor recreation activities</li>
-              <li>Airlines</li>
-              <li>Car Rentals</li>
-              <li>Cruise Lines</li>
-              <li>Hotels</li>
-              <li>Railways</li>
-              <li>Travel Insurance</li>
-              <li>Package Tours</li>
-              <li>Insurance</li>
-              <li>Guide Books</li>
-            </ul>
+            if(isset($_GET['page']) && $_GET['page'] > 0){
+              $page = $_GET['page'];
+            }else{
+              $page = 1;
+            }
+            $start_no = ($page - 1) * $num;
+            $sql = "SELECT * FROM `user_info` ORDER BY `userID` DESC LIMIT $start_no, $num";
+            $stmt =  $dbpdo->prepare($sql);
+            $stmt->execute();
+            $result_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if($total_list>0){
+              $img = "";
+              foreach($result_list as $k=>$v){
+                if($v['user_image']!=""){
+                  $img = $v['user_image'];
+                }else{
+                  $img = "../images/image_prepare.jpg";
+                }
+              ?>
+                <div class="row ml-2">
+                  <div class="col-3">
+                    <div style="width: 150px;height:150px; border-radius: 20px; position: relative; overflow: hidden;">
+                      <img src="<?=$img?>" alt="Image" class="mb-4" style="position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    </div>  
+                  </div>
+                  <div class="col-9">
+                    <h4><?=$v['user_name']?></h4>
+                    <div>
+                      <ul class="list-unstyled two-col clearfix">
+                        <li>暱稱：<?=$v['nickname']?></li>
+                        <li>email：<?=$v['email']?></li>
+                        <li>權限：<?=$v['user_level']?></li>
+                        <li>建立時間：<?=$v['created_date']?></li>
+                      </ul>
+                    </div>
+                    <div class="row justify-content-end">
+                      <!-- <form action="../contral/delete.php" method="post">
+                        <input type="hidden" name="admin_userID" value="<?=$v['userID']?>">
+                        <input type="submit" value="刪除使用者">
+                        
+                      </form> -->
+                      <div>
+                        <input type="button" id="delete_user<?=$v['userID']?>" onclick="confirmdelete_user(this.id);" name="delete_user" value="刪除使用者">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php 
+                }
+              ?>
+                <div class="row justify-content-center">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=member&page=1">第一頁</a>
+                      </li>
+                      <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=member&page=<?($page-1)?>">前一頁</a>
+                      </li>
+                      <?php for($i=1;$i<=$max_page;$i++){ ?>
+                        <li class="page-item <?= $_GET['page']==$i?'active':''?>">
+                          <a class="page-link" href="../view/mypage.php?cate=member&page=<?=$i?>"><?=$i?></a>
+                        </li>
+                      <?php } ?>
+                      <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=member&page=<?=($page+1)?>">下一頁</a>
+                      </li>
+                      <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=member&page=<?=$max_page?>">最後一頁</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              <?php
+              }else{
+              ?>
+              <div class="row ml-2"><p>目前沒有會員</p></div>
+              <?php  
+              }
+              ?>
           </div>
         <?php } ?>
 
         <?php if(isset($_GET['cate']) && $_GET['cate']=='report'){ ?>
           <div class="col-lg-9">
             <h2 class="section-title text-left mb-4">分享心得管理</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <?php
+            $num = 5; //每頁呈現筆數 
+            $stmt = $dbpdo->prepare("SELECT `id` FROM `comment_info`");
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $total_list = count($row);
+            $max_page = ceil($total_list/$num);
 
-            <p class="mb-4"></p>
-
-            <ul class="list-unstyled two-col clearfix">
-              <li>Outdoor recreation activities</li>
-              <li>Airlines</li>
-              <li>Car Rentals</li>
-              <li>Cruise Lines</li>
-              <li>Hotels</li>
-              <li>Railways</li>
-              <li>Travel Insurance</li>
-              <li>Package Tours</li>
-              <li>Insurance</li>
-              <li>Guide Books</li>
-            </ul>
+            if(isset($_GET['page']) && $_GET['page'] > 0){
+              $page = $_GET['page'];
+            }else{
+              $page = 1;
+            }
+            $start_no = ($page - 1) * $num;
+            $sql = "SELECT a.*, b.`user_image`, c.`name` FROM `comment_info` a INNER JOIN `user_info` b ON a.`user_id` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` ORDER BY a.`creat_date` LIMIT $start_no, $num";
+            $stmt =  $dbpdo->prepare($sql);
+            $stmt->execute();
+            $result_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if($total_list>0){
+              $img = "";
+              foreach($result_list as $k=>$v){
+                if($v['user_image']!=""){
+                  $img = $v['user_image'];
+                }else{
+                  $img = "../images/image_prepare.jpg";
+                }
+              ?>
+                <div class="row ml-2">
+                  <div class="col-3">
+                    <div class="mb-4" style="width: 150px;height:150px; border-radius: 20px; position: relative; overflow: hidden;">
+                      <img src="<?=$img?>" alt="Image" style="position: absolute; width: 100%; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                    </div>  
+                  </div>
+                  <div class="col-9">
+                    <h4><?=$v['nickname']?></h4>
+                    <div>
+                      <ul class="list-unstyled two-col clearfix">
+                        <li>餐廳名稱：<?=$v['name']?></li>
+                        <li>建立時間：<?=$v['creat_date']?></li>
+                        <li>留言內容：<?=nl2br($v['content'])?></li>
+                      </ul>
+                    </div>
+                    <div class="row justify-content-end">
+                      <input type="button" id="delete_user" onclick="confirmdelete_user(this.id);" name="delete_user" value="刪除留言">
+                    </div>
+                  </div>
+                </div>
+              <?php 
+                }
+              ?>
+                <div class="row justify-content-center">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
+                        <a class="page-link" href="../view/admin.php?cate=report&page=1">第一頁</a>
+                      </li>
+                      <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
+                        <a class="page-link" href="../view/admin.php?cate=report&page=<?($page-1)?>">前一頁</a>
+                      </li>
+                      <?php for($i=1;$i<=$max_page;$i++){ ?>
+                        <li class="page-item <?= $_GET['page']==$i?'active':''?>">
+                          <a class="page-link" href="../view/admin.php?cate=report&page=<?=$i?>"><?=$i?></a>
+                        </li>
+                      <?php } ?>
+                      <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
+                        <a class="page-link" href="../view/admin.php?cate=report&page=<?=($page+1)?>">下一頁</a>
+                      </li>
+                      <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
+                        <a class="page-link" href="../view/admin.php?cate=report&page=<?=$max_page?>">最後一頁</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              <?php
+              }else{
+              ?>
+              <div class="row ml-2"><p>目前沒有留言</p></div>
+              <?php  
+              }
+              ?>
           </div>
         <?php } ?>
       </div>
@@ -416,9 +552,27 @@ require_once('../DBPDO.php');
       $.ajax({
         url: "../contral/delete.php",
         type: "POST",
-        data: {"admin_id": postinfo[1]},
+        data: {"admin_rID": postinfo[1]},
           success: function(res) {
             confirm("已經成功刪除餐廳");
+            document.location.reload(true);
+          }
+      });
+    } else {
+      alert('已取消刪除');
+    }
+  };
+
+  function confirmdelete_user(id) {
+    var postinfo = id.split("delete_user");
+    if (confirm('確認刪除？')) {
+      $.ajax({
+        url: "../contral/delete.php",
+        type: "POST",
+        data: {"admin_userID": postinfo[1]},
+          success: function(res) {
+            console.log(data);
+            confirm("已經成功刪除使用者");
             document.location.reload(true);
           }
       });
