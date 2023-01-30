@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../DBPDO.php');
 $user_name = $_POST['setting_user_name'];
 $nickname = $_POST['setting_nickname'];
@@ -20,7 +21,7 @@ if($opload_image['size']>0){
 }
 
 
-$sql = "UPDATE `user_info` SET `user_name` = :user_name, `nickname` = :nickname, `email` = :email, `user_image` = :user_image, `created_date` = NOW() WHERE `userID` = '11'";
+$sql = "UPDATE `user_info` SET `user_name` = :user_name, `nickname` = :nickname, `email` = :email, `user_image` = :user_image, `created_date` = NOW() WHERE `userID` = '".$_SESSION['userID']."'";
 $stmt = $dbpdo->prepare($sql);
 $stmt->bindParam(':user_name',$user_name,PDO::PARAM_STR);
 $stmt->bindParam(':nickname',$nickname,PDO::PARAM_STR);

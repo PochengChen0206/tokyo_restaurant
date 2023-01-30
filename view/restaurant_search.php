@@ -70,9 +70,11 @@ if($arr_search_word){
                   $stmt=$dbpdo->prepare("SELECT * FROM `area_info`");
                   $stmt->execute();
                   $result_area = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                  foreach($result_area as $k1=>$v1){
+                  foreach($result_area as $v1){
                   ?>
-                    <option value="<?=$v1['area']?>"><?=$v1['area']?></option>
+                    <option value="<?=$v1['area']?>" <?=$v1['area'] == $_GET['area'] ? "selected" : ""?>>
+                      <?=$v1['area']?>
+                    </option>
                   <?php 
                   } 
                   ?>
@@ -86,9 +88,11 @@ if($arr_search_word){
                   $stmt=$dbpdo->prepare("SELECT * FROM `categories_info`");
                   $stmt->execute();
                   $result_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                  foreach($result_cat as $k2=>$v2){
+                  foreach($result_cat as $v2){
                   ?>
-                    <option value="<?=$v2['cat_name']?>"><?=$v2['cat_name']?></option>
+                    <option value="<?=$v2['cat_name']?>" <?=$v2['cat_name'] == $_GET['category'] ? "selected" : ""?>>
+                      <?=$v2['cat_name']?>
+                    </option>
                   <?php 
                   }
                   ?>
@@ -102,9 +106,11 @@ if($arr_search_word){
                   $stmt=$dbpdo->prepare("SELECT * FROM `price_range`");
                   $stmt->execute();
                   $result_price = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                  foreach($result_price as $k3=>$v3){
+                  foreach($result_price as $v3){
                   ?>
-                    <option value="<?=$v3['price_range']?>"><?=$v3['price_range']?></option>
+                    <option value="<?=$v3['price_range']?>" <?=$v3['price_range'] == $_GET['price_range'] ? "selected" : ""?>>
+                      <?=$v3['price_range']?>
+                    </option>
                   <?php 
                   }
                   ?>
@@ -168,16 +174,18 @@ if($arr_search_word){
             ?>
               <div class="row ml-2">
                 <div class="col-3">
-                  <a href="#"><img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>
+                  <a href="../view/restaurant_detail.php?rID=<?=$v['id']?>&page=1"><img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>
                 </div>
                 <div class="col-9">
-                  <h4><?=$v['name']?></h4>
+                  <h4><a href="../view/restaurant_detail.php?rID=<?=$v['id']?>&page=1"><?=$v['name']?></a></h4>
                   <div>
                     <ul class="list-unstyled two-col clearfix">
                       <li>區域：<?=$v['area']?></li>
                       <li>地點：<?=$v['location']?></li>
                       <li>分類：<?=$v['category']?></li>
                       <li>時間：<?=date("Y/m/d",strtotime($v['creat_date']))?></li>
+                      <li>午餐價格：<?=$v['price_lunch']?></li>
+                      <li>晚餐價格：<?=$v['price_dinner']?></li>
                     </ul>
                   </div>
                   <div class="row">

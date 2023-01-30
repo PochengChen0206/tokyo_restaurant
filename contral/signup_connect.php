@@ -1,41 +1,39 @@
 <?php
 require_once('../DBPDO.php');
+require_once('../function.php');
 
 //使用者名字
 if($_POST['signup_user_name']==""){
-  // echo "<script>alert('請輸入使用者名稱');window.history.back(-1);</script>";
   echo alert_topre('請輸入使用者名稱');
   exit();
+}else{
+  $user_name = $_POST['signup_user_name'];
 }
 
 //使用者暱稱
 if($_POST['signup_nickname']==""){
-  // echo "<script>alert('請輸入使用者暱稱');window.history.back(-1);</script>";
   echo alert_topre('請輸入使用者暱稱');
   exit();
 }else{
   //判斷使用者暱稱是否註冊過
-  $sql ="SELECT `user_name` FROM `user_info` WHERE `nickname` = :nickname";
+  $sql ="SELECT `nickname` FROM `user_info` WHERE `nickname` = :nickname";
   $stmt = $dbpdo->prepare($sql);
   $stmt->bindParam(':nickname',$_POST['signup_nickname'],PDO::PARAM_STR);
   $stmt->execute();
-  $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  if(count($row) > 0){
-    // echo "<script>alert('輸入的暱稱已經註冊過');window.history.back(-1);</script>";
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if(count($result) > 0){
     echo alert_topre('輸入的暱稱已經註冊過');
     exit();
   }else{
-    $nickame = $_POST['signup_nickname'];
+    $nickname = $_POST['signup_nickname'];
   }
 }
 
 //驗證是否為有效的email
 if($_POST['signup_email']==""){
-  // echo "<script>alert('請輸入email');window.history.back(-1);</script>";
   echo alert_topre('請輸入email'); 
   exit();
 }elseif(!filter_var($_POST['signup_email'], FILTER_VALIDATE_EMAIL)) {
-  // echo "<script>alert('請輸入正確的email格式');window.history.back(-1);</script>";
   echo alert_topre('請輸入正確的email格式');
   exit();
 }else{
@@ -44,9 +42,8 @@ if($_POST['signup_email']==""){
   $stmt = $dbpdo->prepare($sql);
   $stmt->bindParam(':email',$_POST['signup_email'],PDO::PARAM_STR);
   $stmt->execute();
-  $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  if(count($row) > 0){
-    // echo "<script>alert('輸入的email已經註冊過');window.history.back(-1);</script>";
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  if(count($result) > 0){
     echo alert_topre('輸入的email已經註冊過');
     exit();
   }else{
@@ -56,7 +53,6 @@ if($_POST['signup_email']==""){
 
 //密碼
 if($_POST['signup_password']==""){
-  // echo "<script>alert('請輸入密碼');window.history.back(-1);</script>";
   echo alert_topre('請輸入密碼');
   exit();
 }else{
@@ -71,7 +67,22 @@ $stmt->bindParam(':email',$email,PDO::PARAM_STR);
 $stmt->bindParam(':password',$password,PDO::PARAM_STR);
 $stmt->execute();
 
-// echo "<script>alert('註冊成功');window.location.href='../index.php'</script>";
+$sql1 = "SELECT * FROM `user_info` ORDER BY `userID` DESC LIMIT 0,1";
+$stmt1 = $dbpdo->prepare($sql1);
+$stmt1->execute();
+$result1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
+
+foreach($result1 as $r1){
+  $userID = $r1['userID'];
+  $nickname = $r1['nickname'];
+  $user_level = $r1['user_level'];
+}
+
+session_start();
+$_SESSION['userID'] = $userID;
+$_SESSION['name'] = $nickname;
+$_SESSION['level'] = $user_level;
+
 echo alert_toindex('註冊成功');
 exit();
 ?>

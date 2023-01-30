@@ -52,10 +52,9 @@
             <div class="row justify-content-center">
               <button type="submit" class="col-4 btn btn-primary mt-2">登入</button>
             </div>
-            <div class="row justify-content-end">
+            <!-- <div class="row justify-content-end">
               <button type="button" class="btn btn-outline-dark btn-sm mt-2" onclick="toForgetpasswordPage();">忘記密碼</button>
-              <!-- 這邊加上點擊到忘記密碼頁面 -->
-            </div>
+            </div> -->
           </form>
           
         </div>

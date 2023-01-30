@@ -38,12 +38,19 @@ if($_POST['comment_id']!=""){
 //刪除使用者
 if($_POST['admin_userID']!=""){
   $delete_id = $_POST['admin_userID'];
-  die;
-  $sql = "DELETE FROM `user_info` WHERE `id` = :id";
+  $sql = "DELETE FROM `user_info` WHERE `userID` = :id";
   $stmt_delete=$dbpdo->prepare($sql);
   $stmt_delete->bindParam(':id',$delete_id,PDO::PARAM_STR);
   $stmt_delete->execute();
-  echo "<script>alert('使用者已刪除');window.location.href='../view/admin.php?cate=member&page=1'</script>";
+}
+
+//刪除使用者心得
+if($_POST['admin_commentID']!=""){
+  $delete_id = $_POST['admin_commentID'];
+  $sql = "DELETE FROM `comment_info` WHERE `id` = :id";
+  $stmt_delete=$dbpdo->prepare($sql);
+  $stmt_delete->bindParam(':id',$delete_id,PDO::PARAM_STR);
+  $stmt_delete->execute();
 }
 
 exit();

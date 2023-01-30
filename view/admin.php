@@ -77,7 +77,7 @@ require_once('../DBPDO.php');
             ?>
               <div class="row ml-2">
                 <div class="col-3">
-                  <a href="#"><img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>
+                  <a href="../view/restaurant_detail.php?rID=<?=$v['id']?>&page=1"><img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>
                 </div>
                 <div class="col-9">
                   <h4><?=$v['name']?></h4>
@@ -94,7 +94,7 @@ require_once('../DBPDO.php');
                       <a class="c-hover" href="../view/restaurant_detail_edit.php?rID=<?=$v['id']?>">查看和修改</a>
                     </div>
                     <div class="col-6">
-                      <input type="button" id="delete_rlist<?=$v['id']?>" onclick="confirmdelete(this.id);" name="delete_restaurant" value="刪除餐廳">
+                      <input type="button" id="delete_restaurant<?=$v['id']?>" onclick="delete_restaurant(this.id);" name="delete_restaurant" value="刪除餐廳">
                     </div>
                   </div>
                 </div>
@@ -322,13 +322,8 @@ require_once('../DBPDO.php');
                       </ul>
                     </div>
                     <div class="row justify-content-end">
-                      <!-- <form action="../contral/delete.php" method="post">
-                        <input type="hidden" name="admin_userID" value="<?=$v['userID']?>">
-                        <input type="submit" value="刪除使用者">
-                        
-                      </form> -->
                       <div>
-                        <input type="button" id="delete_user<?=$v['userID']?>" onclick="confirmdelete_user(this.id);" name="delete_user" value="刪除使用者">
+                        <input type="button" id="delete_user<?=$v['userID']?>" onclick="delete_user(this.id);" name="delete_user" value="刪除使用者">
                       </div>
                     </div>
                   </div>
@@ -386,7 +381,7 @@ require_once('../DBPDO.php');
               $page = 1;
             }
             $start_no = ($page - 1) * $num;
-            $sql = "SELECT a.*, b.`user_image`, c.`name` FROM `comment_info` a INNER JOIN `user_info` b ON a.`user_id` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` ORDER BY a.`creat_date` LIMIT $start_no, $num";
+            $sql = "SELECT a.*, b.`user_image`, c.`name` FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` ORDER BY a.`creat_date` DESC LIMIT $start_no, $num";
             $stmt =  $dbpdo->prepare($sql);
             $stmt->execute();
             $result_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -415,7 +410,7 @@ require_once('../DBPDO.php');
                       </ul>
                     </div>
                     <div class="row justify-content-end">
-                      <input type="button" id="delete_user" onclick="confirmdelete_user(this.id);" name="delete_user" value="刪除留言">
+                      <input type="button" id="delete_comment<?=$v['id']?>" onclick="delete_comment(this.id);" name="delete_comment" value="刪除留言">
                     </div>
                   </div>
                 </div>
@@ -546,9 +541,9 @@ require_once('../DBPDO.php');
     }
   }
 
-  function confirmdelete(id) {
-    var postinfo = id.split("delete_rlist");
-    if (confirm('確認刪除？')) {
+  function delete_restaurant(id) {
+    var postinfo = id.split("delete_restaurant");
+    if (confirm('確認刪除餐廳？')) {
       $.ajax({
         url: "../contral/delete.php",
         type: "POST",
@@ -563,16 +558,32 @@ require_once('../DBPDO.php');
     }
   };
 
-  function confirmdelete_user(id) {
+  function delete_user(id) {
     var postinfo = id.split("delete_user");
-    if (confirm('確認刪除？')) {
+    if (confirm('確認刪除使用者？')) {
       $.ajax({
         url: "../contral/delete.php",
         type: "POST",
         data: {"admin_userID": postinfo[1]},
           success: function(res) {
-            console.log(data);
             confirm("已經成功刪除使用者");
+            document.location.reload(true);
+          }
+      });
+    } else {
+      alert('已取消刪除');
+    }
+  };
+
+  function delete_comment(id) {
+    var postinfo = id.split("delete_comment");
+    if (confirm('確認刪除心得？')) {
+      $.ajax({
+        url: "../contral/delete.php",
+        type: "POST",
+        data: {"admin_commentID": postinfo[1]},
+          success: function(res) {
+            confirm("已經成功刪除心得");
             document.location.reload(true);
           }
       });

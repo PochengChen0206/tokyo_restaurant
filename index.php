@@ -224,7 +224,7 @@ require_once('DBPDO.php');
 					<h2 class="section-title text-center mb-5">用餐心得分享</h2>
 					<div class="owl-single owl-carousel no-nav">
 						<?php 
-						$sql = "SELECT a.*, c.`name`, c.`index_image` FROM `comment_info` a INNER JOIN `user_info` b ON a.`user_id` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` ORDER BY a.`creat_date` DESC LIMIT 0,5";
+						$sql = "SELECT a.*, c.`name`, c.`index_image` FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` ORDER BY a.`creat_date` DESC LIMIT 0,5";
 						$stmt =  $dbpdo->prepare($sql);
 						$stmt->execute();
 						$result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);

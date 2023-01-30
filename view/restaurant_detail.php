@@ -75,33 +75,39 @@
                 ?>
               </li>
             </ul>
-            <div class="row justify-content-end mr-3">
-              <?php
-                $row_check=$dbpdo->prepare("SELECT `rID` FROM `my_restaurant_list` WHERE `rID` = :rID");
-                $row_check->bindParam(':rID',$rID,PDO::PARAM_STR);
-                $row_check->execute();
-                //取得my_restaurant_list裡面的rID判斷是否已經存在
-                $check_rID = $row_check->fetch(PDO::FETCH_ASSOC);
-                if(isset($check_rID['rID'])){
-              ?>
-                  <input type="button" class="btn btn-primary" id="check_mylist" name="check_mylist" value="已收藏">
-              <?php }else{ ?>
-                  <input type="button" class="btn btn-primary" id="add_mylist_<?=$v['id']?>" name="add_mylist" value="加入我的收藏" onclick="addto_mylist(this.id);">
-              <?php } ?>
-                <!-- 下方ajax post用的變數 -->
-                <input type="hidden" id="rID" name="rID" value="<?=$v['id']?>">
-                <input type="hidden" id="name" name="name" value="<?=$v['name']?>">
-                <input type="hidden" id="area" name="area" value="<?=$v['area']?>">
-                <input type="hidden" id="location" name="location" value="<?=$v['location']?>">
-                <input type="hidden" id="category" name="category" value="<?=$v['category']?>">
-                <input type="hidden" id="open_time" name="open_time" value="<?=$v['open_time']?>">
-                <input type="hidden" id="close_time" name="close_time" value="<?=$v['close_time']?>">
-                <input type="hidden" id="access" name="access" value="<?=$v['access']?>">
-                <input type="hidden" id="price_lunch" name="price_lunch" value="<?=$v['price_lunch']?>">
-                <input type="hidden" id="price_dinner" name="price_dinner" value="<?=$v['price_dinner']?>">
-                <input type="hidden" id="link" name="link" value="<?=$v['link']?>">
-                <input type="hidden" id="memo" name="memo" value="<?=$v['memo']?>">
-            </div>
+            <?php if(isset($_SESSION['userID'])){ ?>
+              <div class="row justify-content-end mr-3">
+                <?php
+                  $userID = $_SESSION['userID'];
+                  $stmt=$dbpdo->prepare("SELECT `rID` FROM `my_restaurant_list` WHERE `userID` = :userID");
+                  $stmt->bindParam(':userID',$userID,PDO::PARAM_STR);
+                  $stmt->execute();
+                  //取得my_restaurant_list裡面的rID判斷是否已經存在
+                  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                  foreach($result as $r1){
+                    $check_rID = $r1['rID'];
+                  } 
+                  if(isset($check_rID)){
+                ?>
+                    <input type="button" class="btn btn-primary" id="check_mylist" name="check_mylist" value="已收藏">
+                <?php }else{ ?>
+                    <input type="button" class="btn btn-primary" id="add_mylist_<?=$v['id']?>" name="add_mylist" value="加入我的收藏" onclick="addto_mylist(this.id);">
+                <?php } ?>
+                  <!-- 下方ajax post用的變數 -->
+                  <input type="hidden" id="rID" name="rID" value="<?=$v['id']?>">
+                  <input type="hidden" id="name" name="name" value="<?=$v['name']?>">
+                  <input type="hidden" id="area" name="area" value="<?=$v['area']?>">
+                  <input type="hidden" id="location" name="location" value="<?=$v['location']?>">
+                  <input type="hidden" id="category" name="category" value="<?=$v['category']?>">
+                  <input type="hidden" id="open_time" name="open_time" value="<?=$v['open_time']?>">
+                  <input type="hidden" id="close_time" name="close_time" value="<?=$v['close_time']?>">
+                  <input type="hidden" id="access" name="access" value="<?=$v['access']?>">
+                  <input type="hidden" id="price_lunch" name="price_lunch" value="<?=$v['price_lunch']?>">
+                  <input type="hidden" id="price_dinner" name="price_dinner" value="<?=$v['price_dinner']?>">
+                  <input type="hidden" id="link" name="link" value="<?=$v['link']?>">
+                  <input type="hidden" id="memo" name="memo" value="<?=$v['memo']?>">
+              </div>
+            <?php } ?>
           </div>
         </div>
       </div>
@@ -113,7 +119,7 @@
       <div class="col-lg-12" style="border-top: 1px solid #d5d5d8; border-bottom: 1px solid #d5d5d8;">
         <h2 class="section-title text-left mt-3 mb-4">用餐心得</h2>
         <?php
-        $sql = "SELECT *  FROM `comment_info` a INNER JOIN `user_info` b ON a.`user_id` = b.`userID` WHERE a.`rID` = '".$rID."' ORDER BY a.`creat_date`";
+        $sql = "SELECT *  FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` WHERE a.`rID` = '".$rID."' ORDER BY a.`creat_date`";
         $stmt =  $dbpdo->prepare($sql);
         $stmt->execute();
         $result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -121,48 +127,50 @@
         if($total_comment>0){
           $img = "";
           foreach($result_comment as $k=>$v){
+            $check_userID = $v['userID'];
             $comment_id = $v['id'];
+            if($v['user_image']!=""){
+              $img = $v['user_image'];
+            }else{
+              $img = "../images/image_prepare.jpg";
+            }
           ?>
             <div class="row ml-2 mb-3">
               <?php if(!isset($_GET['editid'])){ ?>
                 <div class="col-1">
-                  <?php if($v['user_image']!=""){ ?>
-                    <img src="../images/detail/A1301_index.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
-                  <?php }else{ ?>
-                    <img src="../images/image_prepare.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
-                  <?php } ?>
+                  <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
                 </div>
                 <div class="col-11" style="background-color: #f4f4f5;">
                   <div><h5><?=$v['nickname']?></h5></div>
-                  <div><?=nl2br($v['content'])?></div>
+                  <div><?=nl2br(htmlspecialchars($v['content']))?></div>
                   <div><?=$v['creat_date']?></div>
-                  <div class="row justify-content-end mr-2 mb-2">
-                    <div class="mr-3">
-                      <input type="button" id="edit_comment<?=$comment_id?>" onclick="editcomment(this.id);" name="edit_comment" value="編輯">
+                  <?php if(isset($_SESSION['userID']) && ($check_userID == $_SESSION['userID'])){ ?>
+                    <div class="row justify-content-end mr-2 mb-2">
+                      <div class="mr-3">
+                        <input type="button" id="edit_comment<?=$comment_id?>" onclick="editcomment(this.id);" name="edit_comment" value="編輯">
+                      </div>
+                      <div>
+                        <input type="button" id="delete_comment<?=$comment_id?>" onclick="confirmdelete(this.id);" name="delete_comment" value="刪除">
+                      </div>
                     </div>
-                    <div>
-                      <input type="button" id="delete_comment<?=$comment_id?>" onclick="confirmdelete(this.id);" name="delete_comment" value="刪除">
-                    </div>
-                  </div>
+                  <?php } ?>
                 </div>
               <?php }elseif($_GET['editid']==$comment_id){ ?>
                 <div class="col-1">
-                  <?php if($v['user_image']!=""){ ?>
-                    <img src="../images/detail/A1301_index.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
-                  <?php }else{ ?>
-                    <img src="../images/image_prepare.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
-                  <?php } ?>
+                  <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
                 </div>
                 <div class="col-11" style="background-color: #f4f4f5;">
                   <div><h5><?=$v['nickname']?></h5></div>
                   <form action="../contral/update_comment.php" method="post">
-                    <div><input type="text" id="edit_content" name="edit_content" value="<?=nl2br($v['content'])?>"></div>
+                    <div>
+                      <textarea name="edit_content" id="edit_content" cols="60" rows="10"><?=$v['content']?></textarea>
+                    </div>
                     <div><?=$v['creat_date']?></div>
                     <div class="row justify-content-end mr-2 mb-2">
                     <div class="mr-3">
                       <input type="hidden" name="comment_rID" value="<?=$rID?>">
                       <input type="hidden" name="comment_id" value="<?=$comment_id?>">
-                      <input type="submit" value="編輯留言">
+                      <input type="submit" value="儲存">
                     </div>
                     <div>
                       <input type="button" onclick="goback_comment();" value="返回用餐心得">
@@ -180,20 +188,34 @@
         }
         ?>
       </div>
-      <?php if(!isset($_GET['editid'])){ ?>
+      <?php if(isset($_SESSION['userID']) && !isset($_GET['editid'])){ ?>
         <div class="col-lg-12 mt-3">
           <form action="../contral/insert_into.php" method="post" onsubmit="return content_check();">
+          <?php 
+          $sql = "SELECT * FROM `user_info` WHERE `userID` = '".$_SESSION['userID']."'";
+          $stmt = $dbpdo->prepare($sql);
+          $stmt->execute();
+          $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+          $user_image = '';
+          foreach($result as $r1){
+            if($r1['user_image']!=""){
+              $user_image = $r1['user_image'];
+            }else{
+              $user_image = "../images/image_prepare.jpg";
+            }
+          }
+          ?>
           <div class="row ml-2">
             <div class="col-1">
               <a href="#">
-                <img src="../images/detail/yoroniku_index.jpg" alt="Image" class="img-fluid mb-4 rounded-20">
+                <img src="<?=$user_image?>" alt="Image" class="img-fluid mb-4 rounded-20">
               </a>
             </div>
             <div class="col-10">
               <textarea name="content" id="content" cols="100" rows="5"></textarea>
               <input type="hidden" name="comment_rID" value="<?=$rID?>">
-              <input type="hidden" name="user_id" value="11">
-              <input type="hidden" name="nickname" value="jay">
+              <input type="hidden" name="userID" value="<?=$_SESSION['userID']?>">
+              <input type="hidden" name="nickname" value="<?=$_SESSION['name']?>">
               <input type="hidden" name="formID" value="comment">
             </div>
             <div class="col-1 row align-items-end">
@@ -213,10 +235,8 @@
           <h2 class="mb-2 text-white">加入討論</h2>
           <p class="mb-4 lead text-white text-white-opacity">去過這家餐廳了嗎?或是對於這家餐廳有什麼想法?</p>
           <p class="mb-0">
-            <a href="booking.html" class="btn btn-outline-white text-white btn-md font-weight-bold">登入會員分享心得</a>
+            <a href="../view/login.php" class="btn btn-outline-white text-white btn-md font-weight-bold">登入會員分享心得</a>
           </p>
-          <!-- 加上判斷是否已經登入會員顯示 -->
-          <!-- 這邊的登入要加上可以判斷回到頁面的value，可以用php記住當前頁面存到session -->
         </div>
       </div>
     </div>

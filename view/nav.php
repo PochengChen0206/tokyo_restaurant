@@ -27,11 +27,20 @@ session_start();
 					</li> -->
 					<li><a href="./view/restaurant_search.php?&area=all&category=all&price_range=all&page=1">搜尋餐廳</a></li>
 					<!-- <li><a href="contact.html">快速預約</a></li> -->
-					<!-- 之後session判斷 -->
-					<li><a href="./view/login.php">LOGIN</a></li>
-					<li><a href="./view/mypage.php?cate=userinfo">會員中心</a></li>
-					<li><a href="./view/admin.php?cate=edit&page=1">管理後台</a></li>
-					<li><a href="index.php">LOGOUT</a></li>
+					<?php if(isset($_SESSION['name'])){ ?>
+						<?php if($_SESSION['name']!="admindemo"){ ?>
+							<li><a href="./view/mypage.php?cate=userinfo">會員中心</a></li>
+						<?php }?>
+					<?php }else{ ?>
+						<li><a href="./view/login.php">LOGIN</a></li>
+					<?php } ?>
+					<!-- //管理者帳號 -->
+					<?php if(isset($_SESSION['level']) && $_SESSION['level']=="1"){ ?>
+						<li><a href="./view/admin.php?cate=edit&page=1">管理後台</a></li>
+					<?php } ?>
+					<?php if(isset($_SESSION['name'])){ ?>
+						<li><a href="./contral/logout.php">LOGOUT</a></li>
+					<?php } ?>
 				</ul>
 				<a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-none light" data-toggle="collapse" data-target="#main-navbar">
 					<span></span>
@@ -64,11 +73,23 @@ session_start();
 					</li> -->
 					<li><a href="../view/restaurant_search.php?&area=all&category=all&price_range=all&page=1">搜尋餐廳</a></li>
 					<!-- <li><a href="contact.html">快速預約</a></li> -->
-					<!-- 之後session判斷 -->
-					<li><a href="../view/login.php">LOGIN</a></li>
-					<li><a href="../view/mypage.php?cate=userinfo">會員中心</a></li>
-					<li><a href="../view/admin.php?cate=edit&page=1">管理後台</a></li>
-					<li><a href="../index.php">LOGOUT</a></li>
+					
+					<?php if(isset($_SESSION['name'])){ ?>
+						<?php if($_SESSION['name']!="admindemo"){ ?>
+							<li><a href="../view/mypage.php?cate=userinfo">會員中心</a></li>
+						<?php }?>
+					<?php }else{ ?>
+						<li><a href="../view/login.php">LOGIN</a></li>
+					<?php } ?>
+
+					<!-- //管理者帳號 -->
+					<?php if(isset($_SESSION['level']) && $_SESSION['level']=="1"){ ?>
+						<li><a href="../view/admin.php?cate=edit&page=1">管理後台</a></li>
+					<?php } ?>
+
+					<?php if(isset($_SESSION['name'])){ ?>
+						<li><a href="../contral/logout.php">LOGOUT</a></li>
+					<?php } ?>
 				</ul>
 				<a href="#" class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-none light" data-toggle="collapse" data-target="#main-navbar">
 					<span></span>

@@ -86,30 +86,35 @@
 
 <script>
   function signup_check(){
-    var check_signup_user_name = document.querySelector('#signup_user_name');
-    var check_signup_nickname = document.querySelector('#signup_nickname');
-    var check_signup_email = document.querySelector('#signup_email');
-    var check_signup_password = document.querySelector('#signup_password');
-    var check_signup_password_check = document.querySelector('#signup_password_check');
+    var signup_user_name = $('#signup_user_name').val();
+    var signup_nickname = $('#signup_nickname').val();
+    var signup_email = $('#signup_email').val();
+    var signup_password = $('#signup_password').val();
+    var signup_password_check = $('#signup_password_check').val();
 
-    if(check_signup_user_name.value==""){
+    if(signup_user_name==""){
       alert("請輸入會員名字進行註冊");
       return false;
     }
-    if(check_signup_nickname.value==""){
+    if(signup_nickname==""){
       alert("請輸入會員暱稱進行註冊");
       return false;
     }
-    if(check_signup_email.value==""){
+    if(signup_email==""){
       alert("請輸入email進行註冊");
       return false;
     }
-    if(check_signup_password.value==""){
+    if(signup_password==""){
       alert("請輸入密碼進行註冊");
       return false;
     }
-    if(check_signup_password_check.value==""){
+    if(signup_password_check==""){
       alert("請輸入確認密碼進行註冊");
+      return false;
+    }
+
+    if(signup_password!=signup_password_check){
+      alert("請重新確認密碼進行註冊");
       return false;
     }
   }

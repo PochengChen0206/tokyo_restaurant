@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once('../DBPDO.php');
 require_once('../function.php');
 
@@ -63,9 +64,11 @@ if($_POST['formID']=='add_mylist'){
   $memo = $_POST['memo'];
   $link = $_POST['link'];
   $rID = $_POST['rID'];
+  $userID = $_SESSION['userID'];
 
-  $cmd = "INSERT INTO `my_restaurant_list`(`rID`,`name`,`area`,`location`,`category`,`open_time`,`close_time`,`access`,`price_lunch`,`price_dinner`,`memo`,`link`,`creat_date`) VALUES(:rID,:name,:area,:location,:category,:open_time,:close_time,:access,:price_lunch,:price_dinner,:memo,:link,NOW())";
+  $cmd = "INSERT INTO `my_restaurant_list`(`userID`,`rID`,`name`,`area`,`location`,`category`,`open_time`,`close_time`,`access`,`price_lunch`,`price_dinner`,`memo`,`link`,`creat_date`) VALUES(:userID,:rID,:name,:area,:location,:category,:open_time,:close_time,:access,:price_lunch,:price_dinner,:memo,:link,NOW())";
   $stmt = $dbpdo->prepare($cmd);
+  $stmt->bindParam(':userID',$userID,PDO::PARAM_STR);
   $stmt->bindParam(':rID',$rID,PDO::PARAM_INT);
   $stmt->bindParam(':name',$name,PDO::PARAM_STR);
   $stmt->bindParam(':area',$area,PDO::PARAM_STR);
@@ -86,14 +89,14 @@ if($_POST['formID']=='add_mylist'){
 //新增留言
 if($_POST['formID']=='comment'){
   $rID = $_POST['comment_rID'];
-  $user_id = $_POST['user_id'];
+  $userID = $_SESSION['userID'];
   $nickname = $_POST['nickname'];
   $content = $_POST['content'];
   
-  $sql = "INSERT INTO `comment_info`(`rID`,`user_id`,`nickname`,`content`,`creat_date`) VALUES(:rID,:user_id,:nickname,:content,NOW())";
+  $sql = "INSERT INTO `comment_info`(`rID`,`userID`,`nickname`,`content`,`creat_date`) VALUES(:rID,:userID,:nickname,:content,NOW())";
   $stmt = $dbpdo->prepare($sql);
   $stmt->bindParam(':rID',$rID,PDO::PARAM_STR);
-  $stmt->bindParam(':user_id',$user_id,PDO::PARAM_STR);
+  $stmt->bindParam(':userID',$userID,PDO::PARAM_STR);
   $stmt->bindParam(':nickname',$nickname,PDO::PARAM_STR);
   $stmt->bindParam(':content',$content,PDO::PARAM_STR);
   $stmt->execute();

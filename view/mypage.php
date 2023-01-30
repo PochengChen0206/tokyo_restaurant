@@ -30,8 +30,7 @@ require_once('../DBPDO.php');
 
   <?php
   //個人資料
-  $sql = "SELECT * FROM `user_info` WHERE `userID` = '11'";
-  // $sql = "SELECT * FROM `user_info` WHERE `userID` = '".$_SESSION['userID']."'";
+  $sql = "SELECT * FROM `user_info` WHERE `userID` = '".$_SESSION['userID']."'";
   $stmt = $dbpdo->prepare($sql);
   $stmt->execute();
   $result_userinfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -68,7 +67,7 @@ require_once('../DBPDO.php');
             <ul class="list-unstyled clearfix">
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=userinfo">個人資料設定</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=collect&page=1">我的收藏</a></li>
-              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=share">我的留言</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=share&page=1">我的留言</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=reservation">預約餐廳</a></li>
             </ul>
           </div>
@@ -107,8 +106,7 @@ require_once('../DBPDO.php');
           <div class="col-lg-9">
             <h2 class="section-title text-left mb-4">修改個人資料</h2>
             <?php  
-            $sql = "SELECT * FROM `user_info` WHERE `userID` = '11'";
-            // $sql = "SELECT * FROM `user_info` WHERE `userID` = '".$_SESSION['userID']."'";
+            $sql = "SELECT * FROM `user_info` WHERE `userID` = '".$_SESSION['userID']."'";
             $stmt = $dbpdo->prepare($sql);
             $stmt->execute();
             $result_userinfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -156,7 +154,7 @@ require_once('../DBPDO.php');
             <h2 class="section-title text-left mb-4">我的收藏</h2>
             <?php
             $num = 5; //每頁呈現筆數 
-            $stmt = $dbpdo->prepare("SELECT `id` FROM `my_restaurant_list`");
+            $stmt = $dbpdo->prepare("SELECT `id` FROM `my_restaurant_list` WHERE `userID` = '".$_SESSION['userID']."'");
             $stmt->execute();
             $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $total_list = count($row);
@@ -168,7 +166,7 @@ require_once('../DBPDO.php');
               $page = 1;
             }
             $start_no = ($page - 1) * $num;
-            $sql = "SELECT a.*,b.`index_image` FROM `my_restaurant_list` a INNER jOIN `restaurant_info` b ON a.`rID` = b.`id` ORDER BY `id` DESC LIMIT $start_no, $num";
+            $sql = "SELECT a.*,b.`index_image` FROM `my_restaurant_list` a INNER jOIN `restaurant_info` b ON a.`rID` = b.`id` WHERE a.`userID` = '".$_SESSION['userID']."' ORDER BY `id` DESC LIMIT $start_no, $num";
             $stmt =  $dbpdo->prepare($sql);
             $stmt->execute();
             $result_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -247,47 +245,92 @@ require_once('../DBPDO.php');
         <?php if(isset($_GET['cate']) && $_GET['cate']=='share'){ ?>
           <div class="col-lg-9">
             <h2 class="section-title text-left mb-4">我的留言</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <?php
+            $num = 5; //每頁呈現筆數 
+            $stmt = $dbpdo->prepare("SELECT `id` FROM `comment_info` WHERE `userID` = '".$_SESSION['userID']."'");
+            $stmt->execute();
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $total_list = count($row);
+            $max_page = ceil($total_list/$num);
 
-            <p class="mb-4"></p>
-
-            <ul class="list-unstyled two-col clearfix">
-              <li>Outdoor recreation activities</li>
-              <li>Airlines</li>
-              <li>Car Rentals</li>
-              <li>Cruise Lines</li>
-              <li>Hotels</li>
-              <li>Railways</li>
-              <li>Travel Insurance</li>
-              <li>Package Tours</li>
-              <li>Insurance</li>
-              <li>Guide Books</li>
-            </ul>
+            if(isset($_GET['page']) && $_GET['page'] > 0){
+              $page = $_GET['page'];
+            }else{
+              $page = 1;
+            }
+            $start_no = ($page - 1) * $num;
+            $sql = "SELECT a.*, c.`index_image`, c.`name` FROM `comment_info` a INNER jOIN `user_info` b ON a.`userID` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` WHERE a.`userID` = '".$_SESSION['userID']."' ORDER BY a.`id` DESC LIMIT $start_no, $num";
+            $stmt =  $dbpdo->prepare($sql);
+            $stmt->execute();
+            $result_list = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if($total_list>0){
+              $image = "";
+              foreach($result_list as $k=>$v){
+                if($v['index_image']!=""){
+                  $image = '.'.$v['index_image'];
+                }else{
+                  $image = './images/image_prepare.jpg';
+                }
+              ?>
+                <div class="row ml-2">
+                  <div class="col-3">
+                    <a href="../view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1"><img src="<?=$image?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>  
+                  </div>
+                  <div class="col-9">
+                    <h4><?=$v['nickname']?></h4>
+                    <div>
+                      <ul class="list-unstyled two-col clearfix">
+                        <li>餐廳名稱：<?=$v['name']?></li>
+                        <li>建立時間：<?=$v['creat_date']?></li>
+                        <li>留言內容：<?=nl2br($v['content'])?></li>
+                      </ul>
+                    </div>
+                    <div class="row justify-content-end">
+                      <input type="button" id="delete_comment<?=$v['id']?>" onclick="delete_comment(this.id);" name="delete_comment" value="刪除留言">
+                    </div>
+                  </div>
+                </div>
+              <?php 
+                }
+              ?>
+                <div class="row justify-content-center">
+                  <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                      <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=share&page=1">第一頁</a>
+                      </li>
+                      <li class="page-item <?=$_GET['page']==1?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=share&page=<?($page-1)?>">前一頁</a>
+                      </li>
+                      <?php for($i=1;$i<=$max_page;$i++){ ?>
+                        <li class="page-item <?= $_GET['page']==$i?'active':''?>">
+                          <a class="page-link" href="../view/mypage.php?cate=share&page=<?=$i?>"><?=$i?></a>
+                        </li>
+                      <?php } ?>
+                      <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=share&page=<?=($page+1)?>">下一頁</a>
+                      </li>
+                      <li class="page-item <?=$_GET['page']==$max_page?'disabled':''?>">
+                        <a class="page-link" href="../view/mypage.php?cate=share&page=<?=$max_page?>">最後一頁</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              <?php
+              }else{
+              ?>
+              <div class="row ml-2"><p>目前沒有留言</p></div>
+              <?php  
+              }
+              ?>
           </div>
         <?php } ?>
 
         <?php if(isset($_GET['cate']) && $_GET['cate']=='reservation'){ ?>
           <div class="col-lg-9">
             <h2 class="section-title text-left mb-4">預約餐廳</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-
-            <p class="mb-4"></p>
-
-            <ul class="list-unstyled two-col clearfix">
-              <li>Outdoor recreation activities</li>
-              <li>Airlines</li>
-              <li>Car Rentals</li>
-              <li>Cruise Lines</li>
-              <li>Hotels</li>
-              <li>Railways</li>
-              <li>Travel Insurance</li>
-              <li>Package Tours</li>
-              <li>Insurance</li>
-              <li>Guide Books</li>
-            </ul>
           </div>
         <?php } ?>
-      </div>
     </div>
   </div>
 
@@ -342,4 +385,21 @@ require_once('../DBPDO.php');
       return false;
     }
   }
+
+  function delete_comment(id) {
+    var postinfo = id.split("delete_comment");
+    if (confirm('確認刪除留言？')) {
+      $.ajax({
+        url: "../contral/delete.php",
+        type: "POST",
+        data: {"admin_commentID": postinfo[1]},
+          success: function(res) {
+            confirm("已經成功刪除留言");
+            document.location.reload(true);
+          }
+      });
+    } else {
+      alert('已取消刪除');
+    }
+  };
 </script>
