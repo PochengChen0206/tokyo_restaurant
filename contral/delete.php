@@ -12,7 +12,7 @@ if($_POST['mylist_rID']!=""){
 
 //刪除餐廳資訊
 if($_POST['admin_rID']!=""){
-  $delete_id = $_POST['admin_id'];
+  $delete_id = $_POST['admin_rID'];
 
   //刪除餐廳資訊寫入restaurant_info_delete
   $sql1 = "INSERT INTO `restaurant_info_delete`(`name`,`area`,`location`,`category`,`open_time`,`close_time`,`access`,`price_lunch`,`price_dinner`,`memo`,`link`,`creat_date`) SELECT `name`,`area`,`location`,`category`,`open_time`,`close_time`,`access`,`price_lunch`,`price_dinner`,`memo`,`link`,`creat_date` FROM `restaurant_info` WHERE `id` = :id";
