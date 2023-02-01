@@ -241,9 +241,9 @@ require_once('DBPDO.php');
 						?>
 							<div class="testimonial mx-auto">
 								<figure style="width:150px; margin:0 auto;">
-									<img src="<?=$image?>" alt="Image" class="img-fluid rounded-20">
+									<a href="./view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1"><img src="<?=$image?>" alt="Image" class="img-fluid rounded-20"></a>
 								</figure>
-								<h3><?=$restaurant?></h3>
+								<h3><a href="./view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1"><?=$restaurant?></a></h3>
 								<h3 class="name"><?=$nickname?></h3>
 								<blockquote>
 									<p class="mb-2">&ldquo;<?=$content?>&rdquo;</p>

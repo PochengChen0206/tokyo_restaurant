@@ -404,7 +404,7 @@ require_once('../DBPDO.php');
                     <h4><?=$v['nickname']?></h4>
                     <div>
                       <ul class="list-unstyled two-col clearfix">
-                        <li>餐廳名稱：<?=$v['name']?></li>
+                        <li>餐廳名稱：<a href="../view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1"><?=$v['name']?></a></li>
                         <li>建立時間：<?=$v['creat_date']?></li>
                         <li>留言內容：<?=nl2br($v['content'])?></li>
                       </ul>
