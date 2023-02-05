@@ -1,9 +1,3 @@
-<!-- /*
-* Template Name: Tour
-* Template Author: Untree.co
-* Tempalte URI: https://untree.co/
-* License: https://creativecommons.org/licenses/by/3.0/
-*/ -->
 <!doctype html>
 <html lang="en">
 <?php require_once('../view/head.php'); ?>
@@ -78,33 +72,37 @@
 </body>
 </html>
 <script>
-  function toSignUpPage(){
+  function toSignUpPage()
+  {
     window.location.href='../view/signup.php';
   }
 
-  function toForgetpasswordPage(){
+  function toForgetpasswordPage()
+  {
     window.location.href='../view/forget_password.php';
   }
 
-  function login_check(){
+  function login_check()
+  {
     var check_login_email = document.querySelector('#login_email');
     var check_login_password = document.querySelector('#login_password');
-    if(check_login_email.value==""){
+    if(check_login_email.value == ""){
       alert("請輸入email進行登入");
       return false;
     }
-    if(check_login_password.value==""){
+    if(check_login_password.value == ""){
       alert("請輸入密碼進行登入");
       return false;
     }
   }
 
-  function signup_check(){
+  function signup_check()
+  {
     var check_signup_user_name = document.querySelector('#signup_user_name');
     var check_signup_email = document.querySelector('#signup_email');
     var check_signup_password = document.querySelector('#signup_password');
 
-    if(check_signup_user_name.value==""){
+    if(check_signup_user_name.value == ""){
       alert("請輸入使用者名字進行註冊");
       return false;
     }
@@ -112,7 +110,7 @@
       alert("請輸入email進行註冊");
       return false;
     }
-    if(check_signup_password.value==""){
+    if(check_signup_password.value == ""){
       alert("請輸入密碼進行註冊");
       return false;
     }

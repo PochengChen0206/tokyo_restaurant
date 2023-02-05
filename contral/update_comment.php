@@ -6,8 +6,8 @@ $rID = $_POST['comment_rID'];
 
 $sql = "UPDATE `comment_info` SET `content` = :content, `update_date` = NOW() WHERE `id` = :id";
 $stmt = $dbpdo->prepare($sql);
-$stmt->bindParam(':content',$content,PDO::PARAM_STR);
-$stmt->bindParam(':id',$id,PDO::PARAM_STR);
+$stmt->bindParam(':content', $content,PDO::PARAM_STR);
+$stmt->bindParam(':id', $id, PDO::PARAM_STR);
 $stmt->execute();
 
 

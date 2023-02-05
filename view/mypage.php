@@ -335,22 +335,12 @@ require_once('../DBPDO.php');
   </div>
 
   <?php require_once('../view/footer.php'); ?>
-  <script src="../js/jquery-3.4.1.min.js"></script>
-  <script src="../js/popper.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/owl.carousel.min.js"></script>
-  <script src="../js/jquery.animateNumber.min.js"></script>
-  <script src="../js/jquery.waypoints.min.js"></script>
-  <script src="../js/jquery.fancybox.min.js"></script>
-  <script src="../js/aos.js"></script>
-  <script src="../js/moment.min.js"></script>
-  <script src="../js/daterangepicker.js"></script>
-  <script src="../js/typed.js"></script>  
-  <script src="../js/custom.js"></script>
+  <?php require_once('../view/src_js.php'); ?>
 </body>
 </html>
 <script>
-  function confirmdelete(id) {
+  function confirmdelete(id)
+  {
     var postinfo = id.split("delete_mylist");
     if (confirm('確認刪除？')) {
       $.ajax({
@@ -367,7 +357,8 @@ require_once('../DBPDO.php');
     }
   };
 
-  function setting_check(){
+  function setting_check()
+  {
     var check_setting_user_name = $('#setting_user_name').val();
     var check_setting_nickname = $('#setting_nickname').val();
     var check_setting_email = $('#setting_email').val();
@@ -386,7 +377,8 @@ require_once('../DBPDO.php');
     }
   }
 
-  function delete_comment(id) {
+  function delete_comment(id)
+  {
     var postinfo = id.split("delete_comment");
     if (confirm('確認刪除留言？')) {
       $.ajax({

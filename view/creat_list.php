@@ -17,9 +17,9 @@ require_once('../DBPDO.php');
         <select name="area" id="area">
           <option value="">請選擇區域</option>
         <?php 
-        $row=$dbpdo->prepare("SELECT * FROM `area_info`");
+        $row = $dbpdo->prepare("SELECT * FROM `area_info`");
         $row->execute();
-        foreach($row as $k=>$v){
+        foreach($row as $v){
         ?>
           <option value="<?=$v['area']?>"><?=$v['area']?></option>
         <?php 
@@ -38,9 +38,9 @@ require_once('../DBPDO.php');
         <select name="category" id="category">
           <option value="">請選擇分類</option>
         <?php 
-        $row=$dbpdo->prepare("SELECT * FROM `categories_info`");
+        $row = $dbpdo->prepare("SELECT * FROM `categories_info`");
         $row->execute();
-        foreach($row as $k=>$v){
+        foreach($row as $v){
         ?>
           <option value="<?=$v['cat_name']?>"><?=$v['cat_name']?></option>
         <?php 
@@ -67,9 +67,9 @@ require_once('../DBPDO.php');
         <select name="price_lunch" id="price_lunch">
           <option value="">請選擇分類</option>
           <?php 
-          $row=$dbpdo->prepare("SELECT * FROM `price_range`");
+          $row = $dbpdo->prepare("SELECT * FROM `price_range`");
           $row->execute();
-          foreach($row as $k=>$v){
+          foreach($row as $v){
           ?>
             <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
           <?php 
@@ -84,9 +84,9 @@ require_once('../DBPDO.php');
         <select name="price_dinner" id="price_dinner">
           <option value="">請選擇分類</option>
           <?php 
-          $row=$dbpdo->prepare("SELECT * FROM `price_range`");
+          $row = $dbpdo->prepare("SELECT * FROM `price_range`");
           $row->execute();
-          foreach($row as $k=>$v){
+          foreach($row as $v){
           ?>
             <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
           <?php 

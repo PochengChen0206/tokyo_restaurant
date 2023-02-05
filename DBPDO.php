@@ -14,4 +14,5 @@ try
   die("無法連上資料庫：" . $e->getMessage());
 }
 
+session_start();
 ?>

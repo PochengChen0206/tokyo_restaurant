@@ -244,22 +244,12 @@
   
 
 <?php require_once('../view/footer.php'); ?>
-<script src="../js/jquery-3.4.1.min.js"></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/owl.carousel.min.js"></script>
-<script src="../js/jquery.animateNumber.min.js"></script>
-<script src="../js/jquery.waypoints.min.js"></script>
-<script src="../js/jquery.fancybox.min.js"></script>
-<script src="../js/aos.js"></script>
-<script src="../js/moment.min.js"></script>
-<script src="../js/daterangepicker.js"></script>
-<script src="../js/typed.js"></script>  
-<script src="../js/custom.js"></script>
+<?php require_once('../view/src_js.php'); ?>
 </body>
 </html>
 <script>
-  function addto_mylist(id) {
+  function addto_mylist(id)
+  {
     var rID = $('#rID').val();
     var name = $('#name').val();
     var area = $('#area').val();
@@ -302,7 +292,8 @@
     }
   };
 
-  function content_check(){
+  function content_check()
+  {
 		var check_content =$('#content').val();
     if(check_content==""){
       alert("請輸入留言內容");
@@ -310,7 +301,8 @@
     }
 	}
 
-  function confirmdelete(id) {
+  function confirmdelete(id)
+  {
     var postinfo = id.split("delete_comment");
     if (confirm('確認刪除？')) {
       $.ajax({
@@ -327,12 +319,14 @@
     }
   };
 
-  function editcomment(id) {
+  function editcomment(id)
+  {
     var editid = id.split("edit_comment");
     window.location.href="../view/restaurant_detail.php?rID=<?=$rID?>&page=1&editid=" + editid[1];
   }
 
-  function goback_comment(){
+  function goback_comment()
+  {
     window.location.href="../view/restaurant_detail.php?rID=<?=$rID?>&page=1";
   }
 </script>

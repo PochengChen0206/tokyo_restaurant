@@ -1,7 +1,3 @@
-<?php  
-session_start();
-?>
-
 <?php if(stripos($_SERVER['PHP_SELF'],'index')){ ?>
 	<nav class="site-nav">
 		<div class="container">
@@ -28,7 +24,7 @@ session_start();
 					<li><a href="./view/restaurant_search.php?&area=all&category=all&price_range=all&page=1">搜尋餐廳</a></li>
 					<!-- <li><a href="contact.html">快速預約</a></li> -->
 					<?php if(isset($_SESSION['name'])){ ?>
-						<?php if($_SESSION['name']!="admindemo"){ ?>
+						<?php if($_SESSION['name'] != "admindemo"){ ?>
 							<li><a href="./view/mypage.php?cate=userinfo">會員中心</a></li>
 						<?php }?>
 					<?php }else{ ?>
@@ -75,7 +71,7 @@ session_start();
 					<!-- <li><a href="contact.html">快速預約</a></li> -->
 					
 					<?php if(isset($_SESSION['name'])){ ?>
-						<?php if($_SESSION['name']!="admindemo"){ ?>
+						<?php if($_SESSION['name'] != "admindemo"){ ?>
 							<li><a href="../view/mypage.php?cate=userinfo">會員中心</a></li>
 						<?php }?>
 					<?php }else{ ?>

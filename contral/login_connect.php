@@ -2,14 +2,14 @@
 require_once('../DBPDO.php');
   
 //驗證email
-if($_POST['login_email']==""){
+if($_POST['login_email'] == ""){
   echo "<script>alert('請輸入email');window.history.back(-1);</script>";
   exit();
 }
 
-$sql ="SELECT * FROM `user_info` WHERE `email` = :email";
+$sql = "SELECT * FROM `user_info` WHERE `email` = :email";
 $stmt = $dbpdo->prepare($sql);
-$stmt->bindParam(':email',$_POST['login_email'],PDO::PARAM_STR);
+$stmt->bindParam(':email', $_POST['login_email'], PDO::PARAM_STR);
 $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 foreach($result as $r1){
@@ -26,7 +26,7 @@ if(!isset($email)){
 }
 
 //驗證密碼
-if($_POST['login_password']==""){
+if($_POST['login_password'] == ""){
   echo "<script>alert('請輸入密碼');window.history.back(-1);</script>";
   exit();
 }

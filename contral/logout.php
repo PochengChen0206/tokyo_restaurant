@@ -1,5 +1,5 @@
 <?php
-require_once('../function.php');
+require_once('../contral/function.php');
 session_start();
 session_destroy();
 

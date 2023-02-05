@@ -69,23 +69,13 @@
   </div>
 
   <?php require_once('../view/footer.php'); ?>
-  <script src="../js/jquery-3.4.1.min.js"></script>
-  <script src="../js/popper.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/owl.carousel.min.js"></script>
-  <script src="../js/jquery.animateNumber.min.js"></script>
-  <script src="../js/jquery.waypoints.min.js"></script>
-  <script src="../js/jquery.fancybox.min.js"></script>
-  <script src="../js/aos.js"></script>
-  <script src="../js/moment.min.js"></script>
-  <script src="../js/daterangepicker.js"></script>
-  <script src="../js/typed.js"></script>  
-  <script src="../js/custom.js"></script>
+  <?php require_once('../view/src_js.php'); ?>
 </body>
 </html>
 
 <script>
-  function signup_check(){
+  function signup_check()
+  {
     var signup_user_name = $('#signup_user_name').val();
     var signup_nickname = $('#signup_nickname').val();
     var signup_email = $('#signup_email').val();

@@ -208,18 +208,7 @@
   
 
 <?php require_once('../view/footer.php'); ?>
-<script src="../js/jquery-3.4.1.min.js"></script>
-<script src="../js/popper.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/owl.carousel.min.js"></script>
-<script src="../js/jquery.animateNumber.min.js"></script>
-<script src="../js/jquery.waypoints.min.js"></script>
-<script src="../js/jquery.fancybox.min.js"></script>
-<script src="../js/aos.js"></script>
-<script src="../js/moment.min.js"></script>
-<script src="../js/daterangepicker.js"></script>
-<script src="../js/typed.js"></script>  
-<script src="../js/custom.js"></script>
+<?php require_once('../view/src_js.php'); ?>
 </body>
 </html>
 <script>
@@ -233,7 +222,8 @@
     format:'H:i'
   });
 
-  function check_open_time(){
+  function check_open_time()
+  {
     var open_time = $('#open_time').val();
     
     var check_open_time = open_time.match(/^([0-2][0-9]):([0-5][0-9])$/);    
@@ -247,7 +237,8 @@
     }
   }
 
-  function check_close_time(){
+  function check_close_time()
+  {
     var close_time = $('#close_time').val();
 
     var check_close_time = close_time.match(/^([0-2][0-9]):([0-5][0-9])$/);    
@@ -261,7 +252,8 @@
     }
   }
 
-  function update_check(){
+  function update_check()
+  {
     var name = $('#name').val();
     var area = $('#area').val();
     var location = $('#location').val();

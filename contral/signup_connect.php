@@ -1,7 +1,6 @@
 <?php
 require_once('../DBPDO.php');
-require_once('../function.php');
-
+require_once('../contral/function.php');
 //使用者名字
 if($_POST['signup_user_name']==""){
   echo alert_topre('請輸入使用者名稱');

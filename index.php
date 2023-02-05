@@ -30,12 +30,12 @@ require_once('DBPDO.php');
                       <select name="area" id="area" class="form-control custom-select">
                         <option value="">選擇區域</option>
                           <?php 
-                          $stmt=$dbpdo->prepare("SELECT * FROM `area_info`");
+                          $stmt = $dbpdo->prepare("SELECT * FROM `area_info`");
                           $stmt->execute();
 													$result_area = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                          foreach($result_area as $k1=>$v1){
+                          foreach($result_area as $value_area){
                           ?>
-                            <option value="<?=$v1['area']?>"><?=$v1['area']?></option>
+                            <option value="<?= $value_area['area'] ?>"><?= $value_area['area'] ?></option>
                           <?php 
                           } 
                           ?>
@@ -45,12 +45,12 @@ require_once('DBPDO.php');
                       <select name="category" id="category" class="form-control custom-select">
                         <option value="">請選擇分類</option>
                         <?php 
-                        $stmt=$dbpdo->prepare("SELECT * FROM `categories_info`");
+                        $stmt = $dbpdo->prepare("SELECT * FROM `categories_info`");
                         $stmt->execute();
-												$result_cat = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        foreach($result_cat as $k2=>$v2){
+												$result_category = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach($result_category as $value_category){
                         ?>
-                          <option value="<?=$v2['cat_name']?>"><?=$v2['cat_name']?></option>
+                          <option value="<?= $value_category['cat_name'] ?>"><?= $value_category['cat_name'] ?></option>
                         <?php 
                         }
                         ?>
@@ -60,12 +60,12 @@ require_once('DBPDO.php');
 											<select name="price_range" id="price_range" class="form-control custom-select">
                         <option value="">請選擇價格區間</option>
                         <?php 
-                        $stmt=$dbpdo->prepare("SELECT * FROM `price_range`");
+                        $stmt = $dbpdo->prepare("SELECT * FROM `price_range`");
                         $stmt->execute();
 												$result_price = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        foreach($result_price as $k3=>$v3){
+                        foreach($result_price as $value_price){
                         ?>
-                          <option value="<?=$v3['price_range']?>"><?=$v3['price_range']?></option>
+                          <option value="<?= $value_price['price_range'] ?>"><?= $pvalue_pricerice['price_range'] ?></option>
                         <?php 
                         }
                         ?>
@@ -225,29 +225,29 @@ require_once('DBPDO.php');
 					<div class="owl-single owl-carousel no-nav">
 						<?php 
 						$sql = "SELECT a.*, c.`name`, c.`index_image` FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` INNER JOIN `restaurant_info` c ON a.`rID` = c.`id` ORDER BY a.`creat_date` DESC LIMIT 0,5";
-						$stmt =  $dbpdo->prepare($sql);
+						$stmt = $dbpdo->prepare($sql);
 						$stmt->execute();
 						$result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
-						foreach($result_comment as $k=>$v){
-							$restaurant = $v['name'];
-							$content = nl2br($v['content']);
-							$nickname = $v['nickname'];
-							if($v['index_image']!=""){
-								$image = $v['index_image'];
+						foreach($result_comment as $value_comment){
+							$restaurant = $value_comment['name'];
+							$content = nl2br(htmlspecialchars($value_comment['content']));
+							$nickname = $value_comment['nickname'];
+							if($value_comment['index_image']!=""){
+								$image = $value_comment['index_image'];
 							}else{
 								$image = './images/image_prepare.jpg';
 							}
-							$creat_date = $v['creat_date'];
+							$creat_date = $value_comment['creat_date'];
 						?>
 							<div class="testimonial mx-auto">
 								<figure style="width:150px; margin:0 auto;">
-									<a href="./view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1"><img src="<?=$image?>" alt="Image" class="img-fluid rounded-20"></a>
+									<a href="./view/restaurant_detail.php?rID=<?= $value_comment['rID'] ?>&page=1"><img src="<?= $image ?>" alt="Image" class="img-fluid rounded-20"></a>
 								</figure>
-								<h3><a href="./view/restaurant_detail.php?rID=<?=$v['rID']?>&page=1"><?=$restaurant?></a></h3>
-								<h3 class="name"><?=$nickname?></h3>
+								<h3><a href="./view/restaurant_detail.php?rID=<?= $value_comment['rID'] ?>&page=1"><?= $restaurant ?></a></h3>
+								<h3 class="name"><?= $nickname ?></h3>
 								<blockquote>
-									<p class="mb-2">&ldquo;<?=$content?>&rdquo;</p>
-									<p><?=$creat_date?></p>
+									<p class="mb-2">&ldquo;<?= $content ?>&rdquo;</p>
+									<p><?= $creat_date ?></p>
 								</blockquote>
 							</div>	
 						<?php }?>
@@ -268,31 +268,29 @@ require_once('DBPDO.php');
 			<div class="row">
 			<?php
 				$cmd = "SELECT * FROM `restaurant_info` ORDER BY `id` DESC LIMIT 8";
-				$stmt=$dbpdo->prepare($cmd);
+				$stmt = $dbpdo->prepare($cmd);
 				$stmt->execute();
-				$result_new = $stmt->fetchAll(PDO::FETCH_ASSOC);
-				foreach($result_new as $k=>$v){
+				$result_restaurant_info = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				foreach($result_restaurant_info as $value_restaurant){
 				?>
 					<div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
 						<div class="media-1">
-							<a href="./view/restaurant_detail.php?rID=<?=$v['id']?>&page=1" class="d-block mb-3">
-								<?php 
-								if($v['index_image']!=""){
-								?>
-									<img src="<?=$v['index_image']?>" alt="Image" class="img-fluid">
+							<a href="./view/restaurant_detail.php?rID=<?= $value_restaurant['id'] ?>&page=1" class="d-block mb-3">
+								<?php if($value_restaurant['index_image'] != ""){ ?>
+									<img src="<?= $value_restaurant['index_image'] ?>" alt="Image" class="img-fluid">
 								<?php }else{ ?>
 									<img src="./images/image_prepare.jpg" alt="Image" class="img-fluid">
 								<?php } ?>
 							</a>
 							<span class="d-flex align-items-center loc mb-2">
 								<span class="icon-room mr-3"></span>
-								<span><?=$v['area']?></span>
+								<span><?= $value_restaurant['area'] ?></span>
 							</span>
 							<div class="d-flex align-items-center">
 								<div>
-									<h3><a href="./view/restaurant_detail.php?rID=<?=$v['id']?>&page=1"><?=$v['name']?></a></h3>
+									<h3><a href="./view/restaurant_detail.php?rID=<?= $value_restaurant['id'] ?>&page=1"><?= $value_restaurant['name'] ?></a></h3>
 									<div class="price ml-auto">
-										<span><?=$v['access']?></span>
+										<span><?= $value_restaurant['access'] ?></span>
 									</div>
 								</div>
 							</div>
@@ -300,8 +298,8 @@ require_once('DBPDO.php');
 								<div>
 									<div class="ml-auto">
 										<p>
-											<?php if($v['link']!=""){ ?>
-												<a class="c-hover" href="<?=$v['link']?>" target="_blank">前往餐廳網站</a>
+											<?php if($value_restaurant['link'] != ""){ ?>
+												<a class="c-hover" href="<?= $value_restaurant['link'] ?>" target="_blank">前往餐廳網站</a>
 											<?php 
 											}else{
 												echo "暫無網站";
@@ -313,7 +311,7 @@ require_once('DBPDO.php');
 							<div class="d-flex align-items-center">
 								<div>
 									<div class="price ml-auto">
-										<p>更新時間：<?=date("Y/m/d",strtotime($v['creat_date']))?></p>
+										<p>更新時間：<?= date("Y/m/d", strtotime($value_restaurant['creat_date'])) ?></p>
 									</div>
 								</div>
 							</div>
@@ -341,17 +339,7 @@ require_once('DBPDO.php');
 	</div>
 
 	<?php require_once('./view/footer.php'); ?>
-	<script src="js/jquery-3.4.1.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/jquery.animateNumber.min.js"></script>
-	<script src="js/jquery.waypoints.min.js"></script>
-	<script src="js/jquery.fancybox.min.js"></script>
-	<script src="js/aos.js"></script>
-	<script src="js/moment.min.js"></script>
-	<script src="js/daterangepicker.js"></script>
-	<script src="js/typed.js"></script>
+	<?php require_once('./view/src_js.php'); ?>
 	<script>
 		$(function() {
 			var slides = $('.slides'),
@@ -382,7 +370,8 @@ require_once('DBPDO.php');
 </body>
 </html>
 <script>
-	function search_check(){
+	function search_check()
+	{
 		var check_area =$('#area').val();
     var check_category = $('#category').val();
     var check_price_range = $('#price_range').val();

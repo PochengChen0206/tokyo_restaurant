@@ -3,7 +3,7 @@ require_once('../DBPDO.php');
 $check_search = array();
 foreach($_POST as $k=>$v){
   //使用strip_tags避免area的連接符號造成亂碼
-  $check_search[$k]=strip_tags($v);
+  $check_search[$k] = strip_tags($v);
 }
 
 $select = http_build_query($check_search);
