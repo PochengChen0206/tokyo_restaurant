@@ -26,12 +26,12 @@
     </div>
   </div>
   <?php
-  $rID=$_GET['rID'];
-  $stmt=$dbpdo->prepare("SELECT * FROM `restaurant_info` WHERE `id` = :rID");
-  $stmt->bindParam(':rID',$rID,PDO::PARAM_STR);
+  $rID = $_GET['rID'];
+  $stmt = $dbpdo->prepare("SELECT * FROM `restaurant_info` WHERE `id` = :rID");
+  $stmt->bindParam(':rID', $rID, PDO::PARAM_STR);
   $stmt->execute();
   $result_detail = $stmt->fetchAll(PDO::FETCH_ASSOC);
-  foreach($result_detail as $k=>$v){
+  foreach($result_detail as $v){
     $name = $v['name'];
     $memo = nl2br($v['memo']);
     $area = $v['area'];
@@ -42,25 +42,25 @@
     $close_time = $v['close_time'];
     $price_lunch = $v['price_lunch'];
     $price_dinner = $v['price_dinner'];
-    $link = ($v['link']!=""?$v['link']:"暫無<br>網站");
+    $link = ($v['link'] != "" ? $v['link'] : "暫無<br>網站");
   ?>
     <div class="untree_co-section">
       <div class="container">
         <div class="row">
           <div class="col-lg-6">
             <div class="owl-single dots-absolute owl-carousel">
-              <?php if($v['image1']!=""){ ?>
-                <img src="<?=$v['image1']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+              <?php if($v['image1'] != ""){ ?>
+                <img src="<?= $v['image1'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
               <?php }else{ ?>
                 <div class="col-8">
                   <img src="../images/image_prepare.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
               <?php } ?>
-              <?php if($v['image2']!=""){ ?>
-                <img src="<?=$v['image2']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+              <?php if($v['image2'] != ""){ ?>
+                <img src="<?= $v['image2'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
               <?php }?>
-              <?php if($v['image3']!=""){ ?>
-                <img src="<?=$v['image3']?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+              <?php if($v['image3'] != ""){ ?>
+                <img src="<?= $v['image3'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
               <?php }?>
             </div>
           </div>
@@ -70,22 +70,22 @@
                 <div class="col-6">
                   <div class="form-group">
                     <label class="text-black">餐廳名稱</label>
-                    <input class="form-control" type="text" id="name" name="name" value="<?=$name?>" required>
+                    <input class="form-control" type="text" id="name" name="name" value="<?= $name ?>" required>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                     <label class="text-black">區域</label>
                     <select name="area" id="area" class="form-control custom-select">
-                      <option value="<?=$area?>"><?=$area?></option>
+                      <option value="<?= $area ?>"><?= $area ?></option>
                     <?php 
-                    $stmt=$dbpdo->prepare("SELECT * FROM `area_info`");
+                    $stmt = $dbpdo->prepare("SELECT * FROM `area_info`");
                     $stmt->execute();
                     $result_area = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_area as $k=>$v){
-                      if($v['area']==$area){continue;}
+                    foreach($result_area as $v){
+                      if($v['area'] == $area){continue;}
                     ?>
-                      <option value="<?=$v['area']?>"><?=$v['area']?></option>
+                      <option value="<?= $v['area'] ?>"><?= $v['area'] ?></option>
                     <?php 
                     }
                     ?>
@@ -97,22 +97,22 @@
                 <div class="col-6">
                   <div class="form-group">
                     <label class="text-black">地點</label>
-                    <input class="form-control" type="text" id="location" name="location" value="<?=$location?>" required>
+                    <input class="form-control" type="text" id="location" name="location" value="<?= $location ?>" required>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                     <label class="text-black">分類</label>
                     <select name="category" id="category" class="form-control custom-select">
-                      <option value="<?=$category?>"><?=$category?></option>
+                      <option value="<?= $category ?>"><?= $category ?></option>
                     <?php 
-                    $stmt=$dbpdo->prepare("SELECT * FROM `categories_info`");
+                    $stmt = $dbpdo->prepare("SELECT * FROM `categories_info`");
                     $stmt->execute();
                     $result_categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_categories as $k=>$v){
-                      if($v['cat_name']==$category){continue;}
+                    foreach($result_categories as $v){
+                      if($v['cat_name'] == $category){continue;}
                     ?>
-                      <option value="<?=$v['cat_name']?>"><?=$v['cat_name']?></option>
+                      <option value="<?= $v['cat_name'] ?>"><?= $v['cat_name'] ?></option>
                     <?php 
                     }
                     ?>
@@ -124,13 +124,13 @@
                 <div class="col-6">
                   <div class="form-group">
                     <label class="text-black">開始營業時間</label>
-                    <input class="form-control" type="text" id="open_time" name="open_time" value="<?=$open_time?>" onblur="check_open_time();">
+                    <input class="form-control" type="text" id="open_time" name="open_time" value="<?= $open_time ?>" onblur="check_open_time();">
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="form-group">
                     <label class="text-black">結束營業時間</label>
-                    <input class="form-control" type="text" id="close_time" name="close_time" value="<?=$close_time?>" onblur="check_close_time();">
+                    <input class="form-control" type="text" id="close_time" name="close_time" value="<?= $close_time ?>" onblur="check_close_time();">
                   </div>
                 </div>
               </div>
@@ -139,15 +139,15 @@
                   <div class="form-group">
                     <label class="text-black">午餐預算</label>
                     <select name="price_lunch" id="price_lunch" class="form-control custom-select">
-                      <option value="<?=$price_lunch?>"><?=$price_lunch?></option>
+                      <option value="<?= $price_lunch ?>"><?= $price_lunch ?></option>
                     <?php 
-                    $stmt=$dbpdo->prepare("SELECT * FROM `price_range`");
+                    $stmt = $dbpdo->prepare("SELECT * FROM `price_range`");
                     $stmt->execute();
                     $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_price_range as $k=>$v){
-                      if($v['price_range']==$price_lunch){ continue;}
+                    foreach($result_price_range as $v){
+                      if($v['price_range'] == $price_lunch){ continue;}
                     ?>
-                      <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
+                      <option value="<?= $v['price_range'] ?>"><?= $v['price_range'] ?></option>
                     <?php 
                     }
                     ?>
@@ -158,15 +158,15 @@
                   <div class="form-group">
                     <label class="text-black">晚餐預算</label>
                     <select name="price_dinner" id="price_dinner" class="form-control custom-select">
-                      <option value="<?=$price_dinner?>"><?=$price_dinner?></option>
+                      <option value="<?= $price_dinner ?>"><?= $price_dinner ?></option>
                     <?php 
-                    $stmt=$dbpdo->prepare("SELECT * FROM `price_range`");
+                    $stmt = $dbpdo->prepare("SELECT * FROM `price_range`");
                     $stmt->execute();
                     $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_price_range as $k=>$v){
-                      if($v['price_range']==$price_dinner){ continue;}
+                    foreach($result_price_range as $v){
+                      if($v['price_range'] == $price_dinner){ continue;}
                     ?>
-                      <option value="<?=$v['price_range']?>"><?=$v['price_range']?></option>
+                      <option value="<?= $v['price_range'] ?>"><?= $v['price_range'] ?></option>
                     <?php 
                     }
                     ?>
@@ -178,7 +178,7 @@
                 <div class="col-6">
                   <div class="form-group">
                     <label class="text-black">交通</label>
-                    <input class="form-control" type="text" id="access" name="access" value="<?=$access?>">
+                    <input class="form-control" type="text" id="access" name="access" value="<?= $access ?>">
                   </div>
                 </div>
                 <div class="col-6">
@@ -190,10 +190,10 @@
               </div>
               <div class="form-group">
                 <label class="text-black">備註</label>
-                <textarea class="form-control" name="memo" id="memo" rows="5"><?=$memo?></textarea>
+                <textarea class="form-control" name="memo" id="memo" rows="5"><?= $memo ?></textarea>
               </div>
               <div class="row justify-content-center">
-                <input type="hidden" id="rID" name="rID" value="<?=$rID?>">
+                <input type="hidden" id="rID" name="rID" value="<?= $rID ?>">
                 <button type="submit" class="col-4 btn btn-primary mt-2">修改餐廳資訊</button>
               </div>
               <div class="row justify-content-center">
