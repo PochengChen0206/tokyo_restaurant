@@ -82,28 +82,28 @@
     var signup_password = $('#signup_password').val();
     var signup_password_check = $('#signup_password_check').val();
 
-    if(signup_user_name==""){
+    if(signup_user_name == ""){
       alert("請輸入會員名字進行註冊");
       return false;
     }
-    if(signup_nickname==""){
+    if(signup_nickname == ""){
       alert("請輸入會員暱稱進行註冊");
       return false;
     }
-    if(signup_email==""){
+    if(signup_email == ""){
       alert("請輸入email進行註冊");
       return false;
     }
-    if(signup_password==""){
+    if(signup_password == ""){
       alert("請輸入密碼進行註冊");
       return false;
     }
-    if(signup_password_check==""){
+    if(signup_password_check == ""){
       alert("請輸入確認密碼進行註冊");
       return false;
     }
 
-    if(signup_password!=signup_password_check){
+    if(signup_password != signup_password_check){
       alert("請重新確認密碼進行註冊");
       return false;
     }

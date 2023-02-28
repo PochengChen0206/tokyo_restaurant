@@ -11,14 +11,13 @@ $sql = "SELECT * FROM `user_info` WHERE `email` = :email";
 $stmt = $dbpdo->prepare($sql);
 $stmt->bindParam(':email', $_POST['login_email'], PDO::PARAM_STR);
 $stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-foreach($result as $r1){
-  $password_hash = $r1['password'];
-  $email = $r1['email'];
-  $nickname = $r1['nickname'];
-  $userID = $r1['userID'];
-  $user_level = $r1['user_level'];
-}
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$password_hash = $result['password'];
+$email = $result['email'];
+$nickname = $result['nickname'];
+$userID = $result['userID'];
+$user_level = $result['user_level'];
 
 if(!isset($email)){
   echo "<script>alert('請檢查輸入的email或密碼是否正確');window.history.back(-1);</script>";
@@ -34,11 +33,10 @@ if($_POST['login_password'] == ""){
 $password = $_POST['login_password'];
 
 if (password_verify($password, $password_hash)) {
-  session_start();
   $_SESSION['userID'] = $userID;
   $_SESSION['name'] = $nickname;
   $_SESSION['level'] = $user_level;
-  echo "<script>alert('登入成功');window.location.href='../index.php'</script>";
+  header("Location:../index.php");
 }else{
   echo "<script>alert('請檢查輸入的email或密碼是否正確');window.history.back(-1);</script>";
   exit();

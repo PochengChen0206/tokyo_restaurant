@@ -40,15 +40,15 @@
               <input type="email" class="form-control" id="login_email" name="login_email" placeholder="請輸入email" required>
             </div>
             <div class="form-group">
-              <label class="text-black" for="email">密碼</label>
+              <label class="text-black" for="password">密碼</label>
               <input type="password" class="form-control" id="login_password" name="login_password" placeholder="請輸入密碼" required>
             </div>
             <div class="row justify-content-center">
               <button type="submit" class="col-4 btn btn-primary mt-2">登入</button>
             </div>
-            <!-- <div class="row justify-content-end">
+            <div class="row justify-content-end">
               <button type="button" class="btn btn-outline-dark btn-sm mt-2" onclick="toForgetpasswordPage();">忘記密碼</button>
-            </div> -->
+            </div>
           </form>
           
         </div>
@@ -57,18 +57,7 @@
   </div>
 
   <?php require_once('../view/footer.php'); ?>
-  <script src="../js/jquery-3.4.1.min.js"></script>
-  <script src="../js/popper.min.js"></script>
-  <script src="../js/bootstrap.min.js"></script>
-  <script src="../js/owl.carousel.min.js"></script>
-  <script src="../js/jquery.animateNumber.min.js"></script>
-  <script src="../js/jquery.waypoints.min.js"></script>
-  <script src="../js/jquery.fancybox.min.js"></script>
-  <script src="../js/aos.js"></script>
-  <script src="../js/moment.min.js"></script>
-  <script src="../js/daterangepicker.js"></script>
-  <script src="../js/typed.js"></script>  
-  <script src="../js/custom.js"></script>
+  <?php require_once('../view/src_js.php'); ?>
 </body>
 </html>
 <script>
