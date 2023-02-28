@@ -72,13 +72,13 @@
 					
 					<?php if(isset($_SESSION['name'])){ ?>
 						<?php if($_SESSION['name'] != "admindemo"){ ?>
-							<li><a href="../view/mypage.php?cate=userinfo">會員中心</a></li>
-						<?php }?>
+						<li><a href="../view/mypage.php?cate=userinfo">會員中心</a></li>
+						<?php } ?>
 					<?php }else{ ?>
 						<li><a href="../view/login.php">LOGIN</a></li>
 					<?php } ?>
 
-					<!-- //管理者帳號 -->
+					<!-- 管理者帳號 -->
 					<?php if(isset($_SESSION['level']) && $_SESSION['level'] == "1"){ ?>
 						<li><a href="../view/admin.php?cate=edit&page=1">管理後台</a></li>
 					<?php } ?>
