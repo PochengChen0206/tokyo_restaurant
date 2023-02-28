@@ -50,18 +50,32 @@
           <div class="col-lg-6">
             <div class="owl-single dots-absolute owl-carousel">
               <?php if($v['image1'] != ""){ ?>
-                <img src="<?= $v['image1'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                <div style="overflow: hidden;">
+                  <img src="<?= $v['image1'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                </div>
               <?php }else{ ?>
-                <div class="col-8">
+                <div class="col-8" style="overflow: hidden;">
                   <img src="../images/image_prepare.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
               <?php } ?>
               <?php if($v['image2'] != ""){ ?>
+                <div style="overflow: hidden;">
                 <img src="<?= $v['image2'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                </div>
               <?php }?>
               <?php if($v['image3'] != ""){ ?>
-                <img src="<?= $v['image3'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                <div style="overflow: hidden;">
+                  <img src="<?= $v['image3'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                </div>
               <?php }?>
+            </div>
+            <br>
+            <div class="col-12 rounded-20" style="overflow: hidden;">
+              <?php 
+                if($v['map_html'] != ""){
+                  echo $v['map_html'];
+                }
+              ?>
             </div>
           </div>
           <div class="col-lg-6 pl-lg-6 ml-auto">

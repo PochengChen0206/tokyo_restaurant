@@ -70,7 +70,7 @@ require_once('../DBPDO.php');
           if($total_restaurant > 0){
             foreach($result as $v){
               if($v['index_image'] != ""){
-                $img = '.'.$v['index_image'];
+                $img = $v['index_image'];
               }else{
                 $img = "../images/image_prepare.jpg";
               }
@@ -140,7 +140,7 @@ require_once('../DBPDO.php');
         <?php if(isset($_GET['cate']) && $_GET['cate'] == 'new'){ ?>
           <div class="col-lg-9">
             <h2 class="section-title text-left mb-4">餐廳新增</h2>
-              <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/insert_into.php" method="post" onsubmit="return insert_check();">
+              <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/insert_into.php" method="post" enctype="multipart/form-data" onsubmit="return insert_check(); check_open_time(); check_close_time();">
                 <div class="row">
                   <div class="col-6">
                     <div class="form-group">
@@ -197,13 +197,13 @@ require_once('../DBPDO.php');
                   <div class="col-6">
                     <div class="form-group">
                       <label class="text-black">開始營業時間</label>
-                      <input class="form-control" type="text" id="open_time" name="open_time" placeholder="請選擇開始營業時間" onblur="check_open_time();">
+                      <input class="form-control" type="text" id="open_time" name="open_time" placeholder="請選擇開始營業時間">
                     </div>
                   </div>
                   <div class="col-6">
                     <div class="form-group">
                       <label class="text-black">結束營業時間</label>
-                      <input class="form-control" type="text" id="close_time" name="close_time" placeholder="請選擇結束營業時間" onblur="check_close_time();">
+                      <input class="form-control" type="text" id="close_time" name="close_time" placeholder="請選擇結束營業時間">
                     </div>
                   </div>
                 </div>
@@ -256,6 +256,42 @@ require_once('../DBPDO.php');
                     <div class="form-group">
                       <label class="text-black">餐廳網站</label>
                       <input class="form-control" type="text" name="link" id="link" placeholder="請輸入餐廳網站">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">餐廳照片1</label>
+                      <input class="form-control" type="file" name="image1" accept="image/*">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">餐廳照片2</label>
+                      <input class="form-control" type="file" name="image2" accept="image/*">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">餐廳照片3</label>
+                      <input class="form-control" type="file" name="image3" accept="image/*">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="form-group">
+                      <label class="text-black">餐廳照片(封面)</label>
+                      <input class="form-control" type="file" name="index_image" accept="image/*">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label class="text-black">餐廳地圖HTML資訊</label>
+                      <input class="form-control" type="text" id="map_html" name="map_html" placeholder="請輸入餐廳地圖HTML資訊">
                     </div>
                   </div>
                 </div>
@@ -436,13 +472,9 @@ require_once('../DBPDO.php');
                     </ul>
                   </nav>
                 </div>
-              <?php
-              }else{
-              ?>
-              <div class="row ml-2"><p>目前沒有留言</p></div>
-              <?php  
-              }
-              ?>
+              <?php }else{ ?>
+                <div class="row ml-2"><p>目前沒有留言</p></div>
+              <?php } ?>
           </div>
         <?php } ?>
       </div>

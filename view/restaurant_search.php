@@ -167,7 +167,7 @@ if($arr_search_word){
           if($total_restaurant>0){
             foreach($result as $k=>$v){
               if($v['index_image']!=""){
-                $img = '.'.$v['index_image'];
+                $img = $v['index_image'];
               }else{
                 $img = "../images/image_prepare.jpg";
               }
