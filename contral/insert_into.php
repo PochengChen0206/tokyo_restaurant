@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once('../DBPDO.php');
 require_once('../contral/function.php');
 
@@ -28,8 +27,65 @@ if($_POST['formID'] == 'creat_list'){
   $price_dinner = $_POST['price_dinner'];
   $memo = $_POST['memo'];
   $link = $_POST['link'];
+  $image1 = $_FILES['image1'];
+  $image2 = $_FILES['image2'];
+  $image3 = $_FILES['image3'];
+  $index_image = $_FILES['index_image'];
+  $map_html = $_POST['map_html'];
 
-  $cmd = "INSERT INTO `restaurant_info`(`name`, `area`, `location`, `category`, `open_time`, `close_time`, `access`, `price_lunch`, `price_dinner`, `memo`, `link`, `creat_date`) VALUES(:name, :area, :location, :category, :open_time, :close_time, :access, :price_lunch, :price_dinner, :memo, :link, NOW())";
+  //餐廳照片1
+  if($image1['size']>0){
+    if($image1['size']>1000000){
+      echo alert_topre('上傳照片容量太大');
+      exit();
+    }else{
+      $uploaded_path1 = "../images/restaurant_image1/".$image1['name'];
+      move_uploaded_file($image1['tmp_name'],$uploaded_path1);
+    }
+  }else{
+    $uploaded_path1 = '';
+  }
+
+  //餐廳照片2
+  if($image2['size']>0){
+    if($image2['size']>1000000){
+      echo alert_topre('上傳照片容量太大');
+      exit();
+    }else{
+      $uploaded_path2 = "../images/restaurant_image2/".$image2['name'];
+      move_uploaded_file($image2['tmp_name'],$uploaded_path2);
+    }
+  }else{
+    $uploaded_path2 = '';
+  }
+
+  //餐廳照片3
+  if($image3['size']>0){
+    if($image3['size']>1000000){
+      echo alert_topre('上傳照片容量太大');
+      exit();
+    }else{
+      $uploaded_path3 = "../images/restaurant_image3/".$image3['name'];
+      move_uploaded_file($image3['tmp_name'],$uploaded_path3);
+    }
+  }else{
+    $uploaded_path3 = '';
+  }
+
+  //餐廳照片(封面照片)
+  if($index_image['size']>0){
+    if($index_image['size']>1000000){
+      echo alert_topre('上傳照片容量太大');
+      exit();
+    }else{
+      $uploaded_path_index_image = "../images/restaurant_index_image/".$index_image['name'];
+      move_uploaded_file($index_image['tmp_name'],$uploaded_path_index_image);
+    }
+  }else{
+    $uploaded_path_index_image = '';
+  }
+
+  $cmd = "INSERT INTO `restaurant_info`(`name`, `area`, `location`, `category`, `open_time`, `close_time`, `access`, `price_lunch`, `price_dinner`, `memo`, `link`, `image1`, `image2`, `image3`, `index_image`, `map_html`, `creat_date`) VALUES(:name, :area, :location, :category, :open_time, :close_time, :access, :price_lunch, :price_dinner, :memo, :link, :image1, :image2, :image3, :index_image, :map_html, NOW())";
 
   $stmt = $dbpdo->prepare($cmd);
   $stmt->bindParam(':name', $name, PDO::PARAM_STR);
@@ -43,6 +99,11 @@ if($_POST['formID'] == 'creat_list'){
   $stmt->bindParam(':price_dinner', $price_dinner, PDO::PARAM_STR);
   $stmt->bindParam(':memo', $memo, PDO::PARAM_STR);
   $stmt->bindParam(':link', $link, PDO::PARAM_STR);
+  $stmt->bindParam(':image1', $uploaded_path1, PDO::PARAM_STR);
+  $stmt->bindParam(':image2', $uploaded_path2, PDO::PARAM_STR);
+  $stmt->bindParam(':image3', $uploaded_path3, PDO::PARAM_STR);
+  $stmt->bindParam(':index_image', $uploaded_path_index_image, PDO::PARAM_STR);
+  $stmt->bindParam(':map_html', $map_html, PDO::PARAM_STR);
   $stmt->execute();
 
   echo "<script>alert('新增成功');window.location.href='http://localhost/pocheng/tokyo_restaurant/view/admin.php?cate=edit'</script>";
