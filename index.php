@@ -161,7 +161,7 @@ require_once('DBPDO.php');
 			<div class="owl-carousel owl-3-slider">
 
 				<div class="item">
-					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=咖啡廳&price_range=&page=1">
+					<a class="media-thumb" href="./view/restaurant_search.php?&area=&category=咖啡廳&price_range=&page=1">
 						<div class="media-text">
 							<h3>咖啡廳</h3>
 						</div>
@@ -170,7 +170,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=壽司&price_range=&page=1">
+					<a class="media-thumb" href="./view/restaurant_search.php?&area=&category=壽司&price_range=&page=1">
 						<div class="media-text">
 							<h3>壽司</h3>
 						</div>
@@ -179,7 +179,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=甜點&price_range=&page=1">
+					<a class="media-thumb" href="./view/restaurant_search.php?&area=&category=甜點&price_range=&page=1">
 						<div class="media-text">
 							<h3>甜點</h3>
 						</div>
@@ -188,7 +188,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=拉麵&price_range=&page=1">
+					<a class="media-thumb" href="./view/restaurant_search.php?&area=&category=拉麵&price_range=&page=1">
 						<div class="media-text">
 							<h3>拉麵</h3>
 						</div>
@@ -197,7 +197,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=酒吧&price_range=&page=1">
+					<a class="media-thumb" href="./view/restaurant_search.php?&area=&category=酒吧&price_range=&page=1">
 						<div class="media-text">
 							<h3>酒吧</h3>
 						</div>
@@ -206,7 +206,7 @@ require_once('DBPDO.php');
 				</div>
 
 				<div class="item">
-					<a class="media-thumb" href="http://localhost/pocheng/tokyo_restaurant/view/restaurant_search.php?&area=&category=海鮮丼&price_range=&page=1">
+					<a class="media-thumb" href="./view/restaurant_search.php?&area=&category=海鮮丼&price_range=&page=1">
 						<div class="media-text">
 							<h3>海鮮丼</h3>
 						</div>
@@ -233,7 +233,8 @@ require_once('DBPDO.php');
 							$content = nl2br(htmlspecialchars($value_comment['content']));
 							$nickname = $value_comment['nickname'];
 							if($value_comment['index_image']!=""){
-								$image = $value_comment['index_image'];
+								//index的路徑和存入restaurant_info的路徑不同，所以需要少一層
+								$image = substr_replace($value_comment['index_image'],'',0,1);
 							}else{
 								$image = './images/image_prepare.jpg';
 							}
@@ -276,8 +277,11 @@ require_once('DBPDO.php');
 					<div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
 						<div class="media-1">
 							<a href="./view/restaurant_detail.php?rID=<?= $value_restaurant['id'] ?>&page=1" class="d-block mb-3">
-								<?php if($value_restaurant['index_image'] != ""){ ?>
-									<img src="<?= $value_restaurant['index_image'] ?>" alt="Image" class="img-fluid">
+								<?php 
+									if($value_restaurant['index_image'] != ""){ 
+										$restaurant_image = substr_replace($value_restaurant['index_image'],'',0,1);
+								?>
+									<img src="<?= $restaurant_image ?>" alt="Image" class="img-fluid">
 								<?php }else{ ?>
 									<img src="./images/image_prepare.jpg" alt="Image" class="img-fluid">
 								<?php } ?>
@@ -359,7 +363,6 @@ require_once('DBPDO.php');
 				showCursor: true,
 				preStringTyped: (arrayPos, self) => {
 					arrayPos++;
-					// console.log(arrayPos);
 					$('.slides img').removeClass('active');
 					$('.slides img[data-id="'+arrayPos+'"]').addClass('active');
 				}
