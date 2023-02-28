@@ -66,6 +66,7 @@ require_once('../DBPDO.php');
           <div class="feature-1">
             <ul class="list-unstyled clearfix">
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=userinfo">個人資料設定</a></li>
+              <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=password_reset">修改密碼</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=collect&page=1">我的收藏</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=share&page=1">我的留言</a></li>
               <li class="mb-3"><a class="col-9 btn btn-outline-dark" href="../view/mypage.php?cate=reservation">預約餐廳</a></li>
@@ -128,15 +129,12 @@ require_once('../DBPDO.php');
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="text-black">電子信箱</label>
-                  <input class="form-control" type="email" id="setting_email"  name="setting_email" value="<?= $v['email'] ?>" required>
-                </div>
-                <div class="form-group">
                   <label class="text-black">個人頭像</label>
-                  <input type="file" name="opload_image" accept="image/*">
+                  <input class="form-control" type="file" name="opload_image" accept="image/*">
                   <input type="hidden" name="user_image" value="<?= $v['user_image'] ?>">
                 </div>
                 <div class="row justify-content-center">
+                  <input type="hidden" name="formID" value="seeting_userinfo">
                   <button type="submit" class="col-3 btn btn-primary mt-2">更新個人資料</button>
                 </div>
                 <div class="row justify-content-center">
@@ -147,7 +145,38 @@ require_once('../DBPDO.php');
           </div>
         <?php } ?>
 
-
+        <?php if(isset($_GET['cate']) && $_GET['cate'] == 'password_reset'){ ?>
+          <div class="col-lg-9">
+            <h2 class="section-title text-left mb-4">修改密碼</h2>
+            <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/setting_userinfo.php" method="post" enctype="multipart/form-data" onsubmit="returnpassword_reset_check();">
+              <div class="col-10">
+                <div class="form-group">
+                  <label class="text-black" for="password">輸入舊密碼</label>
+                  <input type="password" class="form-control" id="password_now" name="password_now"placeholder="請輸入舊密碼" required>
+                </div>
+              </div>
+              <div class="col-10">
+                <div class="form-group">
+                  <label class="text-black" for="password">輸入新密碼</label>
+                  <input type="password" class="form-control" id="password_new" name="password_new"placeholder="請輸入新密碼" required>
+                </div>
+              </div>
+              <div class="col-10">
+                <div class="form-group">
+                  <label class="text-black" for="password">確認新密碼</label>
+                  <input type="password" class="form-control" id="password_new_check" name="password_new_check"placeholder="請再次輸入新密碼" required>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <input type="hidden" name="formID" value="password_reset">
+                <button type="submit" class="col-3 btn btn-primary mt-2">修改密碼</button>
+              </div>
+              <div class="row justify-content-center">
+                <a class="col-3 btn btn-primary mt-2" href="../view/mypage.php?cate=userinfo">返回個人資料設定<a>
+              </div>
+            </form>
+          </div>
+        <?php } ?>
 
         <?php if(isset($_GET['cate']) && $_GET['cate'] == 'collect'){ ?>
           <div class="col-lg-9">
@@ -359,15 +388,15 @@ require_once('../DBPDO.php');
     var check_setting_nickname = $('#setting_nickname').val();
     var check_setting_email = $('#setting_email').val();
 
-    if(check_setting_user_name==""){
+    if(check_setting_user_name == ""){
       alert("請輸入會員名字進行修改");
       return false;
     }
-    if(check_setting_nickname==""){
+    if(check_setting_nickname == ""){
       alert("請輸入會員暱稱進行修改");
       return false;
     }
-    if(check_setting_email==""){
+    if(check_setting_email == ""){
       alert("請輸入email進行修改");
       return false;
     }
@@ -388,6 +417,17 @@ require_once('../DBPDO.php');
       });
     } else {
       alert('已取消刪除');
+    }
+  };
+
+  function password_reset_check()
+  {
+    var password_new = $('#password_new').val();
+    var password_new_check = $('#password_new_check').val();
+
+    if(password_new != password_new_check){
+      alert("請重新確認新密碼輸入");
+      return false;
     }
   };
 </script>
