@@ -43,43 +43,48 @@
     $price_lunch = $v['price_lunch'];
     $price_dinner = $v['price_dinner'];
     $link = ($v['link'] != "" ? $v['link'] : "暫無<br>網站");
+    $image1 = $v['image1'];
+    $image2 = $v['image2'];
+    $image3 = $v['image3'];
+    $index_image = $v['index_image'];
+    $map_html = $v['map_html'];
   ?>
     <div class="untree_co-section">
       <div class="container">
         <div class="row">
           <div class="col-lg-6">
             <div class="owl-single dots-absolute owl-carousel">
-              <?php if($v['image1'] != ""){ ?>
+              <?php if($image1 != ""){ ?>
                 <div style="overflow: hidden;">
-                  <img src="<?= $v['image1'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                  <img src="<?= $image1 ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
               <?php }else{ ?>
                 <div class="col-8" style="overflow: hidden;">
                   <img src="../images/image_prepare.jpg" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
               <?php } ?>
-              <?php if($v['image2'] != ""){ ?>
+              <?php if($image2 != ""){ ?>
                 <div style="overflow: hidden;">
-                <img src="<?= $v['image2'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                  <img src="<?= $image2 ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
               <?php }?>
-              <?php if($v['image3'] != ""){ ?>
+              <?php if($image3 != ""){ ?>
                 <div style="overflow: hidden;">
-                  <img src="<?= $v['image3'] ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
+                  <img src="<?= $image3 ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
               <?php }?>
             </div>
             <br>
             <div class="col-12 rounded-20" style="overflow: hidden;">
               <?php 
-                if($v['map_html'] != ""){
-                  echo $v['map_html'];
+                if($map_html != ""){
+                  echo $map_html;
                 }
               ?>
             </div>
           </div>
           <div class="col-lg-6 pl-lg-6 ml-auto">
-            <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/update_restaurant_detail.php" method="post" onsubmit="return update_check();">
+            <form class="contact-form" data-aos="fade-up" data-aos-delay="200" action="../contral/update_restaurant_detail.php" method="post" enctype="multipart/form-data" onsubmit="return update_check();">
               <div class="row">
                 <div class="col-6">
                   <div class="form-group">
@@ -199,6 +204,46 @@
                   <div class="form-group">
                     <label class="text-black">餐廳網站</label>
                     <input class="form-control" type="text" name="link" id="link" value="<?=$link?>">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="text-black">餐廳照片1</label>
+                    <input class="form-control" type="file" name="upload_image1" accept="image/*">
+                    <input type="hidden" name="image1" value="<?= $image1 ?>">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="text-black">餐廳照片2</label>
+                    <input class="form-control" type="file" name="upload_image2" accept="image/*">
+                    <input type="hidden" name="image2" value="<?= $image2 ?>">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="text-black">餐廳照片3</label>
+                    <input class="form-control" type="file" name="upload_image3" accept="image/*">
+                    <input type="hidden" name="image3" value="<?= $image3 ?>">
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="text-black">餐廳照片(封面)</label>
+                    <input class="form-control" type="file" name="upload_index_image" accept="image/*">
+                    <input type="hidden" name="index_image" value="<?= $index_image ?>">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <label class="text-black">餐廳地圖HTML資訊</label>
+                    <input class="form-control" type="text" id="map_html" name="map_html" value="<?= htmlspecialchars($map_html) ?>">
                   </div>
                 </div>
               </div>
