@@ -33,43 +33,19 @@ if($_POST['formID'] == 'creat_list'){
   $index_image = $_FILES['index_image'];
   $map_html = $_POST['map_html'];
 
-  //餐廳照片1
-  if($image1['size']>0){
-    if($image1['size']>1000000){
-      echo alert_topre('上傳照片容量太大');
-      exit();
+  //餐廳照片1、2、3
+  for($i = 1; $i <= 3; $i++){
+    if(${'upload_image'.$i}['size'] > 0){
+      if(${'upload_image'.$i}['size'] > 1000000){
+        echo alert_topre('上傳照片容量太大');
+        exit();
+      }else{
+        ${'uploaded_path'.$i} = "../images/restaurant_image".$i."/".${'upload_image'.$i}['name'];
+        move_uploaded_file(${'upload_image'.$i}['tmp_name'],${'uploaded_path'.$i});
+      }
     }else{
-      $uploaded_path1 = "../images/restaurant_image1/".$image1['name'];
-      move_uploaded_file($image1['tmp_name'],$uploaded_path1);
+      ${'uploaded_path'.$i} = ${'image'.$i};
     }
-  }else{
-    $uploaded_path1 = '';
-  }
-
-  //餐廳照片2
-  if($image2['size']>0){
-    if($image2['size']>1000000){
-      echo alert_topre('上傳照片容量太大');
-      exit();
-    }else{
-      $uploaded_path2 = "../images/restaurant_image2/".$image2['name'];
-      move_uploaded_file($image2['tmp_name'],$uploaded_path2);
-    }
-  }else{
-    $uploaded_path2 = '';
-  }
-
-  //餐廳照片3
-  if($image3['size']>0){
-    if($image3['size']>1000000){
-      echo alert_topre('上傳照片容量太大');
-      exit();
-    }else{
-      $uploaded_path3 = "../images/restaurant_image3/".$image3['name'];
-      move_uploaded_file($image3['tmp_name'],$uploaded_path3);
-    }
-  }else{
-    $uploaded_path3 = '';
   }
 
   //餐廳照片(封面照片)

@@ -22,43 +22,19 @@ $image3 = $_POST['image3'];
 $index_image = $_POST['index_image'];
 $map_html = $_POST['map_html'];
 
- //餐廳照片1
- if($upload_image1['size']>0){
-  if($upload_image1['size']>1000000){
-    echo alert_topre('上傳照片容量太大');
-    exit();
+//餐廳照片1、2、3
+for($i = 1; $i <= 3; $i++){
+  if(${'upload_image'.$i}['size'] > 0){
+    if(${'upload_image'.$i}['size'] > 1000000){
+      echo alert_topre('上傳照片容量太大');
+      exit();
+    }else{
+      ${'uploaded_path'.$i} = "../images/restaurant_image".$i."/".${'upload_image'.$i}['name'];
+      move_uploaded_file(${'upload_image'.$i}['tmp_name'],${'uploaded_path'.$i});
+    }
   }else{
-    $uploaded_path1 = "../images/restaurant_image1/".$upload_image1['name'];
-    move_uploaded_file($upload_image1['tmp_name'],$uploaded_path1);
+    ${'uploaded_path'.$i} = ${'image'.$i};
   }
-}else{
-  $uploaded_path1 = $image1;
-}
-
-//餐廳照片2
-if($upload_image2['size']>0){
-  if($upload_image2['size']>1000000){
-    echo alert_topre('上傳照片容量太大');
-    exit();
-  }else{
-    $uploaded_path2 = "../images/restaurant_image2/".$upload_image2['name'];
-    move_uploaded_file($upload_image2['tmp_name'],$uploaded_path2);
-  }
-}else{
-  $uploaded_path2 = $image2;
-}
-
-//餐廳照片3
-if($upload_image3['size']>0){
-  if($upload_image3['size']>1000000){
-    echo alert_topre('上傳照片容量太大');
-    exit();
-  }else{
-    $uploaded_path3 = "../images/restaurant_image3/".$upload_image3['name'];
-    move_uploaded_file($upload_image3['tmp_name'],$uploaded_path3);
-  }
-}else{
-  $uploaded_path3 = $image3;
 }
 
 //餐廳照片(封面照片)
@@ -74,7 +50,7 @@ if($upload_index_image['size']>0){
   $uploaded_path_index_image = $index_image;
 }
 
-$sql = "UPDATE `restaurant_info` SET `name` = :name, `area` = :area, `location` = :location, `category` = :category,`open_time` = :open_time, `close_time` = :close_time,`access` = :access,`price_lunch` = :price_lunch, `price_dinner` = :price_dinner, `memo` = :memo, `link` = :link, `image1` = :image1, `image2` = :image2, `image3` = :image3, `index_image` = :index_image, `map_html` = :map_html, `update_date` = NOW() WHERE `id` = :rID";
+$sql = "UPDATE `restaurant_info` SET `name` = :name, `area` = :area, `location` = :location, `category` = :category,`open_time` = :open_time, `close_time` = :close_time,`access` = :access,`price_lunch` = :price_lunch, `price_dinner` = :price_dinner, `memo` = :memo, `link` = :link, `image1` = :image1, `image2` = :image2, `image3` = :image3, `index_image` = :index_image, `map_html` = :map_html WHERE `id` = :rID";
 $stmt = $dbpdo->prepare($sql);
 $stmt->bindParam(':name',$name,PDO::PARAM_STR);
 $stmt->bindParam(':area',$area,PDO::PARAM_STR);

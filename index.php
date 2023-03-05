@@ -36,9 +36,7 @@ require_once('DBPDO.php');
                           foreach($result_area as $value_area){
                           ?>
                             <option value="<?= $value_area['area'] ?>"><?= $value_area['area'] ?></option>
-                          <?php 
-                          } 
-                          ?>
+                          <?php } ?>
                       </select>
 										</div>
 										<div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-5">
@@ -51,9 +49,7 @@ require_once('DBPDO.php');
                         foreach($result_category as $value_category){
                         ?>
                           <option value="<?= $value_category['cat_name'] ?>"><?= $value_category['cat_name'] ?></option>
-                        <?php 
-                        }
-                        ?>
+                        <?php } ?>
                       </select>
 										</div>
 										<div class="col-sm-12 col-md-6 mt-3 mb-3 mb-lg-0 col-lg-5">
@@ -66,9 +62,7 @@ require_once('DBPDO.php');
                         foreach($result_price as $value_price){
                         ?>
                           <option value="<?= $value_price['price_range'] ?>"><?= $pvalue_pricerice['price_range'] ?></option>
-                        <?php 
-                        }
-                        ?>
+                        <?php } ?>
                       </select>
 										</div>
 										<div class="col-sm-12 col-md-6 mt-3 mb-lg-0 col-lg-5">

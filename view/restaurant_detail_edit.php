@@ -67,12 +67,12 @@
                 <div style="overflow: hidden;">
                   <img src="<?= $image2 ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
-              <?php }?>
+              <?php } ?>
               <?php if($image3 != ""){ ?>
                 <div style="overflow: hidden;">
                   <img src="<?= $image3 ?>" alt="Free HTML Template by Untree.co" class="img-fluid rounded-20">
                 </div>
-              <?php }?>
+              <?php } ?>
             </div>
             <br>
             <div class="col-12 rounded-20" style="overflow: hidden;">
@@ -96,18 +96,14 @@
                   <div class="form-group">
                     <label class="text-black">區域</label>
                     <select name="area" id="area" class="form-control custom-select">
-                      <option value="<?= $area ?>"><?= $area ?></option>
-                    <?php 
-                    $stmt = $dbpdo->prepare("SELECT * FROM `area_info`");
-                    $stmt->execute();
-                    $result_area = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_area as $v){
-                      if($v['area'] == $area){continue;}
-                    ?>
-                      <option value="<?= $v['area'] ?>"><?= $v['area'] ?></option>
-                    <?php 
-                    }
-                    ?>
+                      <?php 
+                      $stmt = $dbpdo->prepare("SELECT * FROM `area_info`");
+                      $stmt->execute();
+                      $result_area = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_area as $v){
+                      ?>
+                        <option value="<?= $v['area'] ?>" <?= ($v['area'] == $area ? "selected" : "") ?> ><?= $v['area'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -123,18 +119,14 @@
                   <div class="form-group">
                     <label class="text-black">分類</label>
                     <select name="category" id="category" class="form-control custom-select">
-                      <option value="<?= $category ?>"><?= $category ?></option>
-                    <?php 
-                    $stmt = $dbpdo->prepare("SELECT * FROM `categories_info`");
-                    $stmt->execute();
-                    $result_categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_categories as $v){
-                      if($v['cat_name'] == $category){continue;}
-                    ?>
-                      <option value="<?= $v['cat_name'] ?>"><?= $v['cat_name'] ?></option>
-                    <?php 
-                    }
-                    ?>
+                      <?php 
+                      $stmt = $dbpdo->prepare("SELECT * FROM `categories_info`");
+                      $stmt->execute();
+                      $result_categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_categories as $v){
+                      ?>
+                        <option value="<?= $v['cat_name'] ?>" <?= ($v['cat_name'] == $category ? "selected" : "") ?> ><?= $v['cat_name'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -158,18 +150,14 @@
                   <div class="form-group">
                     <label class="text-black">午餐預算</label>
                     <select name="price_lunch" id="price_lunch" class="form-control custom-select">
-                      <option value="<?= $price_lunch ?>"><?= $price_lunch ?></option>
-                    <?php 
-                    $stmt = $dbpdo->prepare("SELECT * FROM `price_range`");
-                    $stmt->execute();
-                    $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_price_range as $v){
-                      if($v['price_range'] == $price_lunch){ continue;}
-                    ?>
-                      <option value="<?= $v['price_range'] ?>"><?= $v['price_range'] ?></option>
-                    <?php 
-                    }
-                    ?>
+                      <?php 
+                      $stmt = $dbpdo->prepare("SELECT * FROM `price_range`");
+                      $stmt->execute();
+                      $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_price_range as $v){
+                      ?>
+                        <option value="<?= $v['price_range'] ?>" <?= ($v['price_range'] == $price_lunch ? "selected" : "") ?>><?= $v['price_range'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>
@@ -177,18 +165,14 @@
                   <div class="form-group">
                     <label class="text-black">晚餐預算</label>
                     <select name="price_dinner" id="price_dinner" class="form-control custom-select">
-                      <option value="<?= $price_dinner ?>"><?= $price_dinner ?></option>
-                    <?php 
-                    $stmt = $dbpdo->prepare("SELECT * FROM `price_range`");
-                    $stmt->execute();
-                    $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach($result_price_range as $v){
-                      if($v['price_range'] == $price_dinner){ continue;}
-                    ?>
-                      <option value="<?= $v['price_range'] ?>"><?= $v['price_range'] ?></option>
-                    <?php 
-                    }
-                    ?>
+                      <?php 
+                      $stmt = $dbpdo->prepare("SELECT * FROM `price_range`");
+                      $stmt->execute();
+                      $result_price_range = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                      foreach($result_price_range as $v){
+                      ?>
+                        <option value="<?= $v['price_range'] ?>" <?= ($v['price_range'] == $price_dinner ? "selected" : "") ?>><?= $v['price_range'] ?></option>
+                      <?php } ?>
                     </select>
                   </div>
                 </div>

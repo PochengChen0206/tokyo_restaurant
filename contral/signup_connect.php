@@ -65,8 +65,9 @@ $stmt->bindParam(':nickname',$nickname,PDO::PARAM_STR);
 $stmt->bindParam(':email',$email,PDO::PARAM_STR);
 $stmt->bindParam(':password',$password,PDO::PARAM_STR);
 $stmt->execute();
+$last_userID = $dbpdo->lastInsertId();
 
-$sql1 = "SELECT * FROM `user_info` ORDER BY `userID` DESC LIMIT 0,1";
+$sql1 = "SELECT * FROM `user_info` WHERE `userID` = '".$last_userID."'";
 $stmt1 = $dbpdo->prepare($sql1);
 $stmt1->execute();
 $result1 = $stmt1->fetch(PDO::FETCH_ASSOC);
