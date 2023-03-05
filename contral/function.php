@@ -1,9 +1,14 @@
 <?php
 require_once('../DBPDO.php');
 //index
-function select_info($info)
+function make_tmp_password($length)
 {
- 
+  $text = "0123456789!@#$%abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  $str = "";
+  while(strlen($str) < $length){
+    $str .= substr($text, rand(0, strlen($text)), 1);
+  }
+  return $str;
 }
 
 function alert_toindex($text)

@@ -22,7 +22,7 @@ if($_POST['formID'] == "seeting_userinfo"){
   }
 
 
-  $sql = "UPDATE `user_info` SET `user_name` = :user_name, `nickname` = :nickname, `user_image` = :user_image, `created_date` = NOW() WHERE `userID` = '".$_SESSION['userID']."'";
+  $sql = "UPDATE `user_info` SET `user_name` = :user_name, `nickname` = :nickname, `user_image` = :user_image WHERE `userID` = '".$_SESSION['userID']."'";
   $stmt = $dbpdo->prepare($sql);
   $stmt->bindParam(':user_name',$user_name,PDO::PARAM_STR);
   $stmt->bindParam(':nickname',$nickname,PDO::PARAM_STR);
