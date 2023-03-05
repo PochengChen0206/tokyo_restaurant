@@ -34,8 +34,7 @@ $mail->SMTPAuth = true;
 $mail->Username = "cpocheng32@gmail.com";
 
 //Password to use for SMTP authentication
-//使用googleアプリ パスワード 測試完刪除
-$mail->Password = "ityuiwyvorfpbzib";
+$mail->Password = "";
 
 //Set who the message is to be sent from
 $mail->setFrom('cpocheng32@gmail.com', 'List Of Tokyo Restaurant');
