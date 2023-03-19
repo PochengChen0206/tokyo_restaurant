@@ -119,7 +119,7 @@
       <div class="col-lg-12" style="border-top: 1px solid #d5d5d8; border-bottom: 1px solid #d5d5d8;">
         <h2 class="section-title text-left mt-3 mb-4">用餐心得</h2>
         <?php
-        $sql = "SELECT *  FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` WHERE a.`rID` = '".$rID."' ORDER BY a.`creat_date`";
+        $sql = "SELECT * FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` LEFT JOIN `comment_like` c ON c.`cID` = a.`id` WHERE a.`rID` = '".$rID."' ORDER BY a.`creat_date`";
         $stmt =  $dbpdo->prepare($sql);
         $stmt->execute();
         $result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -144,6 +144,9 @@
                   <div><h5><?=$v['nickname']?></h5></div>
                   <div><?=nl2br(htmlspecialchars($v['content']))?></div>
                   <div><?=$v['creat_date']?></div>
+                  <div>
+                    <input type="button" id="like_<?= $comment_id ?>" onclick="check_like(this.id);" value="<?= (isset($_SESSION['userID']) && ($v['liked_userID'] == $_SESSION['userID']) && ($v['like_status'] != "" && $v['like_status'] !="0")) ? "liked" : "like"?>">
+                  </div>
                   <?php if(isset($_SESSION['userID']) && ($check_userID == $_SESSION['userID'])){ ?>
                     <div class="row justify-content-end mr-2 mb-2">
                       <div class="mr-3">
@@ -167,13 +170,14 @@
                     </div>
                     <div><?=$v['creat_date']?></div>
                     <div class="row justify-content-end mr-2 mb-2">
-                    <div class="mr-3">
-                      <input type="hidden" name="comment_rID" value="<?=$rID?>">
-                      <input type="hidden" name="comment_id" value="<?=$comment_id?>">
-                      <input type="submit" value="儲存">
-                    </div>
-                    <div>
-                      <input type="button" onclick="goback_comment();" value="返回用餐心得">
+                      <div class="mr-3">
+                        <input type="hidden" name="comment_rID" value="<?=$rID?>">
+                        <input type="hidden" name="comment_id" value="<?=$comment_id?>">
+                        <input type="submit" value="儲存">
+                      </div>
+                      <div>
+                        <input type="button" onclick="goback_comment();" value="返回用餐心得">
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -277,7 +281,7 @@
               "open_time": open_time,
               "close_time": close_time,
               "access": access,
-              "memo": memo, //memo不能直接存$v['memo']不然會報錯
+              "memo": memo,
               "price_lunch": price_lunch,
               "price_dinner": price_dinner,
               "link": link
@@ -328,5 +332,26 @@
   function goback_comment()
   {
     window.location.href="../view/restaurant_detail.php?rID=<?=$rID?>&page=1";
+  }
+
+  function check_like(id)
+  {
+    var like_id = id; //更改like狀態用
+    var cID = id.split("_"); //DB判斷用
+    $.ajax({
+      url: "../contral/like_setting.php",
+      type: "POST",
+      data: { "cID": cID[1]},
+        success: function(res) {
+          // console.log(res);
+          if(res == "liked"){
+            $("#like_"+cID[1]).val('liked');
+          }else if(res == "unlike"){
+            $("#like_"+cID[1]).val('like');
+          }else if(res == "login"){
+            alert('請先登入帳號');
+          }
+        }
+    });
   }
 </script>
