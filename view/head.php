@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="css/daterangepicker.css">
     <link rel="stylesheet" href="css/aos.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/952d3c3eee.js" crossorigin="anonymous"></script>
     <title>List Of Tokyo Restaurant</title>
   </head>
   <style>
@@ -65,6 +66,7 @@
     <link rel="stylesheet" href="../css/aos.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/jquery.datetimepicker.css">
+    <script src="https://kit.fontawesome.com/952d3c3eee.js" crossorigin="anonymous"></script>
     <title>List Of Tokyo Restaurant</title>
   </head>
   <style>

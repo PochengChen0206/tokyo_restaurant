@@ -119,7 +119,7 @@
       <div class="col-lg-12" style="border-top: 1px solid #d5d5d8; border-bottom: 1px solid #d5d5d8;">
         <h2 class="section-title text-left mt-3 mb-4">用餐心得</h2>
         <?php
-        $sql = "SELECT * FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` LEFT JOIN `comment_like` c ON c.`cID` = a.`id` WHERE a.`rID` = '".$rID."' ORDER BY a.`creat_date`";
+        $sql = "SELECT * FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` LEFT JOIN `comment_like` c ON c.`cID` = a.`id` WHERE a.`rID` = '".$rID."' AND c.`liked_userID` = a.`userID` ORDER BY a.`creat_date`";
         $stmt =  $dbpdo->prepare($sql);
         $stmt->execute();
         $result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -141,11 +141,21 @@
                   <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
                 </div>
                 <div class="col-11" style="background-color: #f4f4f5;">
-                  <div><h5><?=$v['nickname']?></h5></div>
-                  <div><?=nl2br(htmlspecialchars($v['content']))?></div>
-                  <div><?=$v['creat_date']?></div>
-                  <div>
-                    <input type="button" id="like_<?= $comment_id ?>" onclick="check_like(this.id);" value="<?= (isset($_SESSION['userID']) && ($v['liked_userID'] == $_SESSION['userID']) && ($v['like_status'] != "" && $v['like_status'] =="1")) ? "liked" : "like"?>">
+                  <div class="row justify-content-between ml-1 mr-1">
+                    <div><h5><?=$v['nickname']?></h5></div>
+                    <div><?=$v['creat_date']?></div>
+                  </div>
+                  <div class="ml-1"><?=nl2br(htmlspecialchars($v['content']))?></div>
+                  <div class="row ml-1" id="like_<?= $comment_id ?>" onclick="check_like(this.id);">
+                    <?php if(isset($_SESSION['userID']) && ($v['liked_userID'] == $_SESSION['userID']) && ($v['like_status'] != "" && $v['like_status'] == "1")){ ?>
+                      <div class="mr-1">
+                        <i class="fa-solid fa-heart"></i>
+                      </div>
+                    <?php }else{ ?>
+                      <div class="mr-1">
+                        <i class="fa-regular fa-heart"></i>
+                      </div>
+                    <?php } ?>
                     <span id="sum_like_<?=$comment_id?>"><?= ($v['sum_like'] != "0" ? $v['sum_like'] : "") ?></span>
                   </div>
                   <?php if(isset($_SESSION['userID']) && ($check_userID == $_SESSION['userID'])){ ?>
@@ -164,12 +174,14 @@
                   <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
                 </div>
                 <div class="col-11" style="background-color: #f4f4f5;">
-                  <div><h5><?=$v['nickname']?></h5></div>
+                  <div class="row justify-content-between ml-1 mr-1">
+                    <div><h5><?=$v['nickname']?></h5></div>
+                    <div><?=$v['creat_date']?></div>
+                  </div>
                   <form action="../contral/update_comment.php" method="post">
                     <div>
                       <textarea name="edit_content" id="edit_content" cols="60" rows="10"><?=$v['content']?></textarea>
                     </div>
-                    <div><?=$v['creat_date']?></div>
                     <div class="row justify-content-end mr-2 mb-2">
                       <div class="mr-3">
                         <input type="hidden" name="comment_rID" value="<?=$rID?>">
@@ -359,10 +371,10 @@
         success: function(res) {
           // console.log(res);
           if(res == "liked"){
-            $("#like_"+cID[1]).val('liked');
+            $("#like_"+cID[1]+" div").html("<i class='fa-solid fa-heart'></i>");
             $("#sum_like_"+cID[1]).text(sum_like_plus);
           }else if(res == "unlike"){
-            $("#like_"+cID[1]).val('like');
+            $("#like_"+cID[1]+" div").html("<i class='fa-regular fa-heart'></i>");
             if(sum_like_minus != "0"){
               $("#sum_like_"+cID[1]).text(sum_like_minus);
             }else{
