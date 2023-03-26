@@ -145,7 +145,8 @@
                   <div><?=nl2br(htmlspecialchars($v['content']))?></div>
                   <div><?=$v['creat_date']?></div>
                   <div>
-                    <input type="button" id="like_<?= $comment_id ?>" onclick="check_like(this.id);" value="<?= (isset($_SESSION['userID']) && ($v['liked_userID'] == $_SESSION['userID']) && ($v['like_status'] != "" && $v['like_status'] !="0")) ? "liked" : "like"?>">
+                    <input type="button" id="like_<?= $comment_id ?>" onclick="check_like(this.id);" value="<?= (isset($_SESSION['userID']) && ($v['liked_userID'] == $_SESSION['userID']) && ($v['like_status'] != "" && $v['like_status'] =="1")) ? "liked" : "like"?>">
+                    <span id="sum_like_<?=$comment_id?>"><?= ($v['sum_like'] != "0" ? $v['sum_like'] : "") ?></span>
                   </div>
                   <?php if(isset($_SESSION['userID']) && ($check_userID == $_SESSION['userID'])){ ?>
                     <div class="row justify-content-end mr-2 mb-2">
@@ -338,16 +339,35 @@
   {
     var like_id = id; //更改like狀態用
     var cID = id.split("_"); //DB判斷用
+    var sum_like_now = $("#sum_like_"+cID[1]).text(); //取得當下的like數
+    var sum_like_minus = "";
+    if(sum_like_now == "" || sum_like_now == '0'){
+      sum_like_now = parseInt(0);
+      sum_like_minus = "0";
+    }else{
+      sum_like_now = parseInt($("#sum_like_"+cID[1]).text());
+      sum_like_minus = (sum_like_now - 1);
+    }
+    var sum_like_plus = (sum_like_now + 1);
     $.ajax({
       url: "../contral/like_setting.php",
       type: "POST",
-      data: { "cID": cID[1]},
+      data: { 
+        "cID": cID[1],
+        "sum_like": sum_like_now
+      },
         success: function(res) {
           // console.log(res);
           if(res == "liked"){
             $("#like_"+cID[1]).val('liked');
+            $("#sum_like_"+cID[1]).text(sum_like_plus);
           }else if(res == "unlike"){
             $("#like_"+cID[1]).val('like');
+            if(sum_like_minus != "0"){
+              $("#sum_like_"+cID[1]).text(sum_like_minus);
+            }else{
+              $("#sum_like_"+cID[1]).text("");
+            }
           }else if(res == "login"){
             alert('請先登入帳號');
           }

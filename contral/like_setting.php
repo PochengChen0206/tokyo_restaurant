@@ -4,6 +4,13 @@ require_once('../DBPDO.php');
 if(isset($_SESSION['userID'])){
   $cID = $_POST['cID'];
   $userID = $_SESSION['userID'];
+  $sum_like = intval($_POST['sum_like']);
+  $sum_like_plus = $sum_like + 1;
+  if($sum_like != 0){
+    $sum_like_minus = $sum_like - 1;
+  }else{
+    $sum_like_minus = 0;
+  }
   
   //先判斷是否存在此留言的like
   $sql = "SELECT `like_status` FROM `comment_like` WHERE `liked_userID` = :liked_userID AND `cID` = :cID";
@@ -29,6 +36,13 @@ if(isset($_SESSION['userID'])){
     $stmt->bindParam(':cID', $cID, PDO::PARAM_INT);
     $stmt->execute();
 
+    //更新like總數
+    $sql_comment_info = "UPDATE `comment_info` SET `sum_like` = :sum_like WHERE `id` = :cID";
+    $stmt_comment_info = $dbpdo->prepare($sql_comment_info);
+    $stmt_comment_info->bindParam(':sum_like', $sum_like_plus, PDO::PARAM_INT);
+    $stmt_comment_info->bindParam(':cID', $cID, PDO::PARAM_INT);
+    $stmt_comment_info->execute();
+
     echo 'liked';
   }else{
     //刪除狀態
@@ -37,6 +51,13 @@ if(isset($_SESSION['userID'])){
     $stmt_delete->bindParam(':liked_userID', $userID, PDO::PARAM_INT);
     $stmt_delete->bindParam(':cID', $cID, PDO::PARAM_INT);
     $stmt_delete->execute();
+
+    //更新like總數
+    $sql_comment_info = "UPDATE `comment_info` SET `sum_like` = :sum_like WHERE `id` = :cID";
+    $stmt_comment_info = $dbpdo->prepare($sql_comment_info);
+    $stmt_comment_info->bindParam(':sum_like', $sum_like_minus, PDO::PARAM_INT);
+    $stmt_comment_info->bindParam(':cID', $cID, PDO::PARAM_INT);
+    $stmt_comment_info->execute();
 
     echo 'unlike';
   }
