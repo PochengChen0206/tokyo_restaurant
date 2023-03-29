@@ -119,11 +119,27 @@
       <div class="col-lg-12" style="border-top: 1px solid #d5d5d8; border-bottom: 1px solid #d5d5d8;">
         <h2 class="section-title text-left mt-3 mb-4">用餐心得</h2>
         <?php
-        $sql = "SELECT * FROM `comment_info` a INNER JOIN `user_info` b ON a.`userID` = b.`userID` LEFT JOIN `comment_like` c ON c.`cID` = a.`id` WHERE a.`rID` = '".$rID."' AND c.`liked_userID` = a.`userID` ORDER BY a.`creat_date`";
+        $sql = "SELECT a.*, b.`user_image` 
+                FROM `comment_info` a 
+                INNER JOIN `user_info` b ON a.`userID` = b.`userID` 
+                WHERE a.`rID` = '".$rID."' 
+                ORDER BY a.`creat_date`
+                ";
+
         $stmt =  $dbpdo->prepare($sql);
         $stmt->execute();
         $result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $total_comment = count($result_comment);
+
+        $sql2 = "SELECT `cID` FROM `comment_like` WHERE `liked_userID` = '".$_SESSION['userID']."'";
+        $stmt2 =  $dbpdo->prepare($sql2);
+        $stmt2->execute();
+        $result_like = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+        $arr_like_users = array();
+        foreach($result_like as $v){
+          $arr_like_users[] = $v['cID'];
+        }
+
         if($total_comment>0){
           $img = "";
           foreach($result_comment as $k=>$v){
@@ -147,9 +163,9 @@
                   </div>
                   <div class="ml-1"><?=nl2br(htmlspecialchars($v['content']))?></div>
                   <div class="row ml-1" id="like_<?= $comment_id ?>" onclick="check_like(this.id);">
-                    <?php if(isset($_SESSION['userID']) && ($v['liked_userID'] == $_SESSION['userID']) && ($v['like_status'] != "" && $v['like_status'] == "1")){ ?>
+                    <?php if(isset($_SESSION['userID']) && in_array($comment_id, $arr_like_users)){  //已按過like?>
                       <div class="mr-1">
-                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart"></i> 
                       </div>
                     <?php }else{ ?>
                       <div class="mr-1">
