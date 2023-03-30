@@ -131,30 +131,51 @@
         $result_comment = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $total_comment = count($result_comment);
 
-        $sql2 = "SELECT `cID` FROM `comment_like` WHERE `liked_userID` = '".$_SESSION['userID']."'";
+        $img = "";
+        unset($arr_comment_info); //將取出的資料另存陣列
+        $check_cID = ""; //存入此餐廳所有的留言cID
+        foreach($result_comment as $k=>$v){
+          if($v['user_image']!=""){
+            $img = $v['user_image'];
+          }else{
+            $img = "../images/image_prepare.jpg";
+          }
+          $arr_comment_info[] = [
+            'comment_id' => $v['id'],
+            'userID'=> $v['userID'],
+            'user_image' => $img,
+            'nickname' => $v['nickname'],
+            'creat_date' => $v['creat_date'],
+            'content' => $v['content'],
+            'sum_like' => $v['sum_like']
+          ];
+          //將$check_cID存成下方判斷WHERE IN 的格式
+          if($check_cID != ""){
+            $check_cID .= "','";
+          }
+          $check_cID .= $v['id'];
+        }
+
+        $sql2 = "SELECT `cID` FROM `comment_like` WHERE `liked_userID` = '".$_SESSION['userID']."' AND `cID` IN ( '".$check_cID."' )";
+
         $stmt2 =  $dbpdo->prepare($sql2);
         $stmt2->execute();
         $result_like = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-        $arr_like_users = array();
+
+        unset($liked_comment_id); //按過like的comment_id
         foreach($result_like as $v){
-          $arr_like_users[] = $v['cID'];
+          $liked_comment_id[] = $v['cID'];
         }
 
-        if($total_comment>0){
-          $img = "";
-          foreach($result_comment as $k=>$v){
+        if($total_comment > 0){
+          foreach($arr_comment_info as $k=>$v){
             $check_userID = $v['userID'];
-            $comment_id = $v['id'];
-            if($v['user_image']!=""){
-              $img = $v['user_image'];
-            }else{
-              $img = "../images/image_prepare.jpg";
-            }
+            $comment_id = $v['comment_id'];
           ?>
             <div class="row ml-2 mb-3">
               <?php if(!isset($_GET['editid'])){ ?>
                 <div class="col-1">
-                  <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
+                  <img src="<?=$v['user_image']?>" alt="Image" class="img-fluid mb-4 rounded-20">
                 </div>
                 <div class="col-11" style="background-color: #f4f4f5;">
                   <div class="row justify-content-between ml-1 mr-1">
@@ -163,7 +184,7 @@
                   </div>
                   <div class="ml-1"><?=nl2br(htmlspecialchars($v['content']))?></div>
                   <div class="row ml-1" id="like_<?= $comment_id ?>" onclick="check_like(this.id);">
-                    <?php if(isset($_SESSION['userID']) && in_array($comment_id, $arr_like_users)){  //已按過like?>
+                    <?php if(isset($_SESSION['userID']) && in_array($comment_id, $liked_comment_id)){  //已按過like?>
                       <div class="mr-1">
                         <i class="fa-solid fa-heart"></i> 
                       </div>
@@ -187,7 +208,7 @@
                 </div>
               <?php }elseif($_GET['editid']==$comment_id){ ?>
                 <div class="col-1">
-                  <img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20">
+                  <img src="<?=$v['user_image']?>" alt="Image" class="img-fluid mb-4 rounded-20">
                 </div>
                 <div class="col-11" style="background-color: #f4f4f5;">
                   <div class="row justify-content-between ml-1 mr-1">
