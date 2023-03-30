@@ -1,10 +1,10 @@
 <?php 
+require_once('../DBPDO.php'); 
+
 if(!isset($_SESSION['name']) && $_SESSION['name'] != "admindemo"){
   header("Location:../index.php");
   exit();
 }
-
-require_once('../DBPDO.php'); 
 ?>
 <!doctype html>
 <html lang="en">
