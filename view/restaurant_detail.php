@@ -26,8 +26,8 @@
     </div>
   </div>
   <?php
-  $rID=$_GET['rID'];
-  $stmt=$dbpdo->prepare("SELECT * FROM `restaurant_info` WHERE `id` = :rID");
+  $rID = $_GET['rID'];
+  $stmt = $dbpdo->prepare("SELECT * FROM `restaurant_info` WHERE `id` = :rID");
   $stmt->bindParam(':rID',$rID,PDO::PARAM_STR);
   $stmt->execute();
   $result_detail = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -155,14 +155,22 @@
           }
           $check_cID .= $v['id'];
         }
-
-        $sql2 = "SELECT `cID` FROM `comment_like` WHERE `liked_userID` = '".$_SESSION['userID']."' AND `cID` IN ( '".$check_cID."' )";
+        $liked_userID = "";
+        if(isset($_SESSION['userID'])){
+          $liked_userID = $_SESSION['userID'];
+        }
+        
+        $sql2 = "SELECT `cID` 
+                FROM `comment_like` 
+                WHERE `liked_userID` = '".$liked_userID."'
+                AND `rID` = '".$rID."' 
+                AND `cID` IN ( '".$check_cID."' )";
 
         $stmt2 =  $dbpdo->prepare($sql2);
         $stmt2->execute();
         $result_like = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
-        unset($liked_comment_id); //按過like的comment_id
+        $liked_comment_id = array(); //按過like的comment_id
         foreach($result_like as $v){
           $liked_comment_id[] = $v['cID'];
         }
@@ -386,6 +394,7 @@
 
   function check_like(id)
   {
+    var rID = '<?=$rID?>';
     var like_id = id; //更改like狀態用
     var cID = id.split("_"); //DB判斷用
     var sum_like_now = $("#sum_like_"+cID[1]).text(); //取得當下的like數
@@ -402,11 +411,11 @@
       url: "../contral/like_setting.php",
       type: "POST",
       data: { 
+        "rID": rID,
         "cID": cID[1],
         "sum_like": sum_like_now
       },
         success: function(res) {
-          // console.log(res);
           if(res == "liked"){
             $("#like_"+cID[1]+" div").html("<i class='fa-solid fa-heart'></i>");
             $("#sum_like_"+cID[1]).text(sum_like_plus);

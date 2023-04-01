@@ -2,6 +2,7 @@
 require_once('../DBPDO.php');
 
 if(isset($_SESSION['userID'])){
+  $rID = $_POST['rID'];
   $cID = $_POST['cID'];
   $userID = $_SESSION['userID'];
   $sum_like = intval($_POST['sum_like']);
@@ -13,9 +14,15 @@ if(isset($_SESSION['userID'])){
   }
   
   //先判斷是否存在此留言的like
-  $sql = "SELECT `like_status` FROM `comment_like` WHERE `liked_userID` = :liked_userID AND `cID` = :cID";
+  $sql = "SELECT `like_status` 
+          FROM `comment_like` 
+          WHERE `liked_userID` = :liked_userID 
+          AND `rID` = :rID 
+          AND `cID` = :cID";
+
   $stmt = $dbpdo->prepare($sql);
   $stmt->bindParam(':liked_userID', $userID, PDO::PARAM_INT);
+  $stmt->bindParam(':rID', $rID, PDO::PARAM_INT);
   $stmt->bindParam(':cID', $cID, PDO::PARAM_INT);
   $stmt->execute();
   $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,9 +37,11 @@ if(isset($_SESSION['userID'])){
   //判斷是否有like過
   if(!isset($result['like_status'])){
     //寫入DB
-    $sql_insert = "INSERT INTO `comment_like`(`liked_userID`, `cID`, `like_status`, `created_at`) VALUES(:liked_userID, :cID, '".$status_change."', NOW())";
+    $sql_insert = "INSERT INTO `comment_like`(`rID`, `liked_userID`, `cID`, `like_status`, `created_at`) 
+                  VALUES(:rID, :liked_userID, :cID, '".$status_change."', NOW())";
     $stmt = $dbpdo->prepare($sql_insert);
     $stmt->bindParam(':liked_userID', $userID, PDO::PARAM_INT);
+    $stmt->bindParam(':rID', $rID, PDO::PARAM_INT);
     $stmt->bindParam(':cID', $cID, PDO::PARAM_INT);
     $stmt->execute();
 
@@ -67,6 +76,4 @@ if(isset($_SESSION['userID'])){
   echo 'login';
   exit();
 }
-
-
 ?>
