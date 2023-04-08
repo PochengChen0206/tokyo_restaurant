@@ -136,7 +136,7 @@ if($_POST['formID'] == 'comment'){
   $stmt->bindParam(':nickname', $nickname, PDO::PARAM_STR);
   $stmt->bindParam(':content', $content, PDO::PARAM_STR);
   $stmt->execute();
-  echo "<script>alert('留言分享成功');window.location.href='http://localhost/pocheng/tokyo_restaurant/view/restaurant_detail.php?rID=$rID&page=1'</script>";
+  echo "<script>window.location.href='http://localhost/pocheng/tokyo_restaurant/view/restaurant_detail.php?rID=$rID'</script>";
   exit();
 }
 ?>

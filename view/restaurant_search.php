@@ -174,10 +174,10 @@ if($arr_search_word){
             ?>
               <div class="row ml-2">
                 <div class="col-3">
-                  <a href="../view/restaurant_detail.php?rID=<?=$v['id']?>&page=1"><img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>
+                  <a href="../view/restaurant_detail.php?rID=<?=$v['id']?>"><img src="<?=$img?>" alt="Image" class="img-fluid mb-4 rounded-20"></a>
                 </div>
                 <div class="col-9">
-                  <h4><a href="../view/restaurant_detail.php?rID=<?=$v['id']?>&page=1"><?=$v['name']?></a></h4>
+                  <h4><a href="../view/restaurant_detail.php?rID=<?=$v['id']?>"><?=$v['name']?></a></h4>
                   <div>
                     <ul class="list-unstyled two-col clearfix">
                       <li>區域：<?=$v['area']?></li>
@@ -190,7 +190,7 @@ if($arr_search_word){
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <a class="c-hover" href="../view/restaurant_detail.php?rID=<?=$v['id']?>&page=1">詳細資訊</a>
+                      <a class="c-hover" href="../view/restaurant_detail.php?rID=<?=$v['id']?>">詳細資訊</a>
                     </div>
                   </div>
                 </div>

@@ -236,9 +236,9 @@ require_once('DBPDO.php');
 						?>
 							<div class="testimonial mx-auto">
 								<figure style="width:150px; margin:0 auto;">
-									<a href="./view/restaurant_detail.php?rID=<?= $value_comment['rID'] ?>&page=1"><img src="<?= $image ?>" alt="Image" class="img-fluid rounded-20"></a>
+									<a href="./view/restaurant_detail.php?rID=<?= $value_comment['rID'] ?>"><img src="<?= $image ?>" alt="Image" class="img-fluid rounded-20"></a>
 								</figure>
-								<h3><a href="./view/restaurant_detail.php?rID=<?= $value_comment['rID'] ?>&page=1"><?= $restaurant ?></a></h3>
+								<h3><a href="./view/restaurant_detail.php?rID=<?= $value_comment['rID'] ?>"><?= $restaurant ?></a></h3>
 								<h3 class="name"><?= $nickname ?></h3>
 								<blockquote>
 									<p class="mb-2">&ldquo;<?= $content ?>&rdquo;</p>
@@ -270,7 +270,7 @@ require_once('DBPDO.php');
 				?>
 					<div class="col-6 col-sm-6 col-md-6 col-lg-3 mb-4 mb-lg-0">
 						<div class="media-1">
-							<a href="./view/restaurant_detail.php?rID=<?= $value_restaurant['id'] ?>&page=1" class="d-block mb-3">
+							<a href="./view/restaurant_detail.php?rID=<?= $value_restaurant['id'] ?>" class="d-block mb-3">
 								<?php 
 									if($value_restaurant['index_image'] != ""){ 
 										$restaurant_image = substr_replace($value_restaurant['index_image'],'',0,1);
@@ -286,7 +286,7 @@ require_once('DBPDO.php');
 							</span>
 							<div class="d-flex align-items-center">
 								<div>
-									<h3><a href="./view/restaurant_detail.php?rID=<?= $value_restaurant['id'] ?>&page=1"><?= $value_restaurant['name'] ?></a></h3>
+									<h3><a href="./view/restaurant_detail.php?rID=<?= $value_restaurant['id'] ?>"><?= $value_restaurant['name'] ?></a></h3>
 									<div class="price ml-auto">
 										<span><?= $value_restaurant['access'] ?></span>
 									</div>
